@@ -14,19 +14,30 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    
     {{-- bootstrap icon --}}
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
         integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+{{-- leaflet API --}}
+    {{-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script> --}}
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script> --}}
+    {{-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.js"></script>
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.css" type="text/css"> --}}
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/css/index.css', 'resources/js/app.js', 'resources/js/index.js'])
-{{-- AMCHART API --}}
-<!-- Resources --> 
-<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/maps.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/geodata/ghanaLow.js"></script>
+
+
+
 
 </head>
 
@@ -183,7 +194,7 @@
     <div class="sidebar">
         <div class="logo-details">
             <i class='bi bi-list '></i>
-            <div class="logo_name">Gmet</div>
+            <div class="logo_name">GMet</div>
             <i class='bi-x-circle iconn' id="btn"></i>
         </div>
         <ul class="navlist">
@@ -203,6 +214,20 @@
                 </a>
                 <span class="tooltip">Daily Forecast</span>
             </li>
+            <li class="btnicons" data-target="day5-content">
+              <a href="#">
+                  <i class='bi bi-sun'></i>
+                  <span class="links_name">5-Days-Forecast</span>
+              </a>
+              <span class="tooltip">5-Days-Forecast</span>
+          </li>
+          <li class="btnicons" data-target="districts-content">
+            <a href="#">
+                <i class='bi bi-cursor'></i>
+                <span class="links_name">Districts</span>
+            </a>
+            <span class="tooltip">Districts</span>
+        </li>
 
  <li class="btnicons" data-target="seasonal-content" id="seasonal-btn">
                 <a href="#">
@@ -219,20 +244,8 @@
                 </a>
                 <span class="tooltip">Marine Forecast</span>
             </li>
-            <li class="btnicons" data-target="districts-content">
-                <a href="#">
-                    <i class='bi bi-cursor'></i>
-                    <span class="links_name">Districts</span>
-                </a>
-                <span class="tooltip">Districts</span>
-            </li>
-            <li class="btnicons" data-target="map-content">
-                <a href="#">
-                    <i class='bi bi-globe-europe-africa'></i>
-                    <span class="links_name">Map</span>
-                </a>
-                <span class="tooltip">Map</span>
-            </li>
+          
+           
 
             <li class="btnicons" data-target="feedback-content">
                 <a href="#">
@@ -249,9 +262,39 @@
                         <div class="name">
                             <nav class="navbar navbar-bg-white shadow rounded-2 bg-light">
                                 <div class=" container-fluid shadow  rounded-2">
-                                    <a href="#"> <span class="navbar-brand text-center px-2"
-                                            style="font-weight:bold; color:rgb(0, 0, 0);background-color: #EAECEF">
-                                            Sign-In</span></a>
+                                   
+                                            <!-- Authentication Links -->
+                        @guest
+                        @if (Route::has('login'))
+                        <a href="{{ route('login') }}">
+                          <span class="navbar-brand text-center px-2"
+                               style="font-weight:bold; color:rgb(0, 0, 0);background-color: #EAECEF">
+                               {{ __('Login') }}</span>
+                              </a>
+                            
+                        @endif
+                        @if (Route::has('register'))
+                        <a href="{{ route('register') }}">
+                          <span class="navbar-brand text-center px-2"
+                               style="font-weight:bold; color:rgb(0, 0, 0);background-color: #EAECEF">
+                               {{ __('Register') }}</span></a>
+                        @endif
+                   @else
+                   <a href="{{ route('login') }}">
+                    <span class="navbar-brand text-center px-2"
+                         style="font-weight:bold; color:rgb(0, 0, 0);background-color: #EAECEF">
+                         {{ __('Login') }}</span>
+                        </a>
+                    {{--  <a href="{{ route('logout') }}">
+                      <span class="navbar-brand text-center px-2"
+                           style="font-weight:bold; color:rgb(0, 0, 0);background-color: #EAECEF">
+                           {{ __('Logout') }}</span></a>  
+                            --}}
+                    @endguest
+
+
+
+                                          
                                 </div>
                             </nav>
                         </div>
@@ -284,7 +327,8 @@
         <label for="validationCustom03">Select Product:</label>
           <select class="form-control form-control-lg" name="category" id="validationCustom03"   required>
             <option value="">Choose... </option>
-            <option value="24Hrs & 5-Days-Forecast">24Hrs  & 5-Days-Forecast</option>
+            <option value="24Hrs">24-Hour-Forecast</option>
+            <option value="5-Days-Forecast">5-Days-Forecast</option>
             <option value="Seasonal Forecast">Seasonal Forecast</option>
             <option value="Marine Forecast">Marine Forecast</option>
              
@@ -495,7 +539,8 @@
                 </div>
              </div>  {{-- end of home content --}}
 
-                {{-- weather section --}}
+             
+                {{-- daily weather section --}}
                 <div class="content weather-content">
                     <div class="row  g-2">
                         <div class="col-xsm-6 col-sm-6 col-md-6 col-lg-8 col-xlg-8 ">
@@ -762,118 +807,558 @@
                             </div>
                           </div>
                           <br>
-                            <div class="card rounded-2 h-100" style="background-color: #EAECEF">
-                                
-                                <div class="card-body">
-                                    <h5 class="text-muted fw-bold">5-Days-Forecast</h5>
-                                    <ul class="list-group list-group-flush">
-                                      <li class="list-group-item my-4" style="background-color: #EAECEF">
-                                        <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                                          <div class="text-dark fw-bold">Mon</div>
-                                          <div class="text-dark fw-bold">
-                                            <figure>
-                                              <svg class="icon5day" viewbox="0 0 100 100">
-                                                <use xlink:href="#moon" x="-20" y="-15"/>
-                                                <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
-                                                <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
-                                                <use id="drop3" xlink:href="#rainDrop" x="45" y="65"/>
-                                                <use xlink:href="#whiteCloud" x="7" />
-                                              </svg>
-                                              <figcaption class="figure-caption">Showers-Night</figcaption>
-                                            </figure>
-                                          </div>
-                                          <div class="text-dark fw-bold"> 15°C - 18°C</div>
-                                        </div>
-                                      </li>
-                                      <li class="list-group-item my-4" style="background-color: #EAECEF">
-                                        <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                                          <div class="text-dark fw-bold">Tue</div>
-                                          <div class="text-dark fw-bold">
-                                            <figure>
-                                              <svg class="icon5day" viewbox="0 0 100 100">
-                                                <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
-                                                <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
-                                                <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
-                                                <use xlink:href="#whiteCloud" x="7" />
-                                                <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
-                                              </svg>
-                                              <figcaption class="figure-caption">Thunderstorm</figcaption>
-                                            </figure>
-                                          </div>
-                                          <div class="text-dark fw-bold">25°C - 28°C</div>
-                                        </div>
-                                      </li>
-                                      <li class="list-group-item my-4" style="background-color: #EAECEF">
-                                        <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                                          <div class="text-dark fw-bold">Wed</div>
-                                          <div class="text-dark fw-bold">
-                                            <figure>
-                                              <svg class="icon5day" viewbox="0 0 100 100">
-                                                <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
-                                                <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
-                                                <use id="mist" xlink:href="#mist" x="0" y="30"/>
-                                              </svg>
-                                              <figcaption class="figure-caption">Fog</figcaption>
-                                            </figure>
-                                          </div>
-                                          <div class="text-dark fw-bold">18°C - 23°C</div>
-                                        </div>
-                                      </li>
-                                      <li class="list-group-item my-4" style="background-color: #EAECEF">
-                                        <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                                          <div class="text-dark fw-bold">Thu</div>
-                                          <div class="text-dark fw-bold">
-                                            <figure>
-                                              <svg class="icon5day" viewbox="0 0 100 100">
-                                                <use xlink:href="#moon" x="-15"/>
-                                                <use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
-                                                <use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
-                                                <use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
-                                              </svg>
-                                              <figcaption class="figure-caption">Clear-Night</figcaption>
-                                            </figure>
+                          {{-- map --}}
+                          .<div class="card text-center">
+                            {{-- <div class="card-body"> --}}
+                             {{-- <h4 class="card-title">Title</h4>
+                             <p class="card-text">Body</p> --}}
+                           <div id="map" 
+                           style=" width: 600px; 
+                           height: 700px;">
+                           </div> 
+                         {{-- </div> --}}
+                         </div>
 
-                                          </div>
-                                          <div class="text-dark fw-bold">35°C - 37°C</div>
-                                        </div>
-                                      </li>
-                                      <li class="list-group-item my-4" style="background-color: #EAECEF">
-                                        <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                                          <div class="text-dark fw-bold">Fri</div>
-                                          <div class="text-dark fw-bold">
-                                            <figure>
-                                              <svg class="icon5day" viewbox="0 0 100 100">
-                                                <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
-                                                <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
-                                                <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
-                                                <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
-                                                <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
-                                                <use xlink:href="#whiteCloud" x="5" y="-7"/>
-                                              </svg>
-                                              <figcaption class="figure-caption">Rain</figcaption>
-                                            </figure>
-                                          </div>
-                                          <div class="text-dark fw-bold">26°C - 30°C</div>
-                                        </div>
-                                      </li>
-                                    </ul>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="content seasonal-content">seasonal-content goes here</div>
-                <div class="content marine-content">marine content goes here</div>
-                <div class="content districts-content">districts-content goes here</div>
-                <div class="content map-content"><div id="chartdiv"></div></div>
+               
+                <div class="content day5-content ">
+                  <div class="mb-3">
+                    <label for="selectDistric" class="form-label fw-bold fs-2">Select District</label> 
+                  <select class="form-select form-select-lg" id="selectDistric" aria-label="Small select">
+                    <option selected="">Accra</option>
+                    <option value="1">Another District </option>
+                    <option value="2">Another District</option>
+                    <option value="3">Another District</option>
+                    <option value="3">Another District</option>
+                    <option value="3">Another District</option>
+                    <option value="3">Another District</option>
+                    <option value="3">Another District</option>
+                    <option value="3">Another District</option>
+                    <option value="3">Another District</option>
+                  </select>
+                 </div> 
+                 <div class="card rounded-2 h-100" style="background-color: #EAECEF">
+                                
+                    <div class="card-body">
+                        <h5 class="text-muted fw-bold">5-Days-Forecast</h5>
+  
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item my-4" style="background-color: #EAECEF">
+                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
+                              <div class="text-dark fw-bold fs-3">Mon</div>
+                              <div class="text-dark fw-bold">
+                                <figure>
+                                  <svg class="icon5day" viewbox="0 0 100 100">
+                                    <use xlink:href="#moon" x="-20" y="-15"/>
+                                    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                    <use id="drop3" xlink:href="#rainDrop" x="45" y="65"/>
+                                    <use xlink:href="#whiteCloud" x="7" />
+                                  </svg>
+                                  <figcaption class="figure-caption">Showers-Night</figcaption>
+                                </figure>
+                              </div>
+                              <div class="text-dark fw-bold fs-3"> 15°C - 18°C</div>
+                            </div>
+                          </li>
+                          <li class="list-group-item my-4" style="background-color: #EAECEF">
+                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
+                              <div class="text-dark fw-bold fs-3">Tue</div>
+                              <div class="text-dark fw-bold ">
+                                <figure>
+                                  <svg class="icon5day" viewbox="0 0 100 100">
+                                    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+                                    <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+                                    <use xlink:href="#whiteCloud" x="7" />
+                                    <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+                                  </svg>
+                                  <figcaption class="figure-caption">Thunderstorm</figcaption>
+                                </figure>
+                              </div>
+                              <div class="text-dark fw-bold fs-3">25°C - 28°C</div>
+                            </div>
+                          </li>
+                          <li class="list-group-item my-4" style="background-color: #EAECEF">
+                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
+                              <div class="text-dark fw-bold fs-3">Wed</div>
+                              <div class="text-dark fw-bold ">
+                                <figure>
+                                  <svg class="icon5day" viewbox="0 0 100 100">
+                                    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+                                    <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+                                    <use id="mist" xlink:href="#mist" x="0" y="30"/>
+                                  </svg>
+                                  <figcaption class="figure-caption">Fog</figcaption>
+                                </figure>
+                              </div>
+                              <div class="text-dark fw-bold fs-3">18°C - 23°C</div>
+                            </div>
+                          </li>
+                          <li class="list-group-item my-4" style="background-color: #EAECEF">
+                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
+                              <div class="text-dark fw-bold fs-3">Thu</div>
+                              <div class="text-dark fw-bold">
+                                <figure>
+                                  <svg class="icon5day" viewbox="0 0 100 100">
+                                    <use xlink:href="#moon" x="-15"/>
+                                    <use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+                                    <use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+                                    <use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+                                  </svg>
+                                  <figcaption class="figure-caption">Clear-Night</figcaption>
+                                </figure>
+
+                              </div>
+                              <div class="text-dark fw-bold fs-3">35°C - 37°C</div>
+                            </div>
+                          </li>
+                          <li class="list-group-item my-4" style="background-color: #EAECEF">
+                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
+                              <div class="text-dark fw-bold fs-3">Fri</div>
+                              <div class="text-dark fw-bold">
+                                <figure>
+                                  <svg class="icon5day" viewbox="0 0 100 100">
+                                    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+                                    <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+                                    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+                                    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+                                    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                  </svg>
+                                  <figcaption class="figure-caption">Rain</figcaption>
+                                </figure>
+                              </div>
+                              <div class="text-dark fw-bold fs-3">26°C - 30°C</div>
+                            </div>
+                          </li>
+                        </ul>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+                    </div>
+                    {{-- DISTRICTS --}}
+                 <div class="content districts-content">
+                  <div class="row  g-2">
+                     {{-- districts list container--}} 
+                    <div class="col-xsm-6 col-sm-6 col-md-6 col-lg-8 col-xlg-8 ">
+                      <div class="mb-3">
+                      {{-- search  --}}
+                      <label for="selectedDist" class="form-label fw-bold fs-3"> Select District:</label>
+                      <select class="form-select" aria-label="Default select" id="selectedDist">
+                        <option selected="">Select District</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                      </div>
+                      {{-- districts list --}} 
+                      <div class="m-2 p-2">
+                            {{-- card 1 --}} 
+                            <div class="card" style="border-radius: 20px;">
+                                <div class="card-body">
+                                  <div class="d-flex">
+                                    <div class="col-3">
+                                      {{-- weather condition --}}
+                                      <!-- Sunny -->
+                                      <figure> 
+                                        <svg class="districtsicon" viewbox="0 0 100 100">
+                                            <use xlink:href="#sun" />
+                                        </svg>
+                                    </figure>
+                                    </div>
+                                    <div class="col-4 align-self-start">
+                                      {{-- location --}}
+                                      <h4 class="card-title text-left">Accra  <i class='bi bi-cursor fs-6'></i></h4>
+                                      <p class="card-text text-left">10:20 AM</p>
+                                    </div>
+                                    <div class="col  ">
+                                      {{-- temperature --}}
+                                      <h3 class="fw-bold" style="font-size: 30px; text-align: right">
+                                        31°C
+                                    </h3>
+                                       </div>
+                                  </div>
+                                  
+                                </div>
+                              </div>  {{--end of card 1--}}
+ {{-- card 2 --}} 
+ <div class="card my-2" style="border-radius: 20px;">
+  <div class="card-body">
+    <div class="d-flex">
+      <div class="col-3">
+        {{-- weather condition --}}
+        {{-- rainy --}}
+        <figure>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+            <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+            <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          </svg>
+        </figure>
+      </div>
+      <div class="col-4 align-self-start">
+        {{-- location --}}
+        <h4 class="card-title text-left">Kumasi  <i class='bi bi-cursor fs-6'></i></h4>
+        <p class="card-text text-left">10:20 AM</p>
+      </div>
+      <div class="col  ">
+        {{-- temperature --}}
+        <h3 class="fw-bold" style="font-size: 30px; text-align: right">
+          19°C
+      </h3>
+         </div>
+    </div>
+    
+  </div>
+</div>  {{--end of card 2--}}
+ {{-- card 3 --}} 
+                            <div class="card my-2" style="border-radius: 20px;">
+                                <div class="card-body">
+                                  <div class="d-flex">
+                                    <div class="col-3">
+                                      {{-- weather condition --}}
+                                      <figure>
+                                        <svg class="districtsicon wind" viewBox="0 0 100 100"
+                                            id="wind">
+                                            <path id="wind1" d="M 8,37 L 35,37" />
+                                            <path id="wind2"
+                                                d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
+                                            <path id="wind3"
+                                                d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
+                                            <path id="wind4"
+                                                d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
+                                            <path id="wind5" d="M 5,75 L 48,75" />
+                                        </svg> 
+                                    </figure>
+                                    </div>
+                                    <div class="col-4 align-self-start">
+                                      {{-- location --}}
+                                      <h4 class="card-title text-left">Takoradi  <i class='bi bi-cursor fs-6'></i></h4>
+                                      <p class="card-text text-left">10:20 AM</p>
+                                    </div>
+                                    <div class="col  ">
+                                      {{-- temperature --}}
+                                      <h3 class="fw-bold" style="font-size: 30px; text-align: right">
+                                        24°C
+                                    </h3>
+                                       </div>
+                                  </div>
+                                  
+                                </div>
+                              </div>  {{--end of card 3--}}
+                               {{-- card 4 --}} 
+                            <div class="card my-2" style="border-radius: 20px;">
+                                <div class="card-body">
+                                  <div class="d-flex">
+                                    <div class="col-3">
+                                      {{-- weather condition --}}
+                                      <figure>
+                                        <svg class="districtsicon" viewbox="0 0 100 100">
+                                          <use xlink:href="#moon" x="-20" y="-15"/>
+                                          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                          <use id="drop3" xlink:href="#rainDrop" x="45" y="65"/>
+                                          <use xlink:href="#whiteCloud" x="7" />
+                                        </svg>
+                                        <figcaption class="figure-caption">Showers-Night</figcaption>
+                                      </figure>
+                                    </div>
+                                    <div class="col-4 align-self-start">
+                                      {{-- location --}}
+                                      <h4 class="card-title text-left">Bole  <i class='bi bi-cursor fs-6'></i></h4>
+                                      <p class="card-text text-left">10:20 AM</p>
+                                    </div>
+                                    <div class="col  ">
+                                      {{-- temperature --}}
+                                      <h3 class="fw-bold" style="font-size: 30px; text-align: right">
+                                        33°C
+                                    </h3>
+                                       </div>
+                                  </div>
+                                  
+                                </div>
+                              </div>  {{--end of card 4--}}
+                            </div>  {{-- end of districts list --}} 
+
+                        
+                      </div>  {{--end of  districts list container--}} 
+                      {{-- side district--}}
+                      <div class="col-xsm-6 col-sm-6 col-md-6 col-lg-4 col-xlg-4">
+                        <div class="card">
+                          
+                          <div class="card-body">
+                            <div class="d-flex">
+<div class="col-6 align-self-start">
+                                      {{-- location --}}
+                                      <h4 class="card-title text-left fw-bold">Accra  </h4>
+                                      <p class="card-text text-left">chance of rain: 20%</p>
+                                      {{-- temperature --}}
+                                      <h3 class="fw-bold" style="font-size: 30px; text-align: left">
+                                        31°C
+                                    </h3>
+                                    </div>
+<div class="col-6">
+   <!-- Sunny -->
+   <figure> 
+    <svg class="districtsiconSide" viewbox="0 0 100 100">
+        <use xlink:href="#sun" />
+    </svg>
+</figure>
+</div>
+                            </div>
+                             </div>
+<hr>
+{{-- 24hr forecast for district page  --}}
+<h5 class="fw-bold p-2"> Today's Forecast</h5>
+<div class="d-flex justify-content-center bd-highlight mb-2">
+  {{-- morning --}}
+  <div class="col  px-2">
+      <p class="card-text"><small class="text-muted"> Morning(6:00 -
+              11:59am)
+          </small></p>
+      <figure>
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+              <use xlink:href="#grayCloud" class="small-cloud"
+                  fill="url(#gradGray)" />
+              <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
+      </figure>
+      <h5 class="fw-bold text-center">
+          24°C
+      </h5>
+      <figure>
+          <svg class="hrs24iconwind wind" viewBox="0 0 100 100"
+              id="wind">
+              <path id="wind1" d="M 8,37 L 35,37" />
+              <path id="wind2"
+                  d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
+              <path id="wind3"
+                  d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
+              <path id="wind4"
+                  d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
+              <path id="wind5" d="M 5,75 L 48,75" />
+          </svg>
+          <figcaption><small class="text-muted fw-bold">Wind(NW-10m/s)</small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right-circle-fill bouncingNW-arrow" viewBox="0 0 16 16">
+            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm5.904-2.803a.5.5 0 1 0-.707.707L9.293 10H6.525a.5.5 0 0 0 0 1H10.5a.5.5 0 0 0 .5-.5V6.525a.5.5 0 0 0-1 0v2.768L5.904 5.197z"/>
+          </svg></figcaption>
+      </figure>
+  </div>
+  <div class="vr"></div>
+  <div class="col  px-2">
+    {{-- afternoon --}}
+    <p class="card-text"><small class="text-muted">Afternoon(12:00 -
+      5:59pm)
+  </small></p>
+  <figure>
+    <svg class="hrs24icon" viewbox="0 0 100 100">
+      <use xlink:href="#sun"/>
+    </svg>
+    <figcaption class="text-center fw-bold text-muted">Sunny</figcaption>
+  </figure>
+<h5 class="fw-bold text-center">
+  31°C
+</h5>
+<figure>
+  <svg class="hrs24iconwind wind" viewBox="0 0 100 100"
+      id="wind">
+      <path id="wind1" d="M 8,37 L 35,37" />
+      <path id="wind2"
+          d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
+      <path id="wind3"
+          d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
+      <path id="wind4"
+          d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
+      <path id="wind5" d="M 5,75 L 48,75" />
+  </svg>
+  <figcaption> 
+    <small class="text-muted fw-bold">Wind(SW-12m/s)</small> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-circle-fill  bouncingSW-arrow " viewBox="0 0 16 16">
+      <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8zm5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707l-4.096 4.096z"/>
+    </svg> </figcaption>
+</figure>
+  </div>
+  <div class="vr"></div>
+  <div class="col px-2">
+    <p class="card-text"><small class="text-muted"> Evening(6:00 -
+      11:59pm)
+  </small></p>
+<!-- Partly Cloudy Night -->
+<figure>
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-20" y="-15"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg>
+<figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+</figure>
+<h5 class="fw-bold text-center">
+  15°C
+</h5>
+<figure>
+  <svg class="hrs24iconwind wind" viewBox="0 0 100 100"
+      id="wind">
+      <path id="wind1" d="M 8,37 L 35,37" />
+      <path id="wind2"
+          d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
+      <path id="wind3"
+          d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
+      <path id="wind4"
+          d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
+      <path id="wind5" d="M 5,75 L 48,75" />
+  </svg>
+  <figcaption><small class="text-muted fw-bold">Wind(SE-08m/s)</small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-circle-fill bouncingSE-arrow" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-5.904 2.803a.5.5 0 1 0 .707-.707L6.707 6h2.768a.5.5 0 1 0 0-1H5.5a.5.5 0 0 0-.5.5v3.975a.5.5 0 0 0 1 0V6.707l4.096 4.096z"/>
+  </svg></figcaption>
+</figure>
+
+  </div>
+</div>
+<hr>
+{{-- 5-days forecast for district page  --}}
+<h5 class="fw-bold p-2"> 5-Days Forecast</h5>
+<ul class="list-group list-group-flush">
+  {{--  today--}}
+ 
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item"> 
+        {{--day--}}
+        <h5 class=" text-left">Now</h5></li>
+
+      <li class="list-group-item"> 
+         <!-- Sunny -->
+        <figure> 
+          <svg class="districtsicon" viewbox="0 0 100 100">
+              <use xlink:href="#sun" />
+          </svg>
+          <figcaption class="text-center fw-bold">Sunny</figcaption>
+      </figure></li>
+      <li class="list-group-item"> {{-- temperature --}}
+        <h5 class="fw-bold" style="font-size: 20px; ">
+          27°C / 31°C
+      </h5></li>
+    </ul>
+{{-- endo of today --}}
+
+    {{--  tues--}}
+   
+      <ul class="list-group list-group-horizontal">
+        <li class="list-group-item"> 
+          {{--day--}}
+          <h5 class=" text-left">Tue</h5></li>
+  
+        <li class="list-group-item"> 
+           <!-- Sunny -->
+          <figure> 
+            <svg class="districtsicon" viewbox="0 0 100 100">
+                <use xlink:href="#sun" />
+            </svg>
+            <figcaption class="text-center fw-bold">Sunny</figcaption>
+        </figure></li>
+        <li class="list-group-item"> {{-- temperature --}}
+          <h5 class="fw-bold" style="font-size: 20px; ">
+            27°C / 31°C
+        </h5></li>
+      </ul>
+  {{-- endo of tues --}}
+  
+   {{--  wed--}}
+  
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item"> 
+        {{--day--}}
+        <h5 class=" text-left">Wed</h5></li>
+
+      <li class="list-group-item"> 
+         <!-- Sunny -->
+        <figure> 
+          <svg class="districtsicon" viewbox="0 0 100 100">
+              <use xlink:href="#sun" />
+          </svg>
+          <figcaption class="text-center fw-bold">Sunny</figcaption>
+      </figure></li>
+      <li class="list-group-item"> {{-- temperature --}}
+        <h5 class="fw-bold" >
+          27°C / 31°C
+      </h5></li>
+    </ul>
+{{-- endo of wed --}}
+ 
+
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item"> 
+        {{--day--}}
+        <h5 class=" text-left">Thu</h5></li>
+
+      <li class="list-group-item"> 
+         <!-- Sunny -->
+        <figure> 
+          <svg class="districtsicon" viewbox="0 0 100 100">
+              <use xlink:href="#sun" />
+          </svg>
+          <figcaption class="text-center fw-bold">Sunny</figcaption>
+      </figure></li>
+      <li class="list-group-item"> {{-- temperature --}}
+        <h5 class="fw-bold">
+          27°C / 31°C
+      </h5></li>
+    </ul>
+{{-- endo of thursday --}}
+ 
+
+  {{--  fri--}}
+  
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item"> 
+        {{--day--}}
+        <h5 class=" text-left">Fri</h5></li>
+
+      <li class="list-group-item"> 
+         <!-- Sunny -->
+        <figure> 
+          <svg class="districtsicon" viewbox="0 0 100 100">
+              <use xlink:href="#sun" />
+          </svg>
+          <figcaption class="text-center fw-bold">Sunny</figcaption>
+      </figure></li>
+      <li class="list-group-item"> {{-- temperature --}}
+        <h5 class="fw-bold" >
+          27°C / 31°C
+      </h5></li>
+    </ul>
+{{-- endo of fri --}}
+
+
+</ul>
+
+
+ 
+                        </div>
+                        <div>
+                    </div>
+                  </div>
+                   </div>
+                </div>
+                 <div class="content seasonal-content">seasonal-content goes here
+                  
+                 </div>
+                 <div class="content marine-content">marine content goes here</div>
+                 
                 <div class="content feedback-content">feedback content goes here</div>
                 
             </div>
 
         </div>
     </section>
-   
+     <script>
+      
+     </script>
 </body>
 
 </html>
