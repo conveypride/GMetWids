@@ -1,0 +1,97 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Events\orderacceptedByRider; 
+use App\Models\communityOrder; 
+use App\Models\rirdersAssigned;
+use Carbon\Carbon;
+use Illuminate\Http\Request; 
+
+class rideracceptOrderController extends Controller
+{
+    //
+
+
+    public function rideraccept(Request $request){
+        $orderId=  $request['orderId'];
+         $ongoing= "ongoing";
+         $canceled = "canceled";
+         $price = $request['price'];
+// check if the order has  already  been accepted
+         $hasItBeenaccepted =   rirdersAssigned::where('order_id',$orderId)->where('orderStatus',$ongoing)->select('order_id','orderStatus')->get();
+        //  check if order has been canceled
+        $hasItBeencanceled =  communityOrder::where('orderId',$orderId)->where('orderStatus',$canceled)->select('orderId','orderStatus')->get();
+
+
+// if not 
+         if ($hasItBeenaccepted->isEmpty()  ||  $hasItBeencanceled ->isEmpty()) {
+          
+      // update it in the database
+      rirdersAssigned::select('orderStatus','order_id')->where('order_id', $orderId)->update([
+        'orderStatus'=>  $ongoing
+    ]);  
+    $accepted= "accepted";
+       //update the orderStatus for the order in the community_orders 
+    communityOrder::select('orderId','orderStatus','customerSetdeliveryFee')->where('orderId',$orderId)->update([
+        'orderStatus'=> $accepted,
+        'customerSetdeliveryFee'=> $price 
+   ]);
+
+// get the person plcing the order id & orderid
+$communityOrderInfo = communityOrder::select('orderId','userId')->where('orderId',$orderId)->first();
+
+
+$orderin= [
+    'orderId' => $communityOrderInfo['orderId'],
+    'userId' =>(int)  $communityOrderInfo['userId']
+    
+];
+//  broadcast it to the event  orderacceptedByRider  to update the front end of the user tht the rider hs xccepted order
+broadcast(new orderacceptedByRider($orderin));
+
+
+$accepted = "accepted";
+$communityOrders = communityOrder::where("orderId",$orderId)->where("orderStatus",$accepted)->first();
+        return response()->json([
+'Status' => 200,
+'orderId' =>$communityOrders['orderId'] ,
+'userId' =>$communityOrders['userId'] ,
+'pikupLocation' =>$communityOrders['pikupLocation'] ,
+'pickupLocationLongitudes' =>$communityOrders['pickupLocationLongitudes'] ,
+'pickupLocationLatitudes' =>$communityOrders['pickupLocationLatitudes'] ,
+'userCurrentLocations' =>$communityOrders['userCurrentLocations'] ,
+'deliveryLocationLongitudes' =>$communityOrders['deliveryLocationLongitudes'] ,
+'deliveryLocationLatitudes' =>$communityOrders['deliveryLocationLatitudes'] ,
+'userOrderdetails' =>$communityOrders['userOrderdetails'] ,
+'orderedat' =>Carbon::createFromTimeStamp(strtotime($communityOrders['exTime']))->diffForHumans() ,
+'nameOfHostel' =>$communityOrders['nameOfHostel'] ,     
+'customerSetdeliveryFee' =>$communityOrders['customerSetdeliveryFee'] , 
+'roomNums' =>$communityOrders['roomNums'] , 
+'customerNames' =>$communityOrders['customerNames'] , 
+'floorNums' =>$communityOrders['floorNums'] , 
+'phoneNums' =>$communityOrders['phoneNums'] , 
+'whatsappNums' =>$communityOrders['whatsappNums'] , 
+'riderNote2' =>$communityOrders['riderNote2'] , 
+'paymentMethods' =>$communityOrders['paymentMethods'] , 
+'orderStatus' =>$communityOrders['orderStatus'] , 
+'orderNotAvailable' =>$communityOrders['orderNotAvailable'], 
+'price' => $price
+            ]);
+
+} else {
+          return response()->json([
+              'Status' => 400,
+              'sorry' => 'Sorry this order has alredy been accepted by someone else/customer has canceled the order...refresh the page for new orders',
+             
+          ]);
+         }
+         
+        }
+
+
+
+
+
+
+}

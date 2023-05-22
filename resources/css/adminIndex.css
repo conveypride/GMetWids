@@ -286,6 +286,11 @@
     0% { transform: translateY(1rem); }
     100% { transform: translateY(2.6rem); }
 }
+/* input validation */
+.required-error {
+  border: 2px solid red;
+  box-shadow: 0px 0px 8px red;
+}
 	/*end of first page  add daily forecast big cloud raining animation */
 
     /* cafo add districts page */
@@ -293,3 +298,4 @@
 
 
     /* end of  cafo add districts page */
+    

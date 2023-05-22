@@ -14,46 +14,60 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/', [App\Http\Controllers\Userhome::class,'index'])->name('welcome');
+Route::get('/{city}', [App\Http\Controllers\Userhome::class,'seeDetailsOfCity'])->name('welcomeSelectCity');
+
+Route::get('/verify', function () {
+    return view('auth.verify');
 });
 
 Route::get('/test', function () {
     return view('layouts.test');
 });
 
-Route::get('/dailyforecast', function () {
-    return view('admin.dailyForecast');
-})->name('df');
 
-Route::get('/addNewDailyForecast', function () {
-    return view('admin.addNewDailyForecast');
-})->name('addNewDf');
+// admin
+Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
+    Route::get('/dailyforecast', [App\Http\Controllers\dailyForecast::class,'index'])->name('df');
+    
+    Route::get('/addFiveDayForecast', function () {
+        return view('admin.addFiveDayForecast');
+    })->name('addNewFD');
+    
+    Route::get('/fiveDayForecast', function () {
+        return view('admin.fivedayForecast');
+    })->name('fiveDayForecast');
+    
+    Route::get('/docs', function () {
+        return view('admin.docs');
+    })->name('docs');
+    
+    // cafodistrict
+    Route::get('/cafoDistricts', [App\Http\Controllers\CafodistrictsController::class,'index'])->name('cafoDistricts');
+    Route::post('/cafoDistrictspost', [App\Http\Controllers\CafodistrictsController::class,'create']);
+    Route::post('/cafoDistrictsdelete', [App\Http\Controllers\CafodistrictsController::class,'delete']);
+    
+    // addDailyForecast
+    Route::get('/addNewDailyForecast', [App\Http\Controllers\AddDailyForecast::class,'index'])->name('addNewDf');
+    Route::post('/addNewDailyForecastpost', [App\Http\Controllers\AddDailyForecast::class,'create']);
+    Route::post('/addNewDailyForecastedit', [App\Http\Controllers\AddDailyForecast::class,'edit']);
+    Route::post('/addNewDailyForecastdelete', [App\Http\Controllers\AddDailyForecast::class,'delete']);
+    
 
-Route::get('/addFiveDayForecast', function () {
-    return view('admin.addFiveDayForecast');
-})->name('addNewFD');
 
-Route::get('/fiveDayForecast', function () {
-    return view('admin.fivedayForecast');
-})->name('fiveDayForecast');
 
-Route::get('/docs', function () {
-    return view('admin.docs');
-})->name('docs');
+    Route::get('/history', function () {
+        return view('admin.history');
+    })->name('history');
+    
+    Route::get('/settings', function () {
+        return view('admin.settings');
+    })->name('settings');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
 
-Route::get('/cafoDistricts', function () {
-    return view('admin.cafoDistricts');
-})->name('cafoDistricts');
-
-Route::get('/history', function () {
-    return view('admin.history');
-})->name('history');
-
-Route::get('/settings', function () {
-    return view('admin.settings');
-})->name('settings');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

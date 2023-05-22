@@ -9,7 +9,7 @@ const sidePanelToggler = document.getElementById('sidepanel-toggler');
 const sidePanel = document.getElementById('app-sidepanel');  
 const sidePanelDrop = document.getElementById('sidepanel-drop'); 
 const sidePanelClose = document.getElementById('sidepanel-close'); 
-
+const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 window.addEventListener('load', function(){
 	responsiveSidePanel(); 
 });
@@ -83,7 +83,22 @@ searchMobileTrigger.addEventListener('click', () => {
 	
 });
 
+
+
+
+
+function generateRandomId(length = 8) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+  
+    return result;
+  }
+  
+
 
 // ===============morning MAP FOR ADDDAILYFORECAST PAGE=========================
 
@@ -97,7 +112,7 @@ var map = new mapboxgl.Map({
 
 var drawFeatureID = '';
 var newDrawFeature = false;
-
+var polygonsMorning = [];
 // add draw
 var draw = new MapboxDraw({
   displayControlsDefault: false,
@@ -417,51 +432,143 @@ function changeColor(color) {
       } else if (color === 'green') {
           draw.setFeatureProperty(drawFeatureID, 'portColor', '#008000');
       }
-
+ 
       var feat = draw.get(drawFeatureID);
+    //   console.log(feat);
       draw.add(feat)
+// on change of  color, update the polygonsMorning  array
+var drawId = feat.id;
+if (polygonsMorning.length === 0) {
+    polygonsMorning.push({
+        'id': drawId,
+        'cordinates': feat['geometry']['coordinates'],
+        'color' : feat.properties.portColor,
+    });
+  } else {
+    var index = polygonsMorning.findIndex(function(item) {
+            return item.id === drawId;
+        });
+        if (index !== -1) {
+                polygonsMorning.splice(index, 1);
+                polygonsMorning.push({
+                    'id': drawId,
+                    'cordinates': feat['geometry']['coordinates'],
+                    'color' : feat.properties.portColor,
+                });
+            }else{
+                polygonsMorning.push({
+                    'id': drawId,
+                    'cordinates': feat['geometry']['coordinates'],
+                    'color' : feat.properties.portColor,
+                });
+                console.log(`id doesn't exist: ${drawId}`)
+            } 
+        }
+  console.log(polygonsMorning);
   }
+  console.log(polygonsMorning);
 }
 
-// callback for draw.update and draw.selectionchange
-var setDrawFeature = function(e) {
-  if (e.features.length && e.features[0].type === 'Feature') {
-      var feat = e.features[0];
-      drawFeatureID = feat.id;
-      console.log(feat['geometry']['coordinates']);
-  }
-}
+ 
+var setDrawFeature= function(e) {
+    if (e.features.length) {
+        var feat = e.features[0];
+        drawFeatureID = feat.id;
+        if (polygonsMorning.length === 0) {
+            polygonsMorning.push({
+                'id': drawFeatureID,
+                'cordinates': feat['geometry']['coordinates'],
+                'color' : feat.properties.portColor,
+            });
+          } else {
+            var index = polygonsMorning.findIndex(function(item) {
+                    return item.id === drawFeatureID;
+                });
+                if (index !== -1) {
+                        polygonsMorning.splice(index, 1);
+                        polygonsMorning.push({
+                            'id': drawFeatureID,
+                            'cordinates': feat['geometry']['coordinates'],
+                            'color' : feat.properties.portColor,
+                        });
+                    }else{
+                        polygonsMorning.push({
+                            'id': drawFeatureID,
+                            'cordinates': feat['geometry']['coordinates'],
+                            'color' : feat.properties.portColor,
+                        });
+                        console.log(`id doesn't exist: ${drawFeatureID}`)
+                    } 
+                }
 
+  console.log(polygonsMorning);
+    }
+  }
 /* Event Handlers for Draw Tools */
 
 map.on('draw.create', function() {
   newDrawFeature = true;
+  setDrawFeature;
 });
 
 map.on('draw.update', setDrawFeature);
 
 map.on('draw.selectionchange', setDrawFeature);
 
+map.on('draw.delete', function(event) {
+    
+    // use the deletedPolygonId to do something
+    if (event.features.length) {
+        var deletedPolygonId = event.features[0].id;
+    //     var feat = event.features[0];
+    //  var   draID = feat.id;
+        if (polygonsMorning.length != 0) {
+            
+            var index = polygonsMorning.findIndex(function(item) {
+                    return item.id === deletedPolygonId;
+                });
+                if (index !== -1) {
+                        polygonsMorning.splice(index, 1);
+                        // polygonsMorning.push({
+                        //     'id': draID,
+                        //     'cordinates': feat['geometry']['coordinates'],
+                        //     'color' : feat.properties.portColor,
+                        // });
+                         console.log(`id DELETED: ${deletedPolygonId}`)
+                    }else{
+                        
+                        console.log(`id doesn't exist: ${deletedPolygonId}`)
+                    } 
+                }
+
+  console.log(polygonsMorning);
+    }
+   
+  });
+
+
+
+
 map.on('click', function(e) {
   if (!newDrawFeature) {
       var drawFeatureAtPoint = draw.getFeatureIdsAt(e.point);
-
       //if another drawFeature is not found - reset drawFeatureID
       drawFeatureID = drawFeatureAtPoint.length ? drawFeatureAtPoint[0] : '';
   }
 
-  newDrawFeature = false;
+ newDrawFeature = false;
 
 });
  
  // Define an array to store all markers
 var markers = [];
-
-// Variable to store the selected marker
 var selectedMarker = null;
+//generate random id
+
 
 // Define a function to create a new draggable marker and add it to the map
 function addMarker(customValue) {
+    const iddf = generateRandomId();
     if(customValue == "addRain"){
           // Define the marker's icon using an SVG element
 var svgMarker = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -472,6 +579,9 @@ var iconSize = 100;
 var scaleFactor = 0.5;
 svgMarker.setAttribute('width', iconSize * scaleFactor);
 svgMarker.setAttribute('height', iconSize * scaleFactor);
+// set the aria-label attribute
+svgMarker.setAttribute("aria-label", "Rain");
+svgMarker.setAttribute("id", iddf);
     
     }else if(customValue == "addWind"){
  // Define the marker's icon using an SVG element
@@ -484,19 +594,25 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+// set the aria-label attribute
+svgMarker.setAttribute("aria-label", "Wind");
+svgMarker.setAttribute("id", iddf);
 
     }
     else if(customValue == "addDust"){
          // Define the marker's icon using an SVG element
  var svgMarker = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
- svgMarker.setAttribute('viewBox', '0 0 24 24');
- svgMarker.innerHTML = '<path d="M8.5 3a5.001 5.001 0 0 1 4.905 4.027A3 3 0 0 1 13 13h-1.5a.5.5 0 0 0 0-1H1.05a3.51 3.51 0 0 1-.713-1H9.5a.5.5 0 0 0 0-1H.035a3.53 3.53 0 0 1 0-1H7.5a.5.5 0 0 0 0-1H.337a3.5 3.5 0 0 1 3.57-1.977A5.001 5.001 0 0 1 8.5 3z"/>';
+ svgMarker.setAttribute('viewBox', '0 0 512 512');
+ svgMarker.innerHTML = '<path d="m264.2 21.3a39.9 39.9 0 0 1 68.8 27.7c0 22-18 40-40 40h-284m139.2 123.7a39.9 39.9 0 0 0 68.8-27.7c0-22-18-40-40-40h-168" fill="none" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="18"/><circle cx="96" cy="196" r="12"/><circle cx="180" cy="196" r="12"/><circle cx="264" cy="196" r="12"/><circle cx="222" cy="256" r="12"/><circle cx="306" cy="256" r="12"/><circle cx="390" cy="256" r="12"/><circle cx="172" cy="316" r="12"/><circle cx="256" cy="316" r="12"/><circle cx="340" cy="316" r="12"/><use height="234" transform="translate(86 139)" width="342" xlink:href="#a"/>';
  
  // Scale the SVG icon down
  var iconSize = 100;
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "Dust");
+svgMarker.setAttribute("id", iddf);
     }
     else if(customValue == "addHail"){ 
          // Define the marker's icon using an SVG element
@@ -509,6 +625,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "Hail");
+svgMarker.setAttribute("id", iddf);
 }
     else if(customValue == "addA"){
   // Define the marker's icon using an SVG element
@@ -521,6 +640,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "A");
+svgMarker.setAttribute("id", iddf);
         
     }
     else if(customValue == "addB"){
@@ -534,6 +656,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "B");
+svgMarker.setAttribute("id", iddf);
      
     }
     else if(customValue == "addC"){  
@@ -547,6 +672,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "C");
+svgMarker.setAttribute("id", iddf);
     }
     else if(customValue == "addD"){  
     // Define the marker's icon using an SVG element
@@ -559,6 +687,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "D");
+svgMarker.setAttribute("id", iddf);
 }
     else if(customValue == "addE"){  
             // Define the marker's icon using an SVG element
@@ -571,6 +702,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "E");
+svgMarker.setAttribute("id", iddf);
 }
     else if(customValue == "addF"){
         // Define the marker's icon using an SVG element
@@ -583,6 +717,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor); 
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "F");
+svgMarker.setAttribute("id", iddf);
     }
     else if(customValue == "addG"){
          // Define the marker's icon using an SVG element
@@ -595,6 +732,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor); 
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "G");
+svgMarker.setAttribute("id", iddf);
 }
     else if(customValue == "addH"){
          // Define the marker's icon using an SVG element
@@ -607,6 +747,9 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "H");
+svgMarker.setAttribute("id", iddf);
  }
     else if(customValue == "addI"){
   // Define the marker's icon using an SVG element
@@ -619,26 +762,37 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarker.setAttribute('width', iconSize * scaleFactor);
  svgMarker.setAttribute('height', iconSize * scaleFactor);
- 
+ // set the aria-label attribute
+svgMarker.setAttribute("aria-label", "I");
+svgMarker.setAttribute("id", iddf);
         
     }
     
 
-
   // Create a new marker with the customized icon
   var marker = new mapboxgl.Marker({
     element: svgMarker,
-    draggable: true,
+    draggable: true 
   });
-
+ 
+ // Set the marker's initial position and add it to the map
+  marker.setLngLat([-1.6244,6.6918]).addTo(map);
   // Add a dragend event listener to the marker
   marker.on('dragend', function() {
-    var lngLat = marker.getLngLat();
-    console.log('Marker was dragged to:', lngLat);
+// on drag remove the maker and insert the new marker
+    var index = markers.findIndex(function(item) {
+        return item.id === marker.getElement().id;
+    });
+  if (index !== -1) {
+    markers.splice(index, 1);
+ // Add the new marker to the markers array
+ markers.push({'id': marker.getElement().id, 'icontype': marker.getElement().getAttribute("aria-label"), 'lnglat' : marker.getLngLat()});
+    }
+
+  console.log(markers);
   });
 
-  // Set the marker's initial position and add it to the map
-  marker.setLngLat([-1.6244,6.6918]).addTo(map);
+ 
 
   // Add a click event listener to each marker
   marker.getElement().addEventListener('click', function () {
@@ -647,21 +801,25 @@ svgMarker.setAttribute('height', iconSize * scaleFactor);
   });
 
   // Add the new marker to the markers array
-  markers.push(marker);
+  markers.push({'id':marker.getElement().id, 'icontype': marker.getElement().getAttribute("aria-label"), 'lnglat' : marker.getLngLat()});
 }
 
   
  
 // Define a function to remove a marker on click
-function removeMarker(marker) {
-    marker.remove();
-  // Remove the selected marker from the markers array
-  const index = markers.indexOf(marker);
+function removeMarker(selectmarker) {
+    var index = markers.findIndex(function(item) {
+        return item.id === selectmarker.getElement().id;
+    });
+    
+selectmarker.remove();
   if (index !== -1) {
     markers.splice(index, 1);
-  }
+    }
+    console.log(index);
+    console.log(markers);
 
-  }
+ }
   
  
 // Define a function to update the position of a marker
@@ -681,12 +839,10 @@ function updateMarkerPosition(marker, lngLat) {
 
   // Add an event listener to the button to create a new marker
 document.getElementById('button1').addEventListener('click', function() {
-    
 // Retrieve the value of the custom attribute
 const customValue = this.getAttribute('typeofIcon');
-// console.log(customValue); 
+
     addMarker(customValue);
-    console.log(markers);
 
   });
   
@@ -705,6 +861,7 @@ svgIcons.forEach(function(svgIcon) {
 });
 
 
+ 
  
  // Add an event listener to the button to remove the selected marker
  document.getElementById('button2').addEventListener('click', function() {
@@ -731,7 +888,7 @@ var mapaf = new mapboxgl.Map({
 
 var drawFeatureIDaf = '';
 var newDrawFeatureaf = false;
-
+var polygonAfternoon = [];
 // add draw
 var drawaf = new MapboxDraw({
   displayControlsDefault: false,
@@ -1053,17 +1210,84 @@ function changeColoraf(color) {
 
       var feataf = drawaf.get(drawFeatureIDaf);
       drawaf.add(feataf)
+
+// on change of  color, update the polygonAfternoon  array
+var drawId = feataf.id;
+if (polygonAfternoon.length === 0) {
+    polygonAfternoon.push({
+        'id': drawId,
+        'cordinates': feataf['geometry']['coordinates'],
+        'color' : feataf.properties.portColor,
+    });
+  } else {
+    var index = polygonAfternoon.findIndex(function(item) {
+            return item.id === drawId;
+        });
+        if (index !== -1) {
+                polygonAfternoon.splice(index, 1);
+                polygonAfternoon.push({
+                    'id': drawId,
+                    'cordinates': feataf['geometry']['coordinates'],
+                    'color' : feataf.properties.portColor,
+                });
+            }else{
+                polygonAfternoon.push({
+                    'id': drawId,
+                    'cordinates': feataf['geometry']['coordinates'],
+                    'color' : feataf.properties.portColor,
+                });
+                console.log(`afternoon id doesn't exist: ${drawId}`)
+            } 
+        }
+
+        console.log(polygonAfternoon);
+
   }
 }
 
 // callback for draw.update and draw.selectionchange
 var setDrawFeatureaf = function(e) {
-  if (e.features.length && e.features[0].type === 'Feature') {
-      var feataf = e.features[0];
-      drawFeatureIDaf = feataf.id;
-      console.log(`afternoon:==  ${feataf['geometry']['coordinates']}` );
+    if (e.features.length) {
+        var feataf = e.features[0];
+        drawFeatureIDaf = feataf.id;
+        if (polygonAfternoon.length === 0) {
+            polygonAfternoon.push({
+                'id': drawFeatureIDaf,
+                'cordinates': feataf['geometry']['coordinates'],
+                'color' : feataf.properties.portColor,
+            });
+          } else {
+            var index = polygonAfternoon.findIndex(function(item) {
+                    return item.id === drawFeatureIDaf;
+                });
+                if (index !== -1) {
+                    polygonAfternoon.splice(index, 1);
+                    polygonAfternoon.push({
+                            'id': drawFeatureIDaf,
+                            'cordinates': feataf['geometry']['coordinates'],
+                            'color' : feataf.properties.portColor,
+                        });
+                    }else{
+                        polygonAfternoon.push({
+                            'id': drawFeatureIDaf,
+                            'cordinates': feataf['geometry']['coordinates'],
+                            'color' : feataf.properties.portColor,
+                        });
+                        console.log(`afternoon id doesn't exist: ${drawFeatureIDaf}`)
+                    } 
+                }
+
+  console.log(polygonAfternoon);
+    }
   }
-}
+
+// function(e) {
+//   if (e.features.length && e.features[0].type === 'Feature') {
+//       var feataf = e.features[0];
+//       drawFeatureIDaf = feataf.id;
+//       console.log(`afternoon:==  ${feataf['geometry']['coordinates']}` );
+//   }
+// }
 
 /* Event Handlers for Draw Tools */
 
@@ -1074,6 +1298,34 @@ mapaf.on('draw.create', function() {
 mapaf.on('draw.update', setDrawFeatureaf);
 
 mapaf.on('draw.selectionchange', setDrawFeatureaf);
+
+mapaf.on('draw.delete', function(event) {
+    // use the deletedPolygonId to do something
+    if (event.features.length) {
+        var deletedPolygonId = event.features[0].id;
+    //     var feat = event.features[0];
+    //  var   draID = feat.id;
+        if (polygonAfternoon.length != 0) {
+            
+            var index = polygonAfternoon.findIndex(function(item) {
+                    return item.id === deletedPolygonId;
+                });
+                if (index !== -1) {
+                        polygonAfternoon.splice(index, 1);
+                        // polygonsMorning.push({
+                        //     'id': draID,
+                        //     'cordinates': feat['geometry']['coordinates'],
+                        //     'color' : feat.properties.portColor,
+                        // });
+                         console.log(`afternoon id DELETED: ${deletedPolygonId}`)
+                    }else{
+                        
+                        console.log(`afternoon id doesn't exist: ${deletedPolygonId}`)
+                    } 
+                }
+  console.log(polygonAfternoon);
+    }
+  });
 
 mapaf.on('click', function(e) {
   if (!newDrawFeatureaf) {
@@ -1094,6 +1346,8 @@ var selectedMarkeraf = null;
 
 // Define a function to create a new draggable marker and add it to the map
 function addMarkeraf(customValue) {
+    const iddf = generateRandomId();
+
     if(customValue == "addRainaf"){
           // Define the marker's icon using an SVG element
 var svgMarkeraf = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -1104,6 +1358,9 @@ var iconSize = 100;
 var scaleFactor = 0.5;
 svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
 svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+// set the aria-label attribute
+svgMarkeraf.setAttribute("aria-label", "Rain");
+svgMarkeraf.setAttribute("id", iddf);
     
     }else if(customValue == "addWindaf"){
  // Define the marker's icon using an SVG element
@@ -1116,19 +1373,26 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+ svgMarkeraf.setAttribute("aria-label", "Wind");
+ svgMarkeraf.setAttribute("id", iddf);
 
     }
     else if(customValue == "addDustaf"){
          // Define the marker's icon using an SVG element
  var svgMarkeraf = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
- svgMarkeraf.setAttribute('viewBox', '0 0 24 24');
- svgMarkeraf.innerHTML = '<path d="M8.5 3a5.001 5.001 0 0 1 4.905 4.027A3 3 0 0 1 13 13h-1.5a.5.5 0 0 0 0-1H1.05a3.51 3.51 0 0 1-.713-1H9.5a.5.5 0 0 0 0-1H.035a3.53 3.53 0 0 1 0-1H7.5a.5.5 0 0 0 0-1H.337a3.5 3.5 0 0 1 3.57-1.977A5.001 5.001 0 0 1 8.5 3z"/>';
+ svgMarkeraf.setAttribute('viewBox', '0 0 512 512');
+ svgMarkeraf.innerHTML = '<path d="m264.2 21.3a39.9 39.9 0 0 1 68.8 27.7c0 22-18 40-40 40h-284m139.2 123.7a39.9 39.9 0 0 0 68.8-27.7c0-22-18-40-40-40h-168" fill="none" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="18"/><circle cx="96" cy="196" r="12"/><circle cx="180" cy="196" r="12"/><circle cx="264" cy="196" r="12"/><circle cx="222" cy="256" r="12"/><circle cx="306" cy="256" r="12"/><circle cx="390" cy="256" r="12"/><circle cx="172" cy="316" r="12"/><circle cx="256" cy="316" r="12"/><circle cx="340" cy="316" r="12"/><use height="234" transform="translate(86 139)" width="342" xlink:href="#a"/>';
+  
  
  // Scale the SVG icon down
  var iconSize = 100;
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+ svgMarkeraf.setAttribute("aria-label", "Dust");
+ svgMarkeraf.setAttribute("id", iddf);
     }
     else if(customValue == "addHailaf"){ 
          // Define the marker's icon using an SVG element
@@ -1141,6 +1405,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+ svgMarkeraf.setAttribute("aria-label", "Hail");
+ svgMarkeraf.setAttribute("id", iddf);
 }
     else if(customValue == "addAaf"){
   // Define the marker's icon using an SVG element
@@ -1153,6 +1420,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+ svgMarkeraf.setAttribute("aria-label", "A");
+ svgMarkeraf.setAttribute("id", iddf);
         
     }
     else if(customValue == "addBaf"){
@@ -1166,6 +1436,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+  svgMarkeraf.setAttribute("aria-label", "B");
+  svgMarkeraf.setAttribute("id", iddf);
      
     }
     else if(customValue == "addCaf"){  
@@ -1179,6 +1452,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+ svgMarkeraf.setAttribute("aria-label", "C");
+ svgMarkeraf.setAttribute("id", iddf);
     }
     else if(customValue == "addDaf"){  
     // Define the marker's icon using an SVG element
@@ -1191,6 +1467,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+  svgMarkeraf.setAttribute("aria-label", "D");
+  svgMarkeraf.setAttribute("id", iddf);
 }
     else if(customValue == "addEaf"){  
             // Define the marker's icon using an SVG element
@@ -1203,6 +1482,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+  svgMarkeraf.setAttribute("aria-label", "E");
+  svgMarkeraf.setAttribute("id", iddf);
 }
     else if(customValue == "addFaf"){
         // Define the marker's icon using an SVG element
@@ -1215,6 +1497,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor); 
+  // set the aria-label attribute
+  svgMarkeraf.setAttribute("aria-label", "F");
+  svgMarkeraf.setAttribute("id", iddf);
     }
     else if(customValue == "addGaf"){
          // Define the marker's icon using an SVG element
@@ -1227,6 +1512,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor); 
+  // set the aria-label attribute
+  svgMarkeraf.setAttribute("aria-label", "G");
+  svgMarkeraf.setAttribute("id", iddf);
 }
     else if(customValue == "addHaf"){
          // Define the marker's icon using an SVG element
@@ -1239,6 +1527,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+  svgMarkeraf.setAttribute("aria-label", "H");
+  svgMarkeraf.setAttribute("id", iddf);
  }
     else if(customValue == "addIaf"){
   // Define the marker's icon using an SVG element
@@ -1251,7 +1542,9 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkeraf.setAttribute('width', iconSize * scaleFactor);
  svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
- 
+  // set the aria-label attribute
+  svgMarkeraf.setAttribute("aria-label", "I");
+  svgMarkeraf.setAttribute("id", iddf);
         
     }
     
@@ -1265,8 +1558,17 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
 
   // Add a dragend event listener to the markeraf
   markeraf.on('dragend', function() {
-    var lngLat = markeraf.getLngLat();
-    console.log('afternoon Marker was dragged to:', lngLat);
+    // on drag remove the maker and insert the new marker
+    var index = markersaf.findIndex(function(item) {
+        return item.id === markeraf.getElement().id;
+    });
+  if (index !== -1) {
+    markersaf.splice(index, 1);
+ // Add the new marker to the markers array
+ markersaf.push({'id': markeraf.getElement().id, 'icontype': markeraf.getElement().getAttribute("aria-label"), 'lnglat' : markeraf.getLngLat()});
+    }
+
+  console.log(markersaf);
   });
 
   // Set the markeraf's initial position and add it to the map
@@ -1278,21 +1580,26 @@ svgMarkeraf.setAttribute('height', iconSize * scaleFactor);
     selectedMarkeraf = markeraf;
   });
 
-  // Add the new marker to the markersaf array
-  markersaf.push(markeraf);
+  // Add the new marker to the markers array
+ markersaf.push({'id': markeraf.getElement().id, 'icontype': markeraf.getElement().getAttribute("aria-label"), 'lnglat' : markeraf.getLngLat()});
 }
 
   
  
 // Define a function to remove a marker on click
 function removeMarkeraf(markeraf) {
+    
     markeraf.remove();
   // Remove the selected marker from the markersaf array
-  const index = markersaf.indexOf(markeraf);
+  var index = markersaf.findIndex(function(item) {
+    return item.id === markeraf.getElement().id;
+});
   if (index !== -1) {
     markersaf.splice(index, 1);
   }
 
+console.log(index);
+console.log(markersaf);
   }
   
  
@@ -1365,7 +1672,7 @@ var mapev = new mapboxgl.Map({
 
 var drawFeatureIDev = '';
 var newDrawFeatureev = false;
-
+var polygonsEvening = [];
 // add draw
 var drawev = new MapboxDraw({
   displayControlsDefault: false,
@@ -1655,6 +1962,7 @@ let orangeBtnev = document.querySelector("#orange-colorev");
 let redBtnev = document.querySelector("#red-colorev");
 let greenBtnev = document.querySelector("#green-colorev");
 
+
 yellowBtnev.addEventListener("click", ()=>{
   changeColorev('yellow')
 });
@@ -1686,18 +1994,85 @@ function changeColorev(color) {
       }
 
       var featev = drawev.get(drawFeatureIDev);
-      drawev.add(featev)
+      drawev.add(featev);
+
+// on change of  color, update the polygonsEvening  array
+var drawId = featev.id;
+if (polygonsEvening.length === 0) {
+    polygonsEvening.push({
+        'id': drawId,
+        'cordinates': featev['geometry']['coordinates'],
+        'color' : featev.properties.portColor,
+    });
+  } else {
+    var index = polygonsEvening.findIndex(function(item) {
+            return item.id === drawId;
+        });
+        if (index !== -1) {
+            polygonsEvening.splice(index, 1);
+            polygonsEvening.push({
+                    'id': drawId,
+                    'cordinates': featev['geometry']['coordinates'],
+                    'color' : featev.properties.portColor,
+                });
+            }else{
+                polygonsEvening.push({
+                    'id': drawId,
+                    'cordinates': featev['geometry']['coordinates'],
+                    'color' : featev.properties.portColor,
+                });
+                console.log(`evening id doesn't exist: ${drawId}`)
+            } 
+        }
+console.log(polygonsEvening);
+      
   }
 }
 
 // callback for draw.update and draw.selectionchange
 var setDrawFeatureev = function(e) {
-  if (e.features.length && e.features[0].type === 'Feature') {
-      var featev = e.features[0];
-      drawFeatureIDev = featev.id;
-      console.log(`evternoon:==  ${featev['geometry']['coordinates']}` );
+    if (e.features.length) {
+        var featev = e.features[0];
+        drawFeatureIDev = featev.id;
+        if (polygonsEvening.length === 0) {
+            polygonsEvening.push({
+                'id': drawFeatureIDev,
+                'cordinates': featev['geometry']['coordinates'],
+                'color' : featev.properties.portColor,
+            });
+          } else {
+            var index = polygonsEvening.findIndex(function(item) {
+                    return item.id === drawFeatureIDev;
+                });
+                if (index !== -1) {
+                    polygonsEvening.splice(index, 1);
+                    polygonsEvening.push({
+                            'id': drawFeatureIDev,
+                            'cordinates': featev['geometry']['coordinates'],
+                            'color' : featev.properties.portColor,
+                        });
+                    }else{
+                        polygonsEvening.push({
+                            'id': drawFeatureIDev,
+                            'cordinates': featev['geometry']['coordinates'],
+                            'color' : featev.properties.portColor,
+                        });
+                        console.log(`evening id doesn't exist: ${drawFeatureIDev}`)
+                    } 
+                }
+
+  console.log(polygonsEvening);
+    }
   }
-}
+
+
+// function(e) {
+//   if (e.features.length && e.features[0].type === 'Feature') {
+//       var featev = e.features[0];
+//       drawFeatureIDev = featev.id;
+//       console.log(`evening:==  ${featev['geometry']['coordinates']}` );
+//   }
+// }
 
 /* Event Handlers for Draw Tools */
 
@@ -1708,6 +2083,33 @@ mapev.on('draw.create', function() {
 mapev.on('draw.update', setDrawFeatureev);
 
 mapev.on('draw.selectionchange', setDrawFeatureev);
+
+
+mapev.on('draw.delete', function(event) {
+    // use the deletedPolygonId to do something
+    if (event.features.length) {
+        var deletedPolygonId = event.features[0].id;
+    //     var feat = event.features[0];
+    //  var   draID = feat.id;
+        if (polygonsEvening.length != 0) {
+            
+            var index = polygonsEvening.findIndex(function(item) {
+                    return item.id === deletedPolygonId;
+                });
+                if (index !== -1) {
+                        polygonsEvening.splice(index, 1);
+                         
+                         console.log(`evening id DELETED: ${deletedPolygonId}`)
+                    }else{
+                        
+                        console.log(`evening id doesn't exist: ${deletedPolygonId}`)
+                    } 
+                }
+
+  console.log(polygonsEvening);
+    }
+   
+  });
 
 mapev.on('click', function(e) {
   if (!newDrawFeatureev) {
@@ -1728,6 +2130,7 @@ var selectedMarkerev = null;
 
 // Define a function to create a new draggable marker and add it to the map
 function addMarkerev(customValue) {
+    const iddf = generateRandomId();
     if(customValue == "addRainev"){
           // Define the marker's icon using an SVG element
 var svgMarkerev = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -1738,6 +2141,9 @@ var iconSize = 100;
 var scaleFactor = 0.5;
 svgMarkerev.setAttribute('width', iconSize * scaleFactor);
 svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+ // set the aria-label attribute
+ svgMarkerev.setAttribute("aria-label", "Rain");
+ svgMarkerev.setAttribute("id", iddf);
     
     }else if(customValue == "addWindev"){
  // Define the marker's icon using an SVG element
@@ -1750,19 +2156,25 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+  svgMarkerev.setAttribute("aria-label", "Wind");
+  svgMarkerev.setAttribute("id", iddf);
 
     }
     else if(customValue == "addDustev"){
          // Define the marker's icon using an SVG element
  var svgMarkerev = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
- svgMarkerev.setAttribute('viewBox', '0 0 24 24');
- svgMarkerev.innerHTML = '<path d="M8.5 3a5.001 5.001 0 0 1 4.905 4.027A3 3 0 0 1 13 13h-1.5a.5.5 0 0 0 0-1H1.05a3.51 3.51 0 0 1-.713-1H9.5a.5.5 0 0 0 0-1H.035a3.53 3.53 0 0 1 0-1H7.5a.5.5 0 0 0 0-1H.337a3.5 3.5 0 0 1 3.57-1.977A5.001 5.001 0 0 1 8.5 3z"/>';
- 
+ svgMarkerev.setAttribute('viewBox', '0 0 512 512');
+ svgMarkerev.innerHTML = '<path d="m264.2 21.3a39.9 39.9 0 0 1 68.8 27.7c0 22-18 40-40 40h-284m139.2 123.7a39.9 39.9 0 0 0 68.8-27.7c0-22-18-40-40-40h-168" fill="none" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="18"/><circle cx="96" cy="196" r="12"/><circle cx="180" cy="196" r="12"/><circle cx="264" cy="196" r="12"/><circle cx="222" cy="256" r="12"/><circle cx="306" cy="256" r="12"/><circle cx="390" cy="256" r="12"/><circle cx="172" cy="316" r="12"/><circle cx="256" cy="316" r="12"/><circle cx="340" cy="316" r="12"/><use height="234" transform="translate(86 139)" width="342" xlink:href="#a"/>';
+  
  // Scale the SVG icon down
  var iconSize = 100;
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+  svgMarkerev.setAttribute("aria-label", "Dust");
+  svgMarkerev.setAttribute("id", iddf);
     }
     else if(customValue == "addHailev"){ 
          // Define the marker's icon using an SVG element
@@ -1775,6 +2187,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+  svgMarkerev.setAttribute("aria-label", "Hail");
+  svgMarkerev.setAttribute("id", iddf);
 }
     else if(customValue == "addAev"){
   // Define the marker's icon using an SVG element
@@ -1787,6 +2202,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+  // set the aria-label attribute
+  svgMarkerev.setAttribute("aria-label", "A");
+  svgMarkerev.setAttribute("id", iddf);
         
     }
     else if(customValue == "addBev"){
@@ -1800,6 +2218,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+   // set the aria-label attribute
+   svgMarkerev.setAttribute("aria-label", "B");
+   svgMarkerev.setAttribute("id", iddf);
      
     }
     else if(customValue == "addCev"){  
@@ -1813,6 +2234,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+   // set the aria-label attribute
+   svgMarkerev.setAttribute("aria-label", "C");
+   svgMarkerev.setAttribute("id", iddf);
     }
     else if(customValue == "addDev"){  
     // Define the marker's icon using an SVG element
@@ -1825,6 +2249,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+   // set the aria-label attribute
+   svgMarkerev.setAttribute("aria-label", "D");
+   svgMarkerev.setAttribute("id", iddf);
 }
     else if(customValue == "addEev"){  
             // Define the marker's icon using an SVG element
@@ -1837,6 +2264,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+   // set the aria-label attribute
+   svgMarkerev.setAttribute("aria-label", "E");
+   svgMarkerev.setAttribute("id", iddf);
 }
     else if(customValue == "addFev"){
         // Define the marker's icon using an SVG element
@@ -1849,6 +2279,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor); 
+   // set the aria-label attribute
+   svgMarkerev.setAttribute("aria-label", "F");
+   svgMarkerev.setAttribute("id", iddf);
     }
     else if(customValue == "addGev"){
          // Define the marker's icon using an SVG element
@@ -1861,6 +2294,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor); 
+   // set the aria-label attribute
+   svgMarkerev.setAttribute("aria-label", "G");
+   svgMarkerev.setAttribute("id", iddf);
 }
     else if(customValue == "addHev"){
          // Define the marker's icon using an SVG element
@@ -1873,6 +2309,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
+   // set the aria-label attribute
+   svgMarkerev.setAttribute("aria-label", "H");
+   svgMarkerev.setAttribute("id", iddf);
  }
     else if(customValue == "addIev"){
   // Define the marker's icon using an SVG element
@@ -1885,7 +2324,9 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
  var scaleFactor = 0.5;
  svgMarkerev.setAttribute('width', iconSize * scaleFactor);
  svgMarkerev.setAttribute('height', iconSize * scaleFactor);
- 
+   // set the aria-label attribute
+   svgMarkerev.setAttribute("aria-label", "I");
+   svgMarkerev.setAttribute("id", iddf);
         
     }
     
@@ -1899,8 +2340,17 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
 
   // Add a dragend event listener to the markerev
   markerev.on('dragend', function() {
-    var lngLat = markerev.getLngLat();
-    console.log('EVENING Marker was dragged to:', lngLat);
+    // on drag remove the maker and insert the new marker
+    var index = markersev.findIndex(function(item) {
+        return item.id === markerev.getElement().id;
+    });
+  if (index !== -1) {
+    markersev.splice(index, 1);
+ // Add the new marker to the markers array
+ markersev.push({'id': markerev.getElement().id, 'icontype': markerev.getElement().getAttribute("aria-label"), 'lnglat' : markerev.getLngLat()});
+    }
+
+  console.log(markersev);
   });
 
   // Set the markerev's initial position and add it to the map
@@ -1912,8 +2362,8 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
     selectedMarkerev = markerev;
   });
 
-  // Add the new marker to the markersev array
-  markersev.push(markerev);
+  // Add the new marker to the markers array
+  markersev.push({'id': markerev.getElement().id, 'icontype': markerev.getElement().getAttribute("aria-label"), 'lnglat' : markerev.getLngLat()});
 }
 
   
@@ -1922,11 +2372,16 @@ svgMarkerev.setAttribute('height', iconSize * scaleFactor);
 function removeMarkerev(markerev) {
     markerev.remove();
   // Remove the selected marker from the markersev array
-  const index = markersev.indexOf(markerev);
+  var index = markersev.findIndex(function(item) {
+    return item.id === markerev.getElement().id;
+});
+
+
   if (index !== -1) {
     markersev.splice(index, 1);
   }
-
+  console.log(index);
+  console.log(markersev);
   }
   
  
@@ -1985,3 +2440,528 @@ svgIconsev.forEach(function(svgIconev) {
 
 // ===============END OF EVENING MAP FOR ADDDAILYFORECAST PAGE=========================
 
+// Initialize an empty array to store the grouped values
+const morningValues = [];
+const afternoonValues = [];
+const eveningValues = [];
+const masterContainer = [];
+// =================table page next button for addnew daily forecast==========
+var nextBtn2 = document.getElementById('nextBtn2ndpage');
+nextBtn2.addEventListener('click', function(e) {
+    const morningValues = [];
+const afternoonValues = [];
+const eveningValues = [];
+  var activeNav = document.querySelector('#orders-table-tab .nav-link.active');
+  var nextNav = activeNav.nextElementSibling;
+// get the form details:
+const datetableMorning = document.querySelector('#datetableMorning').value;
+const itdtableMorning = document.querySelector('#itdtableMorning').value;
+// const prestableMorning = document.querySelector('#prestableMorning').value;
+
+const datetableAfternoon = document.querySelector('#datetableAfternoon').value;
+const itdtableAfternoon = document.querySelector('#itdtableAfternoon').value;
+// const prestableAfternoon = document.querySelector('#prestableAfternoon').value;
+
+
+const datetableEvening = document.querySelector('#datetableEvening').value;
+const itdtableEvening = document.querySelector('#itdtableEvening').value;
+// const prestableEvening = document.querySelector('#prestableEvening').value;
+
+
+// 
+
+function validatetableForm() {
+    // Get all required input and select elements
+    let requiredElements = document.querySelectorAll('.required');
+  
+    // Loop through each required element
+    for (let i = 0; i < requiredElements.length; i++) {
+      let element = requiredElements[i];
+  
+      // Check if the element is an input or select
+      if (element.tagName === 'INPUT' || element.tagName === 'SELECT') {
+        // Check if the element has a value or selected option
+        if (element.value === 'null' || element.value === '' ) {
+             // If the element is empty, add the "required-error" class to highlight it
+        element.classList.add('required-error');
+          // If the element is empty, show an error message and prevent form submission
+          alert('Error: You\'ve not filled all the fields, please do so to continue, Thank you!!');
+          return false;
+        }else{
+            // If the element is not empty, remove the "required-error" class if it was previously added
+        element.classList.remove('required-error');
+        }
+      }
+    }
+  
+    // If all required inputs and selects have a value or selected option, allow form submission
+    return true;
+  }
+  
+ 
+// ==========================================morning table=============================================
+ // Get all the TR elements with class name "morning"
+const morningDivs = document.querySelectorAll("tr.morning");
+// Loop through each div element
+morningDivs.forEach(div => {
+  // Get all the input and select elements inside the tr
+  const inputElements = div.querySelectorAll("input");
+  const selectElements = div.querySelectorAll("select");
+  const districtElement = div.getAttribute("districtnam");
+  // Initialize an empty array to store the values for this tr
+  const divValues = [];
+  
+  // Extract the values of each input and select element
+  inputElements.forEach(input => {
+    const value = input.value;
+    divValues.push(value);
+  });
+  
+  selectElements.forEach(select => {
+    const value = select.value;
+    divValues.push(value);
+  });
+  
+  // Push the array of values for this tr into the main array
+  const divData = {
+    districts: districtElement,
+    values: divValues
+  };
+  morningValues.push(divData);
+});
+
+// ===========================afternoon table===================================
+ // Get all the TR elements with class name "morning"
+ const afternoonDivs = document.querySelectorAll("tr.afternoon");
+ // Loop through each div element
+ afternoonDivs.forEach(div => {
+   // Get all the input and select elements inside the tr
+   const inputElements = div.querySelectorAll("input");
+   const selectElements = div.querySelectorAll("select");
+   const districtElement = div.getAttribute("districtnam");
+   // Initialize an empty array to store the values for this tr
+   const divValues = [];
+   
+   // Extract the values of each input and select element
+   inputElements.forEach(input => {
+     const value = input.value;
+     divValues.push(value);
+   });
+   
+   selectElements.forEach(select => {
+     const value = select.value;
+     divValues.push(value);
+   });
+   
+   // Push the array of values for this tr into the main array
+   const divData = {
+     districts: districtElement,
+     values: divValues
+   };
+   afternoonValues.push(divData);
+ });
+
+// ===========================evening table===================================
+ // Get all the TR elements with class name "morning"
+ const eveningDivs = document.querySelectorAll("tr.evening");
+ // Loop through each div element
+ eveningDivs.forEach(div => {
+   // Get all the input and select elements inside the tr
+   const inputElements = div.querySelectorAll("input");
+   const selectElements = div.querySelectorAll("select");
+   const districtElement = div.getAttribute("districtnam");
+   // Initialize an empty array to store the values for this tr
+   const divValues = [];
+   
+   // Extract the values of each input and select element
+   inputElements.forEach(input => {
+     const value = input.value;
+     divValues.push(value);
+   });
+   
+   selectElements.forEach(select => {
+     const value = select.value;
+     divValues.push(value);
+   });
+   
+   // Push the array of values for this tr into the main array
+   const divData = {
+     districts: districtElement,
+     values: divValues
+   };
+   eveningValues.push(divData);
+ });
+
+var allfieldsfilled = validatetableForm();
+
+if(allfieldsfilled == true){
+ if (masterContainer.length === 0) {
+// Print the grouped values for testing
+masterContainer.push({
+    'dateItdPressureValues' : [datetableMorning,itdtableMorning,datetableAfternoon, itdtableAfternoon, datetableEvening, itdtableEvening],
+    'tableValues': {"morningValues": morningValues, "afternoonValues" : afternoonValues, 'eveningValues' : eveningValues},
+    'mapdates' : '' ,
+    'markers': '',
+    'polygons': '' ,
+    'summary' : '',
+    'publishType' :'',
+    'textareaweatherwarning':'',
+     'warningtype' :'',
+      'scheduledate':'',
+});
+
+ }else{
+    // Define the key and value you want to replace
+let keyToReplace = 'dateItdPressureValues'; 
+let keyToReplace2 = 'tableValues'; 
+// Check if the array has the specified key
+let index = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace));
+// Check if the array has the specified key
+let index2 = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace2));
+// If the key is found, replace the value
+if (index !== -1) {
+    masterContainer[index][keyToReplace] = [datetableMorning,itdtableMorning,datetableAfternoon, itdtableAfternoon, datetableEvening, itdtableEvening ];
+  }
+  
+// If the key is found, replace the value
+if (index2 !== -1) {
+    masterContainer[index][keyToReplace2] = {"morningValues": morningValues, "afternoonValues" : afternoonValues, 'eveningValues' : eveningValues};
+  }
+}
+
+console.log([datetableMorning,itdtableMorning,datetableAfternoon, itdtableAfternoon, datetableEvening, itdtableEvening]);
+console.log({"morningValues": morningValues, "afternoonValues" : afternoonValues, 'eveningValues' : eveningValues});
+
+console.log("master:", masterContainer)
+
+  activeNav.classList.remove('active');
+  nextNav.classList.add('active');
+  nextNav.classList.remove('disabled');
+
+  var activeTab = document.querySelector(activeNav.getAttribute('href'));
+  var nextTab = document.querySelector(nextNav.getAttribute('href'));
+
+  activeTab.classList.remove('show', 'active');
+  nextTab.classList.add('show', 'active');
+
+} 
+});
+ 
+  
+// ==============-====================================mappage next button for addnew daily forecast===============
+var nextBtn3 = document.getElementById('nextBtn3rdpage');
+nextBtn3.addEventListener('click', function(e) {
+    function validateMapdate() {
+        // Get all required input and select elements
+        let requiredElements = document.querySelectorAll('.requiredmapdate');
+      
+        // Loop through each required element
+        for (let i = 0; i < requiredElements.length; i++) {
+          let element = requiredElements[i];
+      
+          // Check if the element is an input or select
+          if (element.tagName === 'INPUT' || element.tagName === 'SELECT') {
+            // Check if the element has a value or selected option
+            if (element.value === 'null' || element.value === '' ) {
+                 // If the element is empty, add the "required-error" class to highlight it
+            element.classList.add('required-error');
+              // If the element is empty, show an error message and prevent form submission
+              alert('Error: You\'ve not filled the date fields, please do so to continue, Thank you!!');
+              return false;
+            }else{
+                // If the element is not empty, remove the "required-error" class if it was previously added
+            element.classList.remove('required-error');
+            }
+          }
+        }
+      
+        // If all required inputs and selects have a value or selected option, allow form submission
+        return true;
+      }
+    
+
+  var activeNav = document.querySelector('#orders-table-tab .nav-link.active');
+  var nextNav = activeNav.nextElementSibling;
+// morning date :
+var morningdate = document.querySelector('#dateInput1').value;
+// afternoon date :
+var afternoondate = document.querySelector('#dateInput1af').value;
+
+// evening date :
+var eveningdate = document.querySelector('#dateInput1ev').value;
+var validateMapdatec = validateMapdate();
+
+if(validateMapdatec){
+    // save to the master array
+    if (masterContainer.length === 0) {
+        // Print the grouped values for testing
+        masterContainer.push({
+            'mapdates' : {'morningdate':morningdate,'afternoondate':afternoondate,  'eveningdate':eveningdate},
+            'markers':  {'markersmor': markers, 'markersaf': markersaf, 'markersev': markersev},
+            'polygons': {'ploygonsmorning': polygonsMorning, 'ploygonsafternoon': polygonAfternoon, 'ploygonsevening':polygonsEvening }
+        });
+        
+         }else{
+            // Define the key and value you want to replace
+        var keyToReplace = 'mapdates'; 
+        var keyToReplace2 = 'markers'; 
+        var keyToReplace3 = 'polygons'; 
+
+        // Check if the array has the specified key
+        var index = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace));
+        // Check if the array has the specified key
+        var index2 = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace2));
+
+         // Check if the array has the specified key
+         var index3 = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace3));
+        // If the key is found, replace the value
+        if (index !== -1) {
+            masterContainer[index][keyToReplace] =  {'morningdate':morningdate,'afternoondate':afternoondate,  'eveningdate':eveningdate};
+          }
+          
+        // If the key is found, replace the value
+        if (index2 !== -1) {
+            masterContainer[index][keyToReplace2] = {'markersmor': markers, 'markersaf': markersaf, 'markersev': markersev};
+          }
+ // If the key is found, replace the value
+ if (index3 !== -1) {
+    masterContainer[index][keyToReplace3] =  {'ploygonsmorning': polygonsMorning, 'ploygonsafternoon': polygonAfternoon, 'ploygonsevening':polygonsEvening };
+  }
+
+        }
+
+
+    console.log([morningdate,afternoondate,eveningdate]);
+console.log({'markersmor': markers, 'markersaf': markersaf, 'markersev':markersev});
+console.log({'ploygonsmorning': polygonsMorning, 'ploygonsafternoon': polygonAfternoon, 'ploygonsevening':polygonsEvening });
+console.log("masterMap:", masterContainer);
+
+  activeNav.classList.remove('active');
+  nextNav.classList.add('active');
+  nextNav.classList.remove('disabled');
+
+  var activeTab = document.querySelector(activeNav.getAttribute('href'));
+  var nextTab = document.querySelector(nextNav.getAttribute('href'));
+
+  activeTab.classList.remove('show', 'active');
+  nextTab.classList.add('show', 'active');
+}
+
+});
+
+
+// ==============================summary page next button for addnew daily forecast=============================
+var nextBtn4 = document.getElementById('nextBtn4thpage');
+nextBtn4.addEventListener('click', function(e) {
+  var activeNav = document.querySelector('#orders-table-tab .nav-link.active');
+  var nextNav = activeNav.nextElementSibling;
+
+  function validatesummary() {
+    // Get all required input and select elements
+    let requiredElements = document.querySelectorAll('#floatingTextareaSummary');
+  
+    // Loop through each required element
+    for (let i = 0; i < requiredElements.length; i++) {
+      let element = requiredElements[i];
+  
+      // Check if the element is an input or select
+      if (element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
+        // Check if the element has a value or selected option
+        if (element.value === 'null' || element.value === '' ) {
+             // If the element is empty, add the "required-error" class to highlight it
+        element.classList.add('required-error');
+          // If the element is empty, show an error message and prevent form submission
+          alert('Error: You\'ve not filled the summary field, please do so to continue, Thank you!!');
+          return false;
+        }else{
+            // If the element is not empty, remove the "required-error" class if it was previously added
+        element.classList.remove('required-error');
+        }
+      }
+    }
+  
+    // If all required inputs and selects have a value or selected option, allow form submission
+    return true;
+  }
+
+var validatesummaryn= validatesummary();
+
+  if(validatesummaryn){
+
+
+  const summary = document.querySelector('#floatingTextareaSummary').value;
+
+  // save to the master array
+  if (masterContainer.length === 0) {
+    // Print the grouped values for testing
+    masterContainer.push({
+        'summary' : summary, 
+    });
+    
+     }else{
+        // Define the key and value you want to replace
+    var keyToReplace = 'summary'; 
+    // Check if the array has the specified key
+    var index = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace));
+    
+    if (index !== -1) {
+        masterContainer[index][keyToReplace] =   summary;
+      }   }
+
+console.log(summary);
+console.log("masterSummary:", masterContainer);
+  activeNav.classList.remove('active');
+  nextNav.classList.add('active');
+  nextNav.classList.remove('disabled');
+
+  var activeTab = document.querySelector(activeNav.getAttribute('href'));
+  var nextTab = document.querySelector(nextNav.getAttribute('href'));
+
+  activeTab.classList.remove('show', 'active');
+  nextTab.classList.add('show', 'active'); 
+ }
+});
+
+// ========================= final page ======================================================================
+
+
+//  change  type of publish type type:
+var publs = document.querySelectorAll('.publ');
+var changepubType = document.querySelector("#buttonpublish");
+publs.forEach(function(publ) {
+    publ.addEventListener('click', function() {
+    var id = this.id;
+    var content = this.textContent.trim();
+    changepubType.setAttribute('typeofSubmit', id);
+    changepubType.textContent = content;
+
+
+    // Get references to the  date field elements
+var dateField = document.getElementById('date-field');
+// dateField.style.display = 'none';
+if(content == 'Draft-Forecast'){
+// if (dateField.style.display === 'none') {
+    dateField.style.display = 'block';
+  
+//  }
+}else{
+     dateField.style.display = 'none';
+     
+}
+ 
+
+    console.log('ID:', id);
+    console.log('Content:', content);
+  });
+});
+
+
+var buttonpublish = document.getElementById('buttonpublish');
+buttonpublish.addEventListener('click', function(e) {
+// Retrieve the value of the custom attribute
+const publishType = this.getAttribute('typeofSubmit');
+const textareaweatherwarning = document.getElementById('textareaweatherwarning').value;
+const warningtype = document.getElementById('warningtype').value;
+const schdate = document.getElementById('schedule-date').value;
+
+ // save to the master array
+ if (masterContainer.length === 0) {
+    // Print the grouped values for testing
+    masterContainer.push({
+        'publishType' : publishType, 
+        'textareaweatherwarning': textareaweatherwarning,
+        'warningtype' : warningtype,
+        'scheduledate': schdate
+    });
+    
+     }else{
+        // Define the key and value you want to replace
+    var keyToReplace = 'publishType'; 
+    var keyToReplace2 = 'textareaweatherwarning'; 
+    var keyToReplace3 = 'warningtype'; 
+    var keyToReplace4 = 'scheduledate'; 
+
+
+    // Check if the array has the specified key
+    var index = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace));
+     // Check if the array has the specified key
+     var index2 = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace2));
+      // Check if the array has the specified key
+    var index3 = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace3));
+     // Check if the array has the specified key
+     var index4 = masterContainer.findIndex(obj => obj.hasOwnProperty(keyToReplace4));
+    
+    if (index !== -1) {
+        masterContainer[index][keyToReplace] =  publishType;
+      }   
+      if (index !== -1) {
+        masterContainer[index2][keyToReplace2] =   textareaweatherwarning;
+      }   
+      if (index !== -1) {
+        masterContainer[index3][keyToReplace3] =   warningtype;
+      }   
+      if (index !== -1) {
+        masterContainer[index4][keyToReplace4] =   schdate ;
+      }   
+    }
+
+
+
+savetoDatabase(masterContainer);
+
+
+});
+
+// 
+ function savetoDatabase(masterContainer){
+ 
+  
+    
+    // const formData = new FormData();
+    // formData.append('masterContainer', masterContainer); 
+    // var data = {
+    //     'masterContainer': masterContainer
+    //   };
+    if(masterContainer){
+    var pubBtn =  document.getElementById('buttonpublish');
+    pubBtn.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>';
+
+
+  var jsonData = JSON.stringify(masterContainer);
+  const xhr = new XMLHttpRequest();
+    xhr.open('post', 'addNewDailyForecastpost', true);
+    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken); // assuming CSRF token is stored in a variable called csrfToken
+    xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(jsonData);
+
+    // xhr.send(JSON.stringify(data));
+    xhr.onload = () => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        pubBtn.textContent = 'Successful';
+        const response = xhr.response;
+         console.log(response);
+
+      } else {
+        console.error('Error:', xhr.status);
+      }
+    };
+}else{
+    console.log("no data available")
+}
+    console.log("MMMMMMMMMMMMMMMMMMMmaster:", masterContainer[0]);
+
+
+
+
+
+
+
+
+//     if(publishType == "Publish-Forecast"){
+//         console.log("Publish-Forecast",publishType,schdate,warningtype,textareaweatherwarning,);
+        
+//     }else if(publishType == "Draft-Forecast"){
+// console.log("Draft-Forecast", publishType,schdate,warningtype,textareaweatherwarning,);
+//     }
+   
+}

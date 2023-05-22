@@ -1,0 +1,322 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\AddDailyForecast as ModelsAddDailyForecast;
+use App\Models\Afternoon_general_variables;
+use App\Models\Afternoon_table_values;
+use App\Models\AfternoonMarkers;
+use App\Models\AfternoonPolygon;
+use App\Models\Evening_general_variables;
+use App\Models\Evening_table_values;
+use App\Models\EveningMarkers;
+use App\Models\EveningPolygon;
+use App\Models\Morning_general_variables;
+use App\Models\Morning_table_values;
+use App\Models\MorningMarkers;
+use App\Models\MorningPolygon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
+class AddDailyForecast extends Controller
+{
+    //
+    public function index()
+    {
+        $districts = DB::table('cafodistricts')->orderBy('districtname')->get();
+        // dd($districts);
+    return view('admin.addNewDailyForecast', ['districts' => $districts]);
+    }
+
+//  public  function generateRandomId($length = 10)
+//     {
+//         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//         $id = '';
+    
+//         $max = strlen($characters) - 1;
+//         for ($i = 0; $i < $length; $i++) {
+//             $id .= $characters[random_int(0, $max)];
+//         }
+    
+//         return $id;
+//     }
+    
+
+    public function create(Request $request)
+    {
+        // $randomId  = $this->generateRandomId();
+        $data = $request->all();
+        $tableMorningDate = $data[0]['dateItdPressureValues'][0];
+        $tableItdPositionMorning =  $data[0]['dateItdPressureValues'][1];
+        // $tablePressureMorning =  $data[0]['dateItdPressureValues'][2];
+        $tableAfternoonDate = $data[0]['dateItdPressureValues'][2];
+        $tableItdPositionAfternoon =  $data[0]['dateItdPressureValues'][3];
+        // $tablePressureAfternoon =  $data[0]['dateItdPressureValues'][4];
+        $tableEveningDate = $data[0]['dateItdPressureValues'][4];
+        $tableItdPositionEvening =  $data[0]['dateItdPressureValues'][5];
+        // $tablePressureEvening=  $data[0]['dateItdPressureValues'][8];
+        $tableMorningValues = $data[0]['tableValues']['morningValues'];
+        $tableAfternoonValues = $data[0]['tableValues']['afternoonValues'];
+        $tableEveningValues = $data[0]['tableValues']['eveningValues'];
+        $mapMorningDate = $data[0]['mapdates']['morningdate'];
+        $mapAfternoonDate = $data[0]['mapdates']['afternoondate'];
+        $mapEveningDate = $data[0]['mapdates']['eveningdate'];
+        $markersMorning = $data[0]['markers']['markersmor'];
+        $markersAfternoon = $data[0]['markers']['markersaf'];
+        $markersEvening = $data[0]['markers']['markersev'];
+        $ploygonsMorning = $data[0]['polygons']['ploygonsmorning'];
+        $ploygonsAfternoon = $data[0]['polygons']['ploygonsafternoon'];
+        $ploygonsEvening = $data[0]['polygons']['ploygonsevening'];
+        $publishType = $data[0]['publishType'];
+       
+        $summary = $data[0]['summary'];
+        $textareaweatherwarning = $data[0]['textareaweatherwarning'];
+        $warningtype  = $data[0]['warningtype'];
+
+
+
+        if (is_null($data[0]['textareaweatherwarning'])) {
+            // Variable is null 
+            $textareaweatherwarning= 'null';
+        } else {
+            // Variable is not null
+            $textareaweatherwarning= $data[0]['textareaweatherwarning'];
+        }
+
+        if (is_null($data[0]['warningtype'])) {
+            // Variable is null 
+            $warningtype = 'null';
+        } else {
+            // Variable is not null
+            $warningtype = $data[0]['warningtype'];
+        }
+
+
+
+        if (is_null($data[0]['scheduledate'])) {
+            // Variable is null 
+            $scheduledate= 'no date';
+        } else {
+            // Variable is not null
+            $scheduledate = $data[0]['scheduledate'];
+        }
+
+        
+ // Create a new instance of add_daily_forecasts
+ $add_daily_forecasts = new ModelsAddDailyForecast();
+ $add_daily_forecasts->publishType = $publishType ;
+ $add_daily_forecasts->creator =  Auth::user()->name;
+ $add_daily_forecasts->scheduledate= $scheduledate;
+ $add_daily_forecasts->summary =  $summary;
+$add_daily_forecasts->textareaweatherwarning = $textareaweatherwarning;
+$add_daily_forecasts->warningtype = $warningtype;
+$add_daily_forecasts->save();
+
+  // Create a new instance of morning_general_variables
+  $morning_general_variables = new Morning_general_variables();
+//   $morning_general_variables->id = $randomId;
+  $morning_general_variables->date = $tableMorningDate;
+//   $morning_general_variables->pressure= $tablePressureMorning;
+  $morning_general_variables->itd = $tableItdPositionMorning;
+  $add_daily_forecasts->morning_general_variables()->save($morning_general_variables);
+
+ // Create a new instance of afternoon_general_variables
+ $afternoon_general_variables = new Afternoon_general_variables();
+//  $afternoon_general_variables->id = $randomId;
+ $afternoon_general_variables->date = $tableAfternoonDate;
+//  $afternoon_general_variables->pressure= $tablePressureAfternoon;
+ $afternoon_general_variables->itd = $tableItdPositionAfternoon;
+ $add_daily_forecasts->afternoon_general_variables()->save($afternoon_general_variables);
+
+
+ // Create a new instance of evening_general_variables
+ $evening_general_variables = new Evening_general_variables();
+//  $evening_general_variables->id = $randomId;
+ $evening_general_variables->date = $tableEveningDate;
+//  $evening_general_variables->pressure= $tablePressureEvening;
+ $evening_general_variables->itd = $tableItdPositionEvening;
+ $add_daily_forecasts->evening_general_variables()->save($evening_general_variables);
+ // Create a new instance of morning_table_values
+foreach ($tableMorningValues as $item) {
+    $district = $item['districts'];
+    $values = $item['values'];
+    $morning_table_values = new Morning_table_values();
+    $morning_table_values->districts = $district;
+    $morning_table_values->min_temp = $values[0];
+    $morning_table_values->max_temp = $values[1];
+    $morning_table_values->wind = $values[2];
+    $morning_table_values->weather = $values[3];
+    $morning_table_values->rain_chance = $values[4];
+    $morning_table_values->humidity = $values[5];
+    $morning_table_values->morningDate = $tableMorningDate;
+    $morning_table_values->forecaster = Auth::user()->name;
+
+   $add_daily_forecasts->morning_table_values()->save($morning_table_values);
+}
+
+// Create a new instance of afternoon_table_values
+foreach ($tableAfternoonValues as $item) {
+    $district = $item['districts'];
+    $values = $item['values'];
+    $afternoon_table_values = new Afternoon_table_values();
+    $afternoon_table_values->districts = $district;
+    $afternoon_table_values->min_temp = $values[0];
+    $afternoon_table_values->max_temp = $values[1];
+    $afternoon_table_values->wind = $values[2];
+    $afternoon_table_values->weather = $values[3];
+    $afternoon_table_values->rain_chance = $values[4];
+    $afternoon_table_values->humidity = $values[5];
+    $afternoon_table_values->afternoonDate = $tableAfternoonDate;
+    $afternoon_table_values->forecaster = Auth::user()->name;
+
+    $add_daily_forecasts->afternoon_table_values()->save($afternoon_table_values);
+
+    // $afternoon_table_values->save();
+}
+
+// Create a new instance of evening_table_values
+foreach ($tableEveningValues as $item) {
+    $district = $item['districts'];
+    $values = $item['values'];
+    $evening_table_values = new Evening_table_values();
+    $evening_table_values->districts = $district;
+    $evening_table_values->min_temp = $values[0];
+    $evening_table_values->max_temp = $values[1];
+    $evening_table_values->wind = $values[2];
+    $evening_table_values->weather = $values[3];
+    $evening_table_values->rain_chance = $values[4];
+    $evening_table_values->humidity = $values[5];
+    $evening_table_values->eveningDate =  $tableEveningDate;
+    $evening_table_values->forecaster = Auth::user()->name;
+    $add_daily_forecasts->evening_table_values()->save($evening_table_values);
+}
+
+
+ // Create a new instance of morning_markers
+ foreach ($markersMorning as $item) {
+    $morning_markers = new MorningMarkers();
+    $morning_markers->markerId = $item['id'];
+    $morning_markers->morningDate = $mapMorningDate;
+    $morning_markers->icontype = $item['icontype'];
+    $morning_markers->lng = $item['lnglat']['lng'];
+    $morning_markers->lat = $item['lnglat']['lat'];
+    $add_daily_forecasts->morning_markers()->save($morning_markers);
+    
+
+}
+
+
+ // Create a new instance of afternoon_markers
+ foreach ($markersAfternoon as $item) {
+    $afternoon_markers = new AfternoonMarkers();
+    $afternoon_markers->markerId = $item['id'];
+    $afternoon_markers->afternoonDate = $mapAfternoonDate;
+    $afternoon_markers->icontype = $item['icontype'];
+    $afternoon_markers->lng = $item['lnglat']['lng'];
+    $afternoon_markers->lat = $item['lnglat']['lat'];
+    $add_daily_forecasts->afternoon_markers()->save($afternoon_markers);
+}
+
+
+
+// Create a new instance of evening_markers
+foreach ($markersEvening as $item) {
+    $evening_markers = new EveningMarkers();
+    $evening_markers->markerId = $item['id'];
+    $evening_markers->eveningDate = $mapEveningDate;
+    $evening_markers->icontype = $item['icontype'];
+    $evening_markers->lng = $item['lnglat']['lng'];
+    $evening_markers->lat = $item['lnglat']['lat'];
+    $add_daily_forecasts->evening_markers()->save($evening_markers);
+    // $evening_markers->save();
+}
+
+ // Create a new instance of morning_polygons
+ if(!empty($ploygonsMorning)){
+     foreach ($ploygonsMorning as $item) {
+    $morning_polygons = new MorningPolygon();
+    $morning_polygons->polygonId = $item['id'];
+    $morning_polygons->morningDate =  $mapMorningDate;
+    $morning_polygons->color = $item['color'];
+    $morning_polygons->cordinate = json_encode($item['cordinates']); 
+    $add_daily_forecasts->morning_polygons()->save($morning_polygons);
+}
+ }
+
+
+
+ // Create a new instance of afternoon_polygons
+ if(!empty($ploygonsAfternoon)){
+ foreach ($ploygonsAfternoon as $item) {
+    $afternoon_polygons = new AfternoonPolygon();
+    $afternoon_polygons->polygonId = $item['id'];
+    $afternoon_polygons->afternoonDate = $mapAfternoonDate;
+    $afternoon_polygons->color = $item['color'];
+    $afternoon_polygons->cordinate = json_encode($item['cordinates']); 
+    $add_daily_forecasts->afternoon_polygons()->save($afternoon_polygons);
+}
+ }
+ // Create a new instance of evening_polygons
+ if(!empty($ploygonsEvening)){
+ foreach ($ploygonsEvening as $item) {
+    $evening_polygons = new EveningPolygon();
+    $evening_polygons->polygonId = $item['id'];
+    $evening_polygons->eveningDate = $mapEveningDate;
+    $evening_polygons->color = $item['color'];
+    $evening_polygons->cordinate = json_encode($item['cordinates']); 
+    $add_daily_forecasts->evening_polygons()->save($evening_polygons);
+}
+ }
+
+
+
+//  foreach ($markersMorning as $item) {
+//     $district = $item['districts'];
+//     $values = $item['values'];
+//     $evening_table_values = new Evening_table_values();
+//     $evening_table_values->districts = $district;
+//     $evening_table_values->min_temp = $values[0];
+//     $evening_table_values->max_temp = $values[1];
+//     $evening_table_values->wind = $values[2];
+//     $evening_table_values->weather = $values[3];
+//     $evening_table_values->rain_chance = $values[4];
+//     $evening_table_values->humidity = $values[5];
+//     $evening_table_values->eveningDate =  $tableEveningDate;
+//     $evening_table_values->forecaster = Auth::user()->name;
+//     // $evening_table_values->save();
+// }
+
+
+//  $morning_markers = new MorningMarkers();
+//  $morning_markers->markerId = $tableMorningDate;
+//  $morning_markers->lat= $tablePressureMorning;
+//  $morning_markers->lng = $tableItdPositionMorning;
+//  $morning_markers->morningDate = $tableItdPositionMorning;
+
+
+
+
+
+// Save the model instance
+// $morning_general_variables->save();
+
+        Log::info('Your log message', ['data' => $data]);
+
+        // $data = $request->get('masterContainer');
+        // Log::info('Logging :', ['data' =>  $data]);
+        
+        // Log::info(print_r($request->get('masterContainer'),true ));
+        // dump($request->get('masterContainer'));
+       return  response($data);
+    //     $districts = DB::table('cafodistricts')->orderBy('districtname')->get();
+    //     // dd($districts);
+    // return view('admin.addNewDailyForecast', ['districts' => $districts]);
+    }
+
+
+   
+
+
+}

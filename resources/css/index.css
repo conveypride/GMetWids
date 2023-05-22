@@ -308,6 +308,23 @@ body {
     animation-duration: 2.5s;
   }
   
+
+  .flash {
+    animation: flash 1s infinite;
+  }
+  
+  @keyframes flash {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   #snowFlake {
     fill: none;
     stroke: white;
@@ -507,12 +524,12 @@ body {
   }
 }
 
- /*wind arrow bounching north-west */
- .bouncingNW-arrow {
-  animation: bounceNW 2s infinite;
+ /*wind arrow bounching north-EAST */
+ .bouncingNE-arrow {
+  animation: bounceNE 2s infinite;
 }
 
-@keyframes bounceNW {
+@keyframes bounceNE {
   100% {
     transform: translateY(-10px)  
     /* adjust the translateY value to change the distance of the movement */
@@ -980,4 +997,46 @@ height: 70vh;
   max-width: 100%;
   max-height: 100%;
 }
+
+.carousel-item2f {
+  height: 65vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* wind direction css */
+.arrow-animation {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.arrow-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: arrow-move 2s linear infinite;
+}
+
+@keyframes arrow-move {
+  0% {
+    transform: translate(-50%, -50%) rotate(225deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(315deg);
+  }
+}
+
+.stars {
+  animation-duration: 3s;
+}
+
 

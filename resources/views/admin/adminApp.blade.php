@@ -20,6 +20,8 @@
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.4/mapbox-gl-draw.css' type='text/css' />
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <!-- Mapbox GL Utils -->
+ 
   <!-- Scripts -->
   @vite(['resources/sass/app.scss', 'resources/css/adminPortal.css', 'resources/css/adminIndex.css', 'resources/js/app.js', 'resources/js/adminApp.js', 'resources/js/adminCharts-demo.js', 'resources/js/adminIndex-charts.js', ])
 {{-- inject css file of cafoDistrict here csss  --}}
@@ -204,10 +206,23 @@
                             <div class="app-utility-item app-user-dropdown dropdown">
                                 <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><img src="assets/images/user.png" alt="user profile"></a>
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-                                    <li><a class="dropdown-item" href="account.html">Account</a></li>
+                                    <li> <a class="dropdown-item">
+                                            {{ Auth::user()->name }}
+                                        </a>  </li>
+                                        <li><a class="dropdown-item" href="#">Account</a></li>
                                     <li><a class="dropdown-item" href="{{ route('settings') }}">Settings</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="login.html">Log Out</a></li>
+                                   <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" > <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                      document.getElementById('logout-form').submit();">
+                                         {{ __('Logout') }}
+                                     </a>
+ 
+                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                         @csrf
+                                     </form></a></li>
+                                     
+                                   
                                 </ul>
                             </div><!--//app-user-dropdown--> 
                         </div><!--//app-utilities-->

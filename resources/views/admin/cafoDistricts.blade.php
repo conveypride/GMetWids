@@ -52,23 +52,28 @@
                         <tbody id="table">
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" id="task">
+                                    <input type="text" class="form-control" id="district">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="priority">
-                        <option> Coastal  Zone</option>
-                        <option>Forest Zone</option>
-                        <option> Northern  Zone</option>
-                        <option>Transition Zone</option>
+                                    <select class="form-control" id="zone">
+                        <option value="Coastal Zone">Coastal Zone</option>
+                        <option value="Forest Zone">Forest Zone</option>
+                        <option value="Northern Zone">Northern Zone</option>
+                        <option value="Transition Zone">Transition Zone</option>
                       </select>
                                 </td>
                                 <td>
                                     <button type="button" id="add-button" class="btn btn-dark">Add</button>
                                 </td>
                             </tr>
-
-                            <tr><td>Accra</td><td> Coastal Zone</td><td><button type="button" id="remove-button" class="btn btn-danger text-white">Remove</button></td></tr>
-                            <tr><td>Kumasi</td><td>Forest Zone</td><td><button type="button" id="remove-button" class="btn btn-danger text-white">Remove</button></td></tr>
+                            @if (!empty($districts))
+                            @foreach ($districts as $district) 
+<tr><td>{{ $district->districtname }}</td><td> {{ $district->districtZone }}</td><td><button type="button" id="remove-button" class="btn btn-danger text-white" districtid="{{ $district->id }}">Remove</button></td></tr>
+   @endforeach 
+   @else
+    <p class="text-center">No dristricts found</p>
+@endif
+                            
                         </tbody>
                     </table>
                 
