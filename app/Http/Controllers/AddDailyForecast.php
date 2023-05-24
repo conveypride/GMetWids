@@ -302,14 +302,15 @@ foreach ($markersEvening as $item) {
 // Save the model instance
 // $morning_general_variables->save();
 
-        Log::info('Your log message', ['data' => $data]);
+        // Log::info('Your log message', ['data' => $data]);
 
         // $data = $request->get('masterContainer');
         // Log::info('Logging :', ['data' =>  $data]);
         
         // Log::info(print_r($request->get('masterContainer'),true ));
         // dump($request->get('masterContainer'));
-       return  response($data);
+         // Return a response to indicate success
+  return response('Form submitted successfully', 200);
     //     $districts = DB::table('cafodistricts')->orderBy('districtname')->get();
     //     // dd($districts);
     // return view('admin.addNewDailyForecast', ['districts' => $districts]);

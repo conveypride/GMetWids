@@ -260,12 +260,12 @@
               </a>
               <span class="tooltip">5-Days-Forecast</span>
           </li>
-          <li class="btnicons" data-target="districts-content">
+          <li class="btnicons" data-target="districts-content"   id="cities-btn">
             <a href="#">
                 <i class='bi bi-cursor'></i>
-                <span class="links_name">Districts</span>
+                <span class="links_name">Cities</span>
             </a>
-            <span class="tooltip">Districts</span>
+            <span class="tooltip">Cities</span>
         </li>
 
  <li class="btnicons" data-target="seasonal-content" id="seasonal-btn">
@@ -358,10 +358,10 @@
  
 <div class="text-center">
 {{-- <button class="btn btn-dark  d-block w-100" type="button">Request</button> --}}
-.<div class="card text-start"> 
-  <div class="card-body shadow-lg rounded">
-    <h4 class="card-title text-center">GMet Weather Information Dissemination System</h4>
-    <p class="card-text">
+.<div class="text-start"> 
+  <div class="shadow-sm rounded">
+    {{-- <h4 class="card-title text-center">GMet Weather Information Dissemination System</h4> --}}
+    <p class="text-center">
 <header class="d-block w-100">
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -650,8 +650,8 @@
                                              overflow-y: scroll;
                                             max-height: 200px;"> 
 
-                                            @forelse ($districts as $district)
-                                            <li><a class="dropdown-item districted" districted={{ $district->districtname }} href="#">{{ $district->districtname }}</a></li>
+                                            @forelse ($districts as $districtt)
+                                            <li><a class="dropdown-item districted" districted={{ $districtt->districtname }} href="#">{{ $districtt->districtname }}</a></li>
                                             @empty
                                             <li><a class="dropdown-item" href="#">No Cities available</a></li>
                                             @endforelse
@@ -712,7 +712,7 @@
                                                     <i id="arrow-ne" class="bi bi-arrow-down-left-circle-fill active animation-ne "></i>
 
                                                     @elseif ($winddir == 'NW' || $winddir == 'WN')
-                                                    <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fillactive animation-nw"></i>
+                                                    <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fill active animation-nw flush"></i>
                                                     
                                                     @elseif ($winddir == 'S')
                                                     <i id="arrow-s" class="bi bi-arrow-down-circle-fill  active animation-s"></i>
@@ -745,7 +745,7 @@
                                               </svg>  </figure>
                                                  @elseif($weather == '-TSRA')
                                                  <figure>
-                                                  <figcaption class="figure-caption">Slight Thunderstorms With Rain</figcaption>
+                                                  <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
                                                    <svg class="bigicon" viewbox="0 0 100 100">
                                                    
                                                     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
@@ -758,7 +758,7 @@
                                                 
                                                  @elseif($weather == 'TSRA')
                                                  <figure>
-                                                  <figcaption class="figure-caption">Moderate Thunderstorms With Rain</figcaption>
+                                                  <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
                                                    <svg class="bigicon" viewbox="0 0 100 100">
                                                     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
                                                     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
@@ -770,7 +770,7 @@
                                                 </figure>
                                                  @elseif($weather == '+TSRA')
                                                  <figure>
-                                                  <figcaption class="figure-caption">Heavy Thunderstorms With Rain</figcaption>
+                                                  <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
                                                    <svg class="bigicon" viewbox="0 0 100 100">
                                                     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
                                                     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
@@ -1119,7 +1119,7 @@
 @endif
 </div>
 
-                           
+  
                                     {{-- current conditons --}}
 <div class="card rounded-4 my-2" style="background-color: whitesmoke;">
   <div class="card-body">
@@ -1231,7 +1231,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Slight Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
                                         </figure>
                                         
                                          @elseif($weatherM == 'TSRA')
@@ -1244,7 +1244,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Moderate Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
                                         </figure>
                                          @elseif($weatherM == '+TSRA')
                                          <figure>
@@ -1258,7 +1258,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Heavy Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
                                         </figure>
                                          @elseif($weatherM == '-RAINDAY')
                                          <figure>
@@ -1600,7 +1600,7 @@
                                                              <i id="arrow-ne" class="bi bi-arrow-down-left-circle-fill active animation-ne "></i>
          
                                                              @elseif ($winddirM == 'NW' || $winddirM == 'WN')
-                                                             <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fillactive animation-nw"></i>
+                                                             <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fill active animation-nw"></i>
                                                              
                                                              @elseif ($winddirM == 'S')
                                                              <i id="arrow-s" class="bi bi-arrow-down-circle-fill  active animation-s"></i>
@@ -1648,7 +1648,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Slight Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
                                         </figure>
                                         
                                          @elseif($weatherA == 'TSRA')
@@ -1661,7 +1661,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Moderate Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
                                         </figure>
                                          @elseif($weatherA == '+TSRA')
                                          <figure>
@@ -1675,7 +1675,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Heavy Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
                                         </figure>
                                          @elseif($weatherA == '-RAINDAY')
                                          <figure>
@@ -1976,8 +1976,6 @@
           @endif
                                                 
 
-
-
                                             <h5 class="fw-bold text-center">
                                               @if(!empty($maxTempA) || !empty($maxTempA))
                                               {{-- The variable is not empty --}}
@@ -2023,7 +2021,7 @@
                                                        <i id="arrow-ne" class="bi bi-arrow-down-left-circle-fill active animation-ne "></i>
    
                                                        @elseif ($winddirA == 'NW' || $winddirA == 'WN')
-                                                       <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fillactive animation-nw"></i>
+                                                       <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fill active animation-nw"></i>
                                                        
                                                        @elseif ($winddirA == 'S')
                                                        <i id="arrow-s" class="bi bi-arrow-down-circle-fill  active animation-s"></i>
@@ -2071,7 +2069,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Slight Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
                                         </figure>
                                         
                                          @elseif($weatherE == 'TSRA')
@@ -2084,7 +2082,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Moderate Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
                                         </figure>
                                          @elseif($weatherE == '+TSRA')
                                          <figure>
@@ -2098,7 +2096,7 @@
                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
                                             <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
                                           </svg>
-                                          <figcaption class="figure-caption">Heavy Thunderstorms With Rain</figcaption>
+                                          <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
                                         </figure>
                                          @elseif($weatherE == '-RAINDAY')
                                          <figure>
@@ -2441,7 +2439,7 @@
                                                    <i id="arrow-ne" class="bi bi-arrow-down-left-circle-fill active animation-ne "></i>
 
                                                    @elseif ($winddirE == 'NW' || $winddirE == 'WN')
-                                                   <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fillactive animation-nw"></i>
+                                                   <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fill active animation-nw"></i>
                                                    
                                                    @elseif ($winddirE == 'S')
                                                    <i id="arrow-s" class="bi bi-arrow-down-circle-fill  active animation-s"></i>
@@ -2541,30 +2539,118 @@
                            </div> 
                          </div>
                          <br>
-                         
-                         
-   {{-- risk labels --}}
-  <div class="card text-white">
-    <img class="img-fluid" src="{{ asset('images/risk.png') }}">
+
+
+    {{-- weather icons --}}
+    <table class="table table-bordered caption-top">
+      <caption class="fw-bold">  Weather icons</caption>
+      <thead>
+        <tr>
+          <th class="text-center" style="background-color:white">
+            <i class="bi bi-cloud-drizzle-fill fs-5"></i>
+            Rain</th>
+          <th class="text-center" style="background-color: white"> 
+            <i class="bi bi-wind fs-5"></i> 
+            Wind
+          </th>
+          <th  class="text-center" style="background-color: white">
+            <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35"><symbol id="a" viewBox="0 0 342 234"><path d="m264.2 21.3a39.9 39.9 0 0 1 68.8 27.7c0 22-18 40-40 40h-284m139.2 123.7a39.9 39.9 0 0 0 68.8-27.7c0-22-18-40-40-40h-168" fill="none" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="18"/></symbol><circle cx="96" cy="196" r="12"/><circle cx="180" cy="196" r="12"/><circle cx="264" cy="196" r="12"/><circle cx="222" cy="256" r="12"/><circle cx="306" cy="256" r="12"/><circle cx="390" cy="256" r="12"/><circle cx="172" cy="316" r="12"/><circle cx="256" cy="316" r="12"/><circle cx="340" cy="316" r="12"/><use height="234" transform="translate(86 139)" width="342" xlink:href="#a"/></svg>
+          Dust</th>
+          <th class="text-center" style="background-color: white">
+            <i class="bi bi-cloud-hail-fill fs-5"></i>
+          Hail</th>
+          {{-- <th class="text-center" style="background-color: white">No Risk</th> --}}
+        </tr>
+      </thead>
+     
+    </table>
+
+
+                         <hr>
+   {{--  Nowcast Risk--}}
+   <table class="table table-bordered caption-top">
+    <caption class="fw-bold"> Nowcast Risk</caption>
+    <thead>
+      <tr>
+        <th class="text-center" style="background-color:#ff0000">Take Action</th>
+        <th class="text-center" style="background-color: #eda411">Be Prepared</th>
+        <th  class="text-center" style="background-color: #e9f542">Be Aware</th>
+        <th class="text-center" style="background-color: #4ca64c">Low Risk</th>
+        <th class="text-center" style="background-color: white">No Risk</th>
+      </tr>
+    </thead>
+   
+  </table>
+   {{-- Weather Forecasting Risk Table--}}
+   <hr>
+    <div class="row">
+<div class="col-1">
+  <div class="row" style="min-height: 230px;">
+    <div class="col d-flex flex-column justify-content-center fw-bold">
+      <p class="text-center fw-bold my-5 mx-2">  <i class="bi bi-arrow-up text-center fw-bold  text-success fs-4" style="min-height: 115px;"></i></p> 
+      <p class="text-center fw-bold p-1 verticaltext">Likelihood</p> 
+    </div>
+
+    <div class="col d-flex flex-column justify-content-center">
+      
+    </div>
+
   </div>
+</div>
 
- <p class="text-center">
-  <img class="img-fluid" src="{{ asset('images/warning.png') }}" style="height: 200px;">
-</p>
+<div class="col">
+  <table class="table table-bordered caption-top">
+    <caption class="fw-bold"> Weather Forecasting Risk Table</caption>
+<thead>
+    <th>High(>60%) </th>
+    <th class="text-center" style="background-color: #e9f542">G</th>
+    <th class="text-center" style="background-color: #eda411">H</th>
+    <th class="text-center" style="background-color:#ff0000">I</th>
+  </tr>
+</thead>
+<tbody>
+  <thead>
+    <th>Medium(40% - 60%)</th>
+    <th class="text-center" style="background-color: #4ca64c">D</th>
+    <th  class="text-center" style="background-color: #e9f542">E</th>
+    <th class="text-center" style="background-color: #eda411">F</th>
+  </thead>
+  <thead>
+    <th>Low(<40%)</th>
+    <th class="text-center" style="background-color: #4ca64c">A</th>
+    <th class="text-center" style="background-color: #4ca64c">B</th>
+    <th  class="text-center" style="background-color: #e9f542">C</th>
+  </thead>
+  <thead>
+    <th></th>
+    <th>Low</th>
+    <th>Medium</th>
+    <th>High</th>
+  </thead>
+  <thead>
+    <th colspan="4">
+      <p class="text-center fw-bold m-0 p-0"><i class="text-center fw-bold bi bi-arrow-right text-success fs-4" style="width: 12em;"></i> </p>
+      <p class="text-center fw-bold m-0 p-0"> Impact </p>
+    </th>
+    
+  </thead>
+</tbody>
+</table>
+</div>
+    </div>
+    
+  {{-- </div> --}}
 
 
-{{-- <div class="card text-white bg-primary">
-  <img class="card-img-top" src="{{ asset('images/risk.png') }}" alt="Title">
-</div> --}}
-                   
-                        </div>
+
+    </div>
                     </div>
                 </div>
                
                 <div class="content day5-content ">
                   <div class="mb-3">
-                    <label for="selectDistric" class="form-label fw-bold fs-2">Select District</label> 
-                  <select class="form-select form-select-lg" id="selectDistric" aria-label="Small select">
+                    {{-- <label for="selectDistric" class="form-label fw-bold fs-2">Select District</label>  --}}
+                  {{-- <select class="form-select form-select-lg" id="selectDistric" aria-label="Small select">
                     <option selected="">Accra</option>
                     <option value="1">Another District </option>
                     <option value="2">Another District</option>
@@ -2575,105 +2661,389 @@
                     <option value="3">Another District</option>
                     <option value="3">Another District</option>
                     <option value="3">Another District</option>
-                  </select>
+                  </select> --}}
                  </div> 
                  <div class="card rounded-2 h-100" style="background-color: #EAECEF">
                                 
                     <div class="card-body">
-                        <h5 class="text-muted fw-bold">5-Days-Forecast</h5>
-  
-                        <ul class="list-group list-group-flush">
-                          <li class="list-group-item my-4" style="background-color: #EAECEF">
-                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                              <div class="text-dark fw-bold fs-3">Mon</div>
-                              <div class="text-dark fw-bold">
-                                <figure>
-                                  <svg class="icon5day" viewbox="0 0 100 100">
-                                    <use xlink:href="#moon" x="-20" y="-15"/>
-                                    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
-                                    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
-                                    <use id="drop3" xlink:href="#rainDrop" x="45" y="65"/>
-                                    <use xlink:href="#whiteCloud" x="7" />
-                                  </svg>
-                                  <figcaption class="figure-caption">Showers-Night</figcaption>
-                                </figure>
-                              </div>
-                              <div class="text-dark fw-bold fs-3"> 15°C - 18°C</div>
-                            </div>
-                          </li>
-                          <li class="list-group-item my-4" style="background-color: #EAECEF">
-                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                              <div class="text-dark fw-bold fs-3">Tue</div>
-                              <div class="text-dark fw-bold ">
-                                <figure>
-                                  <svg class="icon5day" viewbox="0 0 100 100">
-                                    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
-                                    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
-                                    <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
-                                    <use xlink:href="#whiteCloud" x="7" />
-                                    <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
-                                  </svg>
-                                  <figcaption class="figure-caption">Thunderstorm</figcaption>
-                                </figure>
-                              </div>
-                              <div class="text-dark fw-bold fs-3">25°C - 28°C</div>
-                            </div>
-                          </li>
-                          <li class="list-group-item my-4" style="background-color: #EAECEF">
-                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                              <div class="text-dark fw-bold fs-3">Wed</div>
-                              <div class="text-dark fw-bold ">
-                                <figure>
-                                  <svg class="icon5day" viewbox="0 0 100 100">
-                                    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
-                                    <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
-                                    <use id="mist" xlink:href="#mist" x="0" y="30"/>
-                                  </svg>
-                                  <figcaption class="figure-caption">Fog</figcaption>
-                                </figure>
-                              </div>
-                              <div class="text-dark fw-bold fs-3">18°C - 23°C</div>
-                            </div>
-                          </li>
-                          <li class="list-group-item my-4" style="background-color: #EAECEF">
-                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                              <div class="text-dark fw-bold fs-3">Thu</div>
-                              <div class="text-dark fw-bold">
-                                <figure>
-                                  <svg class="icon5day" viewbox="0 0 100 100">
-                                    <use xlink:href="#moon" x="-15"/>
-                                    <use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
-                                    <use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
-                                    <use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
-                                  </svg>
-                                  <figcaption class="figure-caption">Clear-Night</figcaption>
-                                </figure>
+          <h5 class="text-muted fw-bold font-monospace">5-Days-Forecast</h5>
+  {{--  today--}}
+  @forelse ($fivedayforecasts as $fivedayforecast )
+    
+ <div class="card" style="border-radius: 20px;">
+  <div class="card-body">
+    <div class="d-flex">
+      <div class="col-4 align-self-start">
+        <h3 class="card-title text-left text-dark fw-bold fs-3">
+         {{ \Carbon\Carbon::parse($fivedayforecast->date)->format('l') }}
+       </h3> 
+      </div>
+      <div class="col-4">
+        @if(!empty($fivedayforecast->weather))
+        {{-- The variable is not empty --}}
+       @if ($fivedayforecast->weather == 'SUNNY')
+          <!-- Sunny -->
+     <figure> <figcaption class="text-center fw-bold">Sunny</figcaption>
+     <svg class="icon5day" viewbox="0 0 100 100">
+        <use xlink:href="#sun" />
+     </svg>  </figure>
+       @elseif($fivedayforecast->weather == '-TSRA')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
+         <svg class="icon5day" viewbox="0 0 100 100">
+         
+          <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+          <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/> 
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+        </svg>
+      </figure>
+      
+       @elseif($fivedayforecast->weather == 'TSRA')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
+         <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+          <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+          <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+        </svg>
+      </figure>
+       @elseif($fivedayforecast->weather == '+TSRA')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
+         <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+          <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+          <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+          <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+          <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+        </svg>
+      </figure>
+       @elseif($fivedayforecast->weather == '-RAINDAY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Rain Day</figcaption>
+       <svg class="icon5day" viewbox="0 0 100 100">
+         <use xlink:href="#sun" x="-12" y="-18"/>
+         <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+         <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+         <use xlink:href="#whiteCloud" x="5" y="-7"/>
+       </svg> 
+     </figure>
+      @elseif($fivedayforecast->weather == '-RAINNIGHT')
+      <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Rain Night</figcaption>
+       <svg class="icon5day" viewbox="0 0 100 100">
+        <use xlink:href="#moon" x="-20" y="-15"/>
+         <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+         <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+         <use xlink:href="#whiteCloud" x="5" y="-7"/>
+       </svg> 
+     </figure>
+     
+       @elseif($fivedayforecast->weather == 'RAINDAY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Moderate  Rain Day</figcaption>
+       <svg class="icon5day" viewbox="0 0 100 100">
+         <use xlink:href="#sun" x="-12" y="-18"/>
+         
+         <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+         <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+         <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+         <use xlink:href="#whiteCloud" x="5" y="-7"/>
+       </svg> 
+     </figure>
+        @elseif($fivedayforecast->weather == 'RAINNIGHT')
+        <figure>
+          <figcaption class="text-center fw-bold text-muted">Moderate Rain Night</figcaption>
+         <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+        
+           <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+       </figure>
+     
+     
+       @elseif($fivedayforecast->weather == '+RAINDAY')
+      
+       <figure>
+         <figcaption class="text-center fw-bold text-muted">Heavy Rain Day</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+          <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+          <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+          <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+        </svg> 
+      </figure>
+      @elseif($fivedayforecast->weather == '+RAINNIGHT')
+      
+      <figure>
+        <figcaption class="text-center fw-bold text-muted">Heavy Rain Night</figcaption>
+       <svg class="icon5day" viewbox="0 0 100 100">
+        <use xlink:href="#moon" x="-20" y="-15"/>
+         <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+         <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+         <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+         <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+         <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+         <use xlink:href="#whiteCloud" x="5" y="-7"/>
+       </svg> 
+     </figure>
+     
+     
+     
+       @elseif($fivedayforecast->weather == '-DRIZZLEDAY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Drizzle Day</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+           <use xlink:href="#rainDrizzle" x="30" y="65"/>
+          <use xlink:href="#rainDrizzle" x="35" y="65"/>
+          <use xlink:href="#rainDrizzle" x="40" y="65"/>
+          <use xlink:href="#rainDrizzle" x="45" y="65"/>
+          <use xlink:href="#rainDrizzle" x="50" y="65"/>
+          <use xlink:href="#rainDrizzle" x="55" y="65"/>
+          <use xlink:href="#rainDrizzle" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg> 
+      </figure>
+      @elseif($fivedayforecast->weather == '-DRIZZLENIGHT')
+      <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Drizzle Night</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+          <use xlink:href="#rainDrizzle" x="30" y="65"/>
+          <use xlink:href="#rainDrizzle" x="35" y="65"/>
+          <use xlink:href="#rainDrizzle" x="40" y="65"/>
+          <use xlink:href="#rainDrizzle" x="45" y="65"/>
+          <use xlink:href="#rainDrizzle" x="50" y="65"/>
+          <use xlink:href="#rainDrizzle" x="55" y="65"/>
+          <use xlink:href="#rainDrizzle" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+      </figure>
+     
+       @elseif($fivedayforecast->weather == 'DRIZZLEDAY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Day</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          <use xlink:href="#rainDrizzle" x="30" y="65"/>
+          <use xlink:href="#rainDrizzle" x="35" y="65"/>
+          <use xlink:href="#rainDrizzle" x="40" y="65"/>
+          <use xlink:href="#rainDrizzle" x="45" y="65"/>
+          <use xlink:href="#rainDrizzle" x="50" y="65"/>
+          <use xlink:href="#rainDrizzle" x="55" y="65"/>
+          <use xlink:href="#rainDrizzle" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg> 
+      </figure>
+      @elseif($fivedayforecast->weather == 'DRIZZLENIGHT')
+      <figure>
+        <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Night</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          <use xlink:href="#rainDrizzle" x="30" y="65"/>
+          <use xlink:href="#rainDrizzle" x="35" y="65"/>
+          <use xlink:href="#rainDrizzle" x="40" y="65"/>
+          <use xlink:href="#rainDrizzle" x="45" y="65"/>
+          <use xlink:href="#rainDrizzle" x="50" y="65"/>
+          <use xlink:href="#rainDrizzle" x="55" y="65"/>
+          <use xlink:href="#rainDrizzle" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+      </figure>
+     @elseif($fivedayforecast->weather == '+DRIZZLEDAY')
+     <figure>
+     <figcaption class="text-center fw-bold text-muted">Heavy Drizzle Day</figcaption>
+     <svg class="icon5day" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#rainDrizzle" x="25" y="65"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+     </svg> 
+     </figure>
+     @elseif($fivedayforecast->weather == '+DRIZZLENIGHT')
+     <figure>
+     <figcaption class="text-center fw-bold text-muted">Heavy Drizzle NIGHT</figcaption>
+     <svg class="icon5day" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#rainDrizzle" x="25" y="65"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+     </svg>
+     </figure>
+     
+       
+       @elseif($fivedayforecast->weather == 'HAIL')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">HAIL</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+          <use id="ice4" xlink:href="#icePellet" x="25" y="65"/>
+          <use id="ice1" xlink:href="#icePellet" x="35" y="65"/>
+          <use id="ice2" xlink:href="#icePellet" x="47" y="65"/>
+          <use id="ice3" xlink:href="#icePellet" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+        </svg>
+      </figure>
+     
+       @elseif($fivedayforecast->weather == 'MIST')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">MIST</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)" x="0" y="20"/>
+          <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+          <use id="mist" xlink:href="#mist" x="0" y="30"/>
+        </svg> 
+       </figure>
+       @elseif($fivedayforecast->weather == 'FOG') 
+     <figure>  
+        <figcaption class="text-center fw-bold text-muted">FOG</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+          <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+          <use id="mist" xlink:href="#mist" x="0" y="30"/>
+        </svg> 
+       </figure>
+     
+       @elseif($fivedayforecast->weather == 'HAZE') 
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">HAZE</figcaption>
+        <svg class="icon5day wind" viewBox="0 0 100 100" id="wind">
+         
+          <path id="wind1" d="M 8,37 L 35,37"/>
+          <path id="wind2" d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35"/>
+          <path id="wind3" d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41"/>
+          <path id="wind4" d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76"/>
+          <path id="wind5" d="M 5,75 L 48,75"/>  
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          {{-- <use xlink:href="#whiteCloud" x="7" /> --}}
+        </svg>
+      </figure>
+     
+     
+       @elseif($fivedayforecast->weather == 'SUNNY BREAKS')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">SUNNY BREAKS</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#whiteCloud" x="-7" y="-15"/>
+          <use xlink:href="#whiteCloud" x="7" />
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#whiteCloud" x="7" />
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg> 
+      </figure>
+       @elseif($fivedayforecast->weather == 'SUNNY INTERVALS')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">SUNNY INTERVALS</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+       
+      </figure>
+       @elseif($fivedayforecast->weather == 'FEW CLOUDS')
+     <figure>
+        <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+        </svg>
+       
+      </figure>
+     
+       @elseif($fivedayforecast->weather == 'PARTLY CLOUDY(DAY)')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Partly Cloudy Day</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+      </figure>
+       @elseif($fivedayforecast->weather == 'PARTLY CLOUDY(NIGHT)')
+       {{-- Partly Cloudy Night --}}
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+      </figure>
+       @elseif($fivedayforecast->weather == 'CLOUDY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Cloudy</figcaption>
+        <svg class="icon5day" viewbox="0 0 100 100">
+           <use xlink:href="#grayCloud" class="small-cloud"
+               fill="url(#gradGray)" />
+           <use xlink:href="#whiteCloud" x="7" />
+       </svg>
+       </figure>
+       @elseif($fivedayforecast->weather == 'CLEAR NIGHT')
+         <!-- Clear Night -->
+     <figure> 
+     <figcaption class="text-center fw-bold text-muted">Clear Night</figcaption>
+     <svg class="icon5day" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-15"/>
+     <use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+     <use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+     <use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+     </svg>
+     </figure>
+     @endif
+     
+     
+     
+     @else
+      {{-- The variable is empty --}}
+       {{ 'No Value' }}
+     @endif
+     
+        
 
-                              </div>
-                              <div class="text-dark fw-bold fs-3">35°C - 37°C</div>
-                            </div>
-                          </li>
-                          <li class="list-group-item my-4" style="background-color: #EAECEF">
-                            <div class="d-flex justify-content-evenly bd-highlight"><!-- New -->
-                              <div class="text-dark fw-bold fs-3">Fri</div>
-                              <div class="text-dark fw-bold">
-                                <figure>
-                                  <svg class="icon5day" viewbox="0 0 100 100">
-                                    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
-                                    <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
-                                    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
-                                    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
-                                    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
-                                    <use xlink:href="#whiteCloud" x="5" y="-7"/>
-                                  </svg>
-                                  <figcaption class="figure-caption">Rain</figcaption>
-                                </figure>
-                              </div>
-                              <div class="text-dark fw-bold fs-3">26°C - 30°C</div>
-                            </div>
-                          </li>
-                        </ul>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+      <div class="col">
+        <h3 class="text-dark fw-bold fs-3" style="font-size: 30px; text-align: right"> {{$fivedayforecast->min_temp}}°C  - {{$fivedayforecast->max_temp}}°C</h3>
+         </div>
+    </div>
+  </div>
+</div>
+<br>
+     @empty
+    <p> No 5 days Forecast Provided</p>
+  @endforelse
                     </div>
                 </div>
                     </div>
@@ -2686,17 +3056,12 @@
                       {{-- search  --}}
                       <label for="selectedDist" class="form-label fw-bold fs-3"> Select City:</label>
                       <select class="form-select" aria-label="Default select" id="selectedDist">
-                        <option selected="">Select City</option>
-                        @forelse ($districts as $district)
-                        <option value="{{ $district->districtname }}">{{ $district->districtname }}</option> 
+                        <option value="null">Select City</option>
+                        @forelse ($districts as $districtt)
+                        <option value="{{ $districtt->districtname }}">{{ $districtt->districtname }}</option> 
                         @empty
                         <option value="2">No Cities available</option>
                         @endforelse
-
-                        {{-- 
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option> --}}
                       </select>
                       </div>
                       {{-- districts list --}} 
@@ -2707,22 +3072,385 @@
                                   <div class="d-flex">
                                     <div class="col-3">
                                       {{-- weather condition --}}
-                                      <!-- Sunny -->
-                                      <figure> 
-                                        <svg class="districtsicon" viewbox="0 0 100 100">
-                                            <use xlink:href="#sun" />
-                                        </svg>
-                                    </figure>
+                              
+   @if(!empty($weather))
+   {{-- The variable is not empty --}}
+  @if ($weather == 'SUNNY')
+     <!-- Sunny -->
+<figure> <figcaption class="text-center fw-bold">Sunny</figcaption>
+<svg class="districtsicon" viewbox="0 0 100 100">
+   <use xlink:href="#sun" />
+</svg>  </figure>
+  @elseif($weather == '-TSRA')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
+    <svg class="districtsicon" viewbox="0 0 100 100">
+    
+     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/> 
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+     <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+   </svg>
+ </figure>
+ 
+  @elseif($weather == 'TSRA')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
+    <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+     <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+   </svg>
+ </figure>
+  @elseif($weather == '+TSRA')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
+    <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+     <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+   </svg>
+ </figure>
+  @elseif($weather == '-RAINDAY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Rain Day</figcaption>
+  <svg class="districtsicon" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
+</figure>
+ @elseif($weather == '-RAINNIGHT')
+ <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Rain Night</figcaption>
+  <svg class="districtsicon" viewbox="0 0 100 100">
+   <use xlink:href="#moon" x="-20" y="-15"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
+</figure>
+
+  @elseif($weather == 'RAINDAY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Moderate  Rain Day</figcaption>
+  <svg class="districtsicon" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    
+    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
+</figure>
+   @elseif($weather == 'RAINNIGHT')
+   <figure>
+     <figcaption class="text-center fw-bold text-muted">Moderate Rain Night</figcaption>
+    <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+   
+      <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+      <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+      <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+      <use xlink:href="#whiteCloud" x="5" y="-7"/>
+    </svg> 
+  </figure>
+
+
+  @elseif($weather == '+RAINDAY')
+ 
+  <figure>
+    <figcaption class="text-center fw-bold text-muted">Heavy Rain Day</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+   </svg> 
+ </figure>
+ @elseif($weather == '+RAINNIGHT')
+ 
+ <figure>
+   <figcaption class="text-center fw-bold text-muted">Heavy Rain Night</figcaption>
+  <svg class="districtsicon" viewbox="0 0 100 100">
+   <use xlink:href="#moon" x="-20" y="-15"/>
+    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+    <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
+</figure>
+
+
+
+  @elseif($weather == '-DRIZZLEDAY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Drizzle Day</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+      <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#rainDrizzle" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="55" y="65"/>
+     <use xlink:href="#rainDrizzle" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg> 
+ </figure>
+ @elseif($weather == '-DRIZZLENIGHT')
+ <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Drizzle Night</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#rainDrizzle" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="55" y="65"/>
+     <use xlink:href="#rainDrizzle" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+ </figure>
+
+  @elseif($weather == 'DRIZZLEDAY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Day</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#rainDrizzle" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="55" y="65"/>
+     <use xlink:href="#rainDrizzle" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg> 
+ </figure>
+ @elseif($weather == 'DRIZZLENIGHT')
+ <figure>
+   <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Night</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#rainDrizzle" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="55" y="65"/>
+     <use xlink:href="#rainDrizzle" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+ </figure>
+@elseif($weather == '+DRIZZLEDAY')
+<figure>
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle Day</figcaption>
+<svg class="districtsicon" viewbox="0 0 100 100">
+<use xlink:href="#sun" x="-12" y="-18"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg> 
+</figure>
+@elseif($weather == '+DRIZZLENIGHT')
+<figure>
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle NIGHT</figcaption>
+<svg class="districtsicon" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-20" y="-15"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg>
+</figure>
+
+  
+  @elseif($weather == 'HAIL')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">HAIL</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+     <use id="ice4" xlink:href="#icePellet" x="25" y="65"/>
+     <use id="ice1" xlink:href="#icePellet" x="35" y="65"/>
+     <use id="ice2" xlink:href="#icePellet" x="47" y="65"/>
+     <use id="ice3" xlink:href="#icePellet" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+   </svg>
+ </figure>
+
+  @elseif($weather == 'MIST')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">MIST</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)" x="0" y="20"/>
+     <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+     <use id="mist" xlink:href="#mist" x="0" y="30"/>
+   </svg> 
+  </figure>
+  @elseif($weather == 'FOG') 
+<figure>  
+   <figcaption class="text-center fw-bold text-muted">FOG</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+     <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+     <use id="mist" xlink:href="#mist" x="0" y="30"/>
+   </svg> 
+  </figure>
+
+  @elseif($weather == 'HAZE') 
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">HAZE</figcaption>
+   <svg class="districtsicon wind" viewBox="0 0 100 100" id="wind">
+    
+     <path id="wind1" d="M 8,37 L 35,37"/>
+     <path id="wind2" d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35"/>
+     <path id="wind3" d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41"/>
+     <path id="wind4" d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76"/>
+     <path id="wind5" d="M 5,75 L 48,75"/>  
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     {{-- <use xlink:href="#whiteCloud" x="7" /> --}}
+   </svg>
+ </figure>
+
+
+  @elseif($weather == 'SUNNY BREAKS')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">SUNNY BREAKS</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#whiteCloud" x="-7" y="-15"/>
+     <use xlink:href="#whiteCloud" x="7" />
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#whiteCloud" x="7" />
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg> 
+ </figure>
+  @elseif($weather == 'SUNNY INTERVALS')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">SUNNY INTERVALS</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+  
+ </figure>
+  @elseif($weather == 'FEW CLOUDS')
+<figure>
+   <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+   </svg>
+  
+ </figure>
+
+  @elseif($weather == 'PARTLY CLOUDY(DAY)')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Partly Cloudy Day</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+ </figure>
+  @elseif($weather == 'PARTLY CLOUDY(NIGHT)')
+  {{-- Partly Cloudy Night --}}
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+ </figure>
+  @elseif($weather == 'CLOUDY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Cloudy</figcaption>
+   <svg class="districtsicon" viewbox="0 0 100 100">
+      <use xlink:href="#grayCloud" class="small-cloud"
+          fill="url(#gradGray)" />
+      <use xlink:href="#whiteCloud" x="7" />
+  </svg>
+  </figure>
+  @elseif($weather == 'CLEAR NIGHT')
+    <!-- Clear Night -->
+<figure> 
+<figcaption class="text-center fw-bold text-muted">Clear Night</figcaption>
+<svg class="districtsicon" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-15"/>
+<use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+<use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+<use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+</svg>
+</figure>
+@endif
+
+
+
+@else
+ {{-- The variable is empty --}}
+  {{ 'No Value' }}
+@endif
+
                                     </div>
                                     <div class="col-4 align-self-start">
                                       {{-- location --}}
-                                      <h4 class="card-title text-left">Accra  <i class='bi bi-cursor fs-6'></i></h4>
-                                      <p class="card-text text-left">10:20 AM</p>
+                                      <h4 class="card-title text-left">
+                                        @if(!empty($district))
+                                        {{-- The variable is not empty --}}
+                                       {{ $district}}
+                                   @else
+                                      {{-- The variable is empty --}}
+                                       {{ 'No Value' }}
+                                   @endif 
+                                        {{-- <i class='bi bi-cursor fs-6'></i> --}}
+                                      
+                                      </h4>
+                                      <p class="card-text text-left">{{$time }}</p>
                                     </div>
-                                    <div class="col  ">
+                                    <div class="col">
                                       {{-- temperature --}}
                                       <h3 class="fw-bold" style="font-size: 30px; text-align: right">
-                                        31°C
+                                        @if(!empty($maxTemp))
+                                              {{-- The variable is not empty --}}
+                                             {{ $maxTemp }}°C
+                                         @else
+                                            {{-- The variable is empty --}}
+                                             {{ 'No Value' }}
+                                         @endif
                                     </h3>
                                        </div>
                                   </div>
@@ -2730,105 +3458,389 @@
                                 </div>
                               </div>  {{--end of card 1--}}
  {{-- card 2 --}} 
- <div class="card my-2" style="border-radius: 20px;">
-  <div class="card-body">
-    <div class="d-flex">
-      <div class="col-3">
-        {{-- weather condition --}}
-        {{-- rainy --}}
+ @forelse ($eachDistrictWeathers as $eachDistrictWeather)
+ 
+   <div class="card my-2" style="border-radius: 20px;">
+    <div class="card-body">
+      <div class="d-flex">
+        <div class="col-3">
+          {{-- weather condition --}}
+          @if(!empty($eachDistrictWeather))
+          {{-- The variable is not empty --}}
+         @if ($eachDistrictWeather->weather == 'SUNNY')
+            <!-- Sunny -->
+       <figure> <figcaption class="text-center fw-bold">Sunny</figcaption>
+       <svg class="districtsicon" viewbox="0 0 100 100">
+          <use xlink:href="#sun" />
+       </svg>  </figure>
+         @elseif($eachDistrictWeather->weather == '-TSRA')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
+           <svg class="districtsicon" viewbox="0 0 100 100">
+           
+            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/> 
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+          </svg>
+        </figure>
+        
+         @elseif($eachDistrictWeather->weather == 'TSRA')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
+           <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+          </svg>
+        </figure>
+         @elseif($eachDistrictWeather->weather == '+TSRA')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
+           <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+            <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+            <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+          </svg>
+        </figure>
+         @elseif($eachDistrictWeather->weather == '-RAINDAY')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Slight Rain Day</figcaption>
+         <svg class="districtsicon" viewbox="0 0 100 100">
+           <use xlink:href="#sun" x="-12" y="-18"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+       </figure>
+        @elseif($eachDistrictWeather->weather == '-RAINNIGHT')
         <figure>
+          <figcaption class="text-center fw-bold text-muted">Slight Rain Night</figcaption>
+         <svg class="districtsicon" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+       </figure>
+       
+         @elseif($eachDistrictWeather->weather == 'RAINDAY')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Moderate  Rain Day</figcaption>
+         <svg class="districtsicon" viewbox="0 0 100 100">
+           <use xlink:href="#sun" x="-12" y="-18"/>
+           
+           <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+       </figure>
+          @elseif($eachDistrictWeather->weather == 'RAINNIGHT')
+          <figure>
+            <figcaption class="text-center fw-bold text-muted">Moderate Rain Night</figcaption>
+           <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#moon" x="-20" y="-15"/>
+          
+             <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+             <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+             <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+             <use xlink:href="#whiteCloud" x="5" y="-7"/>
+           </svg> 
+         </figure>
+       
+       
+         @elseif($eachDistrictWeather->weather == '+RAINDAY')
+        
+         <figure>
+           <figcaption class="text-center fw-bold text-muted">Heavy Rain Day</figcaption>
           <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
             <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
             <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
             <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
             <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
             <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
             <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          </svg> 
+        </figure>
+        @elseif($eachDistrictWeather->weather == '+RAINNIGHT')
+        
+        <figure>
+          <figcaption class="text-center fw-bold text-muted">Heavy Rain Night</figcaption>
+         <svg class="districtsicon" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+           <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+           <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+           <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+       </figure>
+       
+       
+       
+         @elseif($eachDistrictWeather->weather == '-DRIZZLEDAY')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Slight Drizzle Day</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+             <use xlink:href="#rainDrizzle" x="30" y="65"/>
+            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg> 
+        </figure>
+        @elseif($eachDistrictWeather->weather == '-DRIZZLENIGHT')
+        <figure>
+          <figcaption class="text-center fw-bold text-muted">Slight Drizzle Night</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#moon" x="-20" y="-15"/>
+            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="7" />
           </svg>
         </figure>
+       
+         @elseif($eachDistrictWeather->weather == 'DRIZZLEDAY')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Day</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg> 
+        </figure>
+        @elseif($eachDistrictWeather->weather == 'DRIZZLENIGHT')
+        <figure>
+          <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Night</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#moon" x="-20" y="-15"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+        </figure>
+       @elseif($eachDistrictWeather->weather == '+DRIZZLEDAY')
+       <figure>
+       <figcaption class="text-center fw-bold text-muted">Heavy Drizzle Day</figcaption>
+       <svg class="districtsicon" viewbox="0 0 100 100">
+       <use xlink:href="#sun" x="-12" y="-18"/>
+       <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+       <use xlink:href="#rainDrizzle" x="25" y="65"/>
+       <use xlink:href="#rainDrizzle" x="30" y="65"/>
+       <use xlink:href="#rainDrizzle" x="35" y="65"/>
+       <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+       <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+       <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+       <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+       <use xlink:href="#rainDrizzle" x="40" y="65"/>
+       <use xlink:href="#rainDrizzle" x="45" y="65"/>
+       <use xlink:href="#whiteCloud" x="7" />
+       </svg> 
+       </figure>
+       @elseif($eachDistrictWeather->weather == '+DRIZZLENIGHT')
+       <figure>
+       <figcaption class="text-center fw-bold text-muted">Heavy Drizzle NIGHT</figcaption>
+       <svg class="districtsicon" viewbox="0 0 100 100">
+       <use xlink:href="#moon" x="-20" y="-15"/>
+       <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+       <use xlink:href="#rainDrizzle" x="25" y="65"/>
+       <use xlink:href="#rainDrizzle" x="30" y="65"/>
+       <use xlink:href="#rainDrizzle" x="35" y="65"/>
+       <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+       <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+       <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+       <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+       <use xlink:href="#rainDrizzle" x="40" y="65"/>
+       <use xlink:href="#rainDrizzle" x="45" y="65"/>
+       <use xlink:href="#whiteCloud" x="7" />
+       </svg>
+       </figure>
+       
+         
+         @elseif($eachDistrictWeather->weather == 'HAIL')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">HAIL</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+            <use id="ice4" xlink:href="#icePellet" x="25" y="65"/>
+            <use id="ice1" xlink:href="#icePellet" x="35" y="65"/>
+            <use id="ice2" xlink:href="#icePellet" x="47" y="65"/>
+            <use id="ice3" xlink:href="#icePellet" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          </svg>
+        </figure>
+       
+         @elseif($eachDistrictWeather->weather == 'MIST')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">MIST</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)" x="0" y="20"/>
+            <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+            <use id="mist" xlink:href="#mist" x="0" y="30"/>
+          </svg> 
+         </figure>
+         @elseif($eachDistrictWeather->weather == 'FOG') 
+       <figure>  
+          <figcaption class="text-center fw-bold text-muted">FOG</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+            <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+            <use id="mist" xlink:href="#mist" x="0" y="30"/>
+          </svg> 
+         </figure>
+       
+         @elseif($eachDistrictWeather->weather == 'HAZE') 
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">HAZE</figcaption>
+          <svg class="districtsicon wind" viewBox="0 0 100 100" id="wind">
+           
+            <path id="wind1" d="M 8,37 L 35,37"/>
+            <path id="wind2" d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35"/>
+            <path id="wind3" d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41"/>
+            <path id="wind4" d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76"/>
+            <path id="wind5" d="M 5,75 L 48,75"/>  
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            {{-- <use xlink:href="#whiteCloud" x="7" /> --}}
+          </svg>
+        </figure>
+       
+       
+         @elseif($eachDistrictWeather->weather == 'SUNNY BREAKS')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">SUNNY BREAKS</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#whiteCloud" x="-7" y="-15"/>
+            <use xlink:href="#whiteCloud" x="7" />
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#whiteCloud" x="7" />
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg> 
+        </figure>
+         @elseif($eachDistrictWeather->weather == 'SUNNY INTERVALS')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">SUNNY INTERVALS</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+         
+        </figure>
+         @elseif($eachDistrictWeather->weather == 'FEW CLOUDS')
+       <figure>
+          <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          </svg>
+         
+        </figure>
+       
+         @elseif($eachDistrictWeather->weather == 'PARTLY CLOUDY(DAY)')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Partly Cloudy Day</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+        </figure>
+         @elseif($eachDistrictWeather->weather == 'PARTLY CLOUDY(NIGHT)')
+         {{-- Partly Cloudy Night --}}
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+            <use xlink:href="#moon" x="-20" y="-15"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+        </figure>
+         @elseif($eachDistrictWeather->weather == 'CLOUDY')
+         <figure>
+          <figcaption class="text-center fw-bold text-muted">Cloudy</figcaption>
+          <svg class="districtsicon" viewbox="0 0 100 100">
+             <use xlink:href="#grayCloud" class="small-cloud"
+                 fill="url(#gradGray)" />
+             <use xlink:href="#whiteCloud" x="7" />
+         </svg>
+         </figure>
+         @elseif($eachDistrictWeather->weather == 'CLEAR NIGHT')
+           <!-- Clear Night -->
+       <figure> 
+       <figcaption class="text-center fw-bold text-muted">Clear Night</figcaption>
+       <svg class="districtsicon" viewbox="0 0 100 100">
+       <use xlink:href="#moon" x="-15"/>
+       <use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+       <use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+       <use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+       </svg>
+       </figure>
+       @endif
+       
+       
+       
+       @else
+        {{-- The variable is empty --}}
+         {{ 'No Value' }}
+       @endif
+       
+        </div>
+        <div class="col-4 align-self-start">
+          {{-- location --}}
+          <h4 class="card-title text-left">  {{  $eachDistrictWeather->districts }}</h4>
+          <p class="card-text text-left">{{$time}}</p>
+        </div>
+        <div class="col">
+          {{-- temperature --}}
+          <h3 class="fw-bold" style="font-size: 30px; text-align: right">
+            {{  $eachDistrictWeather->max_temp }}°C
+        </h3>
+           </div>
       </div>
-      <div class="col-4 align-self-start">
-        {{-- location --}}
-        <h4 class="card-title text-left">Kumasi  <i class='bi bi-cursor fs-6'></i></h4>
-        <p class="card-text text-left">10:20 AM</p>
-      </div>
-      <div class="col  ">
-        {{-- temperature --}}
-        <h3 class="fw-bold" style="font-size: 30px; text-align: right">
-          19°C
-      </h3>
-         </div>
+      
     </div>
-    
-  </div>
-</div>  {{--end of card 2--}}
- {{-- card 3 --}} 
-                            <div class="card my-2" style="border-radius: 20px;">
-                                <div class="card-body">
-                                  <div class="d-flex">
-                                    <div class="col-3">
-                                      {{-- weather condition --}}
-                                      <figure>
-                                        <svg class="districtsicon wind" viewBox="0 0 100 100"
-                                            id="wind">
-                                            <path id="wind1" d="M 8,37 L 35,37" />
-                                            <path id="wind2"
-                                                d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
-                                            <path id="wind3"
-                                                d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
-                                            <path id="wind4"
-                                                d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
-                                            <path id="wind5" d="M 5,75 L 48,75" />
-                                        </svg> 
-                                    </figure>
-                                    </div>
-                                    <div class="col-4 align-self-start">
-                                      {{-- location --}}
-                                      <h4 class="card-title text-left">Takoradi  <i class='bi bi-cursor fs-6'></i></h4>
-                                      <p class="card-text text-left">10:20 AM</p>
-                                    </div>
-                                    <div class="col  ">
-                                      {{-- temperature --}}
-                                      <h3 class="fw-bold" style="font-size: 30px; text-align: right">
-                                        24°C
-                                    </h3>
-                                       </div>
-                                  </div>
-                                  
-                                </div>
-                              </div>  {{--end of card 3--}}
-                               {{-- card 4 --}} 
-                            <div class="card my-2" style="border-radius: 20px;">
-                                <div class="card-body">
-                                  <div class="d-flex">
-                                    <div class="col-3">
-                                      {{-- weather condition --}}
-                                      <figure>
-                                        <svg class="districtsicon" viewbox="0 0 100 100">
-                                          <use xlink:href="#moon" x="-20" y="-15"/>
-                                          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
-                                          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
-                                          <use id="drop3" xlink:href="#rainDrop" x="45" y="65"/>
-                                          <use xlink:href="#whiteCloud" x="7" />
-                                        </svg>
-                                        <figcaption class="figure-caption">Showers-Night</figcaption>
-                                      </figure>
-                                    </div>
-                                    <div class="col-4 align-self-start">
-                                      {{-- location --}}
-                                      <h4 class="card-title text-left">Bole  <i class='bi bi-cursor fs-6'></i></h4>
-                                      <p class="card-text text-left">10:20 AM</p>
-                                    </div>
-                                    <div class="col  ">
-                                      {{-- temperature --}}
-                                      <h3 class="fw-bold" style="font-size: 30px; text-align: right">
-                                        33°C
-                                    </h3>
-                                       </div>
-                                  </div>
-                                  
-                                </div>
-                              </div>  {{--end of card 4--}}
+  </div>  
+
+ @empty
+   <p>No Cities Available</p>
+
+ @endforelse
+ 
+  
+                        
                             </div>  {{-- end of districts list --}} 
 
                         
@@ -2841,74 +3853,1174 @@
                             <div class="d-flex">
 <div class="col-6 align-self-start">
                                       {{-- location --}}
-                                      <h4 class="card-title text-left fw-bold">Accra  </h4>
-                                      <p class="card-text text-left">chance of rain: 20%</p>
+                                      <h4 class="card-title text-left fw-bold">
+                                        @if(!empty($district))
+                                        {{-- The variable is not empty --}}
+                                       {{ $district}}
+                                   @else
+                                      {{-- The variable is empty --}}
+                                       {{ 'No Value' }}
+                                   @endif 
+                                      </h4>
+                                      <p class="card-text text-left">chance of rain:  @if(!empty($currentConditionRain))
+                                        {{-- The variable is not empty --}}
+                                       {{ $currentConditionRain}}
+                                   @else
+                                      {{-- The variable is empty --}}
+                                       {{ 'No Value' }}
+                                   @endif
+                                  </p>
                                       {{-- temperature --}}
                                       <h3 class="fw-bold" style="font-size: 30px; text-align: left">
-                                        31°C
+                                        @if(!empty($maxTemp))
+                                        {{-- The variable is not empty --}}
+                                       {{ $maxTemp }}°C
+                                   @else
+                                      {{-- The variable is empty --}}
+                                       {{ 'No Value' }}
+                                   @endif
                                     </h3>
                                     </div>
 <div class="col-6">
    <!-- Sunny -->
-   <figure> 
+   @if(!empty($weather))
+   {{-- The variable is not empty --}}
+  @if ($weather == 'SUNNY')
+     <!-- Sunny -->
+<figure> <figcaption class="text-center fw-bold">Sunny</figcaption>
+<svg class="districtsiconSide" viewbox="0 0 100 100">
+   <use xlink:href="#sun" />
+</svg>  </figure>
+  @elseif($weather == '-TSRA')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
     <svg class="districtsiconSide" viewbox="0 0 100 100">
-        <use xlink:href="#sun" />
-    </svg>
+    
+     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/> 
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+     <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+   </svg>
+ </figure>
+ 
+  @elseif($weather == 'TSRA')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
+    <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+     <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+   </svg>
+ </figure>
+  @elseif($weather == '+TSRA')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
+    <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+     <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+     <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+   </svg>
+ </figure>
+  @elseif($weather == '-RAINDAY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Rain Day</figcaption>
+  <svg class="districtsiconSide" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
 </figure>
+ @elseif($weather == '-RAINNIGHT')
+ <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Rain Night</figcaption>
+  <svg class="districtsiconSide" viewbox="0 0 100 100">
+   <use xlink:href="#moon" x="-20" y="-15"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
+</figure>
+
+  @elseif($weather == 'RAINDAY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Moderate  Rain Day</figcaption>
+  <svg class="districtsiconSide" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    
+    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
+</figure>
+   @elseif($weather == 'RAINNIGHT')
+   <figure>
+     <figcaption class="text-center fw-bold text-muted">Moderate Rain Night</figcaption>
+    <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+   
+      <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+      <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+      <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+      <use xlink:href="#whiteCloud" x="5" y="-7"/>
+    </svg> 
+  </figure>
+
+
+  @elseif($weather == '+RAINDAY')
+ 
+  <figure>
+    <figcaption class="text-center fw-bold text-muted">Heavy Rain Day</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+   </svg> 
+ </figure>
+ @elseif($weather == '+RAINNIGHT')
+ 
+ <figure>
+   <figcaption class="text-center fw-bold text-muted">Heavy Rain Night</figcaption>
+  <svg class="districtsiconSide" viewbox="0 0 100 100">
+   <use xlink:href="#moon" x="-20" y="-15"/>
+    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+    <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
+</figure>
+
+
+
+  @elseif($weather == '-DRIZZLEDAY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Drizzle Day</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+      <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#rainDrizzle" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="55" y="65"/>
+     <use xlink:href="#rainDrizzle" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg> 
+ </figure>
+ @elseif($weather == '-DRIZZLENIGHT')
+ <figure>
+   <figcaption class="text-center fw-bold text-muted">Slight Drizzle Night</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#rainDrizzle" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="55" y="65"/>
+     <use xlink:href="#rainDrizzle" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+ </figure>
+
+  @elseif($weather == 'DRIZZLEDAY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Day</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#rainDrizzle" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="55" y="65"/>
+     <use xlink:href="#rainDrizzle" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg> 
+ </figure>
+ @elseif($weather == 'DRIZZLENIGHT')
+ <figure>
+   <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Night</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#rainDrizzle" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="55" y="65"/>
+     <use xlink:href="#rainDrizzle" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+ </figure>
+@elseif($weather == '+DRIZZLEDAY')
+<figure>
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle Day</figcaption>
+<svg class="districtsiconSide" viewbox="0 0 100 100">
+<use xlink:href="#sun" x="-12" y="-18"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg> 
+</figure>
+@elseif($weather == '+DRIZZLENIGHT')
+<figure>
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle NIGHT</figcaption>
+<svg class="districtsiconSide" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-20" y="-15"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg>
+</figure>
+
+  
+  @elseif($weather == 'HAIL')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">HAIL</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+     <use id="ice4" xlink:href="#icePellet" x="25" y="65"/>
+     <use id="ice1" xlink:href="#icePellet" x="35" y="65"/>
+     <use id="ice2" xlink:href="#icePellet" x="47" y="65"/>
+     <use id="ice3" xlink:href="#icePellet" x="60" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+   </svg>
+ </figure>
+
+  @elseif($weather == 'MIST')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">MIST</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)" x="0" y="20"/>
+     <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+     <use id="mist" xlink:href="#mist" x="0" y="30"/>
+   </svg> 
+  </figure>
+  @elseif($weather == 'FOG') 
+<figure>  
+   <figcaption class="text-center fw-bold text-muted">FOG</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+     <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+     <use id="mist" xlink:href="#mist" x="0" y="30"/>
+   </svg> 
+  </figure>
+
+  @elseif($weather == 'HAZE') 
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">HAZE</figcaption>
+   <svg class="icon wind" viewBox="0 0 100 100" id="wind">
+    
+     <path id="wind1" d="M 8,37 L 35,37"/>
+     <path id="wind2" d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35"/>
+     <path id="wind3" d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41"/>
+     <path id="wind4" d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76"/>
+     <path id="wind5" d="M 5,75 L 48,75"/>  
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     {{-- <use xlink:href="#whiteCloud" x="7" /> --}}
+   </svg>
+ </figure>
+
+
+  @elseif($weather == 'SUNNY BREAKS')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">SUNNY BREAKS</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#whiteCloud" x="-7" y="-15"/>
+     <use xlink:href="#whiteCloud" x="7" />
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#whiteCloud" x="7" />
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg> 
+ </figure>
+  @elseif($weather == 'SUNNY INTERVALS')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">SUNNY INTERVALS</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+  
+ </figure>
+  @elseif($weather == 'FEW CLOUDS')
+<figure>
+   <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+   </svg>
+  
+ </figure>
+
+  @elseif($weather == 'PARTLY CLOUDY(DAY)')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Partly Cloudy Day</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+ </figure>
+  @elseif($weather == 'PARTLY CLOUDY(NIGHT)')
+  {{-- Partly Cloudy Night --}}
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#whiteCloud" x="7" />
+   </svg>
+ </figure>
+  @elseif($weather == 'CLOUDY')
+  <figure>
+   <figcaption class="text-center fw-bold text-muted">Cloudy</figcaption>
+   <svg class="districtsiconSide" viewbox="0 0 100 100">
+      <use xlink:href="#grayCloud" class="small-cloud"
+          fill="url(#gradGray)" />
+      <use xlink:href="#whiteCloud" x="7" />
+  </svg>
+  </figure>
+  @elseif($weather == 'CLEAR NIGHT')
+    <!-- Clear Night -->
+<figure> 
+<figcaption class="text-center fw-bold text-muted">Clear Night</figcaption>
+<svg class="districtsiconSide" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-15"/>
+<use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+<use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+<use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+</svg>
+</figure>
+@endif
+
+
+
+@else
+ {{-- The variable is empty --}}
+  {{ 'No Value' }}
+@endif
+
 </div>
                             </div>
                              </div>
 <hr>
-{{-- 24hr forecast for district page  --}}
+{{--hrs24iconwind 24hr forecast for district page hrs24icon --}}
 <h5 class="fw-bold p-2"> Today's Forecast</h5>
 <div class="d-flex justify-content-center bd-highlight mb-2">
   {{-- morning --}}
   <div class="col  px-2">
-      <p class="card-text"><small class="text-muted"> Morning(6:00 -
+      <p class="card-text"><small class="text-muted"> Morning(12:00am -
               11:59am)
           </small></p>
-      <figure>
+          @if(!empty($weatherM))
+          {{-- The variable is not empty --}}
+         @if ($weatherM == 'SUNNY')
+            <!-- Sunny -->
+    <figure> 
+      <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#sun" />
+      </svg> 
+      <figcaption class="text-center fw-bold">Sunny</figcaption>
+    </figure>
+         @elseif($weatherM == '-TSRA')
+         <figure>
           <svg class="hrs24icon" viewbox="0 0 100 100">
-              <use xlink:href="#grayCloud" class="small-cloud"
-                  fill="url(#gradGray)" />
-              <use xlink:href="#whiteCloud" x="7" />
+            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/> 
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
+        </figure>
+        
+         @elseif($weatherM == 'TSRA')
+         <figure>
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
+        </figure>
+         @elseif($weatherM == '+TSRA')
+         <figure>
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+            <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+            <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
+        </figure>
+         @elseif($weatherM == '-RAINDAY')
+         <figure>
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+           <use xlink:href="#sun" x="-12" y="-18"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+         <figcaption class="text-center fw-bold text-muted">Slight Rain Day</figcaption>
+       </figure>
+        @elseif($weatherM == '-RAINNIGHT')
+        <figure>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+         <figcaption class="text-center fw-bold text-muted">Slight Rain Night</figcaption>
+       </figure>
+
+         @elseif($weatherM == 'RAINDAY')
+         <figure>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+           <use xlink:href="#sun" x="-12" y="-18"/>
+           <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+         <figcaption class="text-center fw-bold text-muted">Moderate  Rain Day</figcaption>
+       </figure>
+          @elseif($weatherM == 'RAINNIGHT')
+          <figure>
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#moon" x="-20" y="-15"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+             <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+             <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+             <use xlink:href="#whiteCloud" x="5" y="-7"/>
+           </svg> 
+           <figcaption class="text-center fw-bold text-muted">Moderate Rain Night</figcaption>
+         </figure>
+
+
+         @elseif($weatherM == '+RAINDAY')
+        
+         <figure>
+           <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+            <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+            <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          </svg> 
+          <figcaption class="text-center fw-bold text-muted">Heavy Rain Day</figcaption>
+        </figure>
+        @elseif($weatherM == '+RAINNIGHT')
+        
+        <figure>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+           <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+           <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+           <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+         <figcaption class="text-center fw-bold text-muted">Heavy Rain Night</figcaption>
+       </figure>
+
+
+
+         @elseif($weatherM == '-DRIZZLEDAY')
+         <figure>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+             <use xlink:href="#rainDrizzle" x="30" y="65"/>
+            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg> 
+          <figcaption class="text-center fw-bold text-muted">Slight Drizzle Day</figcaption>
+        </figure>
+        @elseif($weatherM == '-DRIZZLENIGHT')
+        <figure>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#moon" x="-20" y="-15"/>
+            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">Slight Drizzle Night</figcaption>
+        </figure>
+
+         @elseif($weatherM == 'DRIZZLEDAY')
+         <figure>
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg> 
+          <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Day</figcaption>
+        </figure>
+        @elseif($weatherM == 'DRIZZLENIGHT')
+        <figure>
+           <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#moon" x="-20" y="-15"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Night</figcaption>
+        </figure>
+@elseif($weatherM == '+DRIZZLEDAY')
+<figure>
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#sun" x="-12" y="-18"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg> 
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle Day</figcaption>
+</figure>
+@elseif($weatherM == '+DRIZZLENIGHT')
+<figure>
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-20" y="-15"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg>
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle NIGHT</figcaption>
+</figure>
+
+         
+         @elseif($weatherM == 'HAIL')
+         <figure>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+            <use id="ice4" xlink:href="#icePellet" x="25" y="65"/>
+            <use id="ice1" xlink:href="#icePellet" x="35" y="65"/>
+            <use id="ice2" xlink:href="#icePellet" x="47" y="65"/>
+            <use id="ice3" xlink:href="#icePellet" x="60" y="65"/>
+            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">HAIL</figcaption>
+        </figure>
+      
+         @elseif($weatherM == 'MIST')
+         <figure>
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)" x="0" y="20"/>
+            <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+            <use id="mist" xlink:href="#mist" x="0" y="30"/>
+          </svg> 
+          <figcaption class="text-center fw-bold text-muted">MIST</figcaption>
+         </figure>
+         @elseif($weatherM == 'FOG') 
+       <figure>  
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+            <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+            <use id="mist" xlink:href="#mist" x="0" y="30"/>
+          </svg> 
+          <figcaption class="text-center fw-bold text-muted">FOG</figcaption>
+         </figure>
+
+         @elseif($weatherM == 'HAZE') 
+         <figure>
+         <svg class="icon wind" viewBox="0 0 100 100" id="wind">
+           <path id="wind1" d="M 8,37 L 35,37"/>
+            <path id="wind2" d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35"/>
+            <path id="wind3" d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41"/>
+            <path id="wind4" d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76"/>
+            <path id="wind5" d="M 5,75 L 48,75"/>  
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            {{-- <use xlink:href="#whiteCloud" x="7" /> --}}
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">HAZE</figcaption>
+        </figure>
+
+
+         @elseif($weatherM == 'SUNNY BREAKS')
+         <figure>
+           <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#whiteCloud" x="-7" y="-15"/>
+            <use xlink:href="#whiteCloud" x="7" />
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#whiteCloud" x="7" />
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg> 
+          <figcaption class="text-center fw-bold text-muted">SUNNY BREAKS</figcaption>
+        </figure>
+         @elseif($weatherM == 'SUNNY INTERVALS')
+         <figure>
+          <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">SUNNY INTERVALS</figcaption>
+        </figure>
+         @elseif($weatherM == 'FEW CLOUDS')
+       <figure>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
           </svg>
           <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
-      </figure>
+        </figure>
+
+         @elseif($weatherM == 'PARTLY CLOUDY(DAY)')
+         <figure>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#sun" x="-12" y="-18"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">Partly Cloudy Day</figcaption>
+        </figure>
+         @elseif($weatherM == 'PARTLY CLOUDY(NIGHT)')
+         {{-- Partly Cloudy Night --}}
+         <figure>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+            <use xlink:href="#moon" x="-20" y="-15"/>
+            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+            <use xlink:href="#whiteCloud" x="7" />
+          </svg>
+          <figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+        </figure>
+         @elseif($weatherM == 'CLOUDY')
+         <figure>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+             <use xlink:href="#grayCloud" class="small-cloud"
+                 fill="url(#gradGray)" />
+             <use xlink:href="#whiteCloud" x="7" />
+         </svg>
+         <figcaption class="text-center fw-bold text-muted">Cloudy</figcaption>
+         </figure>
+         @elseif($weatherM == 'CLEAR NIGHT')
+           <!-- Clear Night -->
+<figure> 
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-15"/>
+<use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+<use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+<use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+</svg>
+<figcaption class="text-center fw-bold text-muted">Clear Night</figcaption>
+</figure>
+@endif
+
+@else
+{{-- The variable is empty --}}
+{{ 'No Value' }}
+@endif
+          
+          
       <h5 class="fw-bold text-center">
-          24°C
+        <h5 class="fw-bold text-center">
+          @if(!empty($maxTempM))
+              {{-- The variable is not empty --}}
+            {{$maxTempM}}°C
+      @else
+              {{-- The variable is empty --}}
+    {{ 'No Value' }}
+             @endif
+   </h5>
       </h5>
       <figure>
-          <svg class="hrs24iconwind wind" viewBox="0 0 100 100"
-              id="wind">
-              <path id="wind1" d="M 8,37 L 35,37" />
-              <path id="wind2"
-                  d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
-              <path id="wind3"
-                  d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
-              <path id="wind4"
-                  d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
-              <path id="wind5" d="M 5,75 L 48,75" />
-          </svg>
-          <figcaption><small class="text-muted fw-bold">Wind(NW-10m/s)</small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right-circle-fill bouncingNW-arrow" viewBox="0 0 16 16">
-            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm5.904-2.803a.5.5 0 1 0-.707.707L9.293 10H6.525a.5.5 0 0 0 0 1H10.5a.5.5 0 0 0 .5-.5V6.525a.5.5 0 0 0-1 0v2.768L5.904 5.197z"/>
-          </svg></figcaption>
-      </figure>
+        <svg class="hrs24iconwind wind" viewBox="0 0 100 100"
+            id="wind">
+            <path id="wind1" d="M 8,37 L 35,37" />
+            <path id="wind2"
+                d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
+            <path id="wind3"
+                d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
+            <path id="wind4"
+                d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
+            <path id="wind5" d="M 5,75 L 48,75" />
+        </svg>
+        <figcaption><small class="text-muted fw-bold">Wind
+           @if(!empty($windM))
+          {{-- The variable is not empty --}}
+         {{($windM )}}
+     @else
+        {{-- The variable is empty --}}
+         {{ 'No Value' }}
+     @endif
+        </small>
+          @if ($winddirM !== null || !empty($winddirM))
+          @if ($winddirM == 'SW' || $winddirM == 'WS')
+           <i id="arrow-sw" class="bi bi-arrow-up-right-circle-fill active animation-sw"></i>
+
+              @elseif ($winddirM == 'SE' || $winddirM == 'ES')
+              <i id="arrow-se" class="bi bi-arrow-up-left-circle-fill active animation-se "></i>
+
+             @elseif ($winddirM == 'NE' || $winddirM == 'EN')
+             <i id="arrow-ne" class="bi bi-arrow-down-left-circle-fill active animation-ne "></i>
+
+             @elseif ($winddirM == 'NW' || $winddirM == 'WN')
+             <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fill active animation-nw"></i>
+             
+             @elseif ($winddirM == 'S')
+             <i id="arrow-s" class="bi bi-arrow-down-circle-fill  active animation-s"></i>
+             
+             @elseif ($winddirM == 'N')
+             <i id="arrow-n" class="bi bi-arrow-up-circle-fill  active animation-n"></i>
+
+             @elseif ($winddirM == 'E')
+             <i id="arrow-e" class="bi bi-arrow-right-circle-fill active animation-e"></i>
+
+             @elseif ($winddirM == 'W')
+             <i id="arrow-w" class="bi bi-arrow-right-circle-fill active animation-w "></i>
+           @endif
+
+         @else
+           {{  'no direction provided...' }}
+         @endif
+        
+        </figcaption>
+    </figure>
   </div>
   <div class="vr"></div>
   <div class="col  px-2">
-    {{-- afternoon --}}
-    <p class="card-text"><small class="text-muted">Afternoon(12:00 -
+    {{-- afternoon hrs24icon--}}
+    <p class="card-text"><small class="text-muted">Afternoon(12:00pm -
       5:59pm)
   </small></p>
+ 
+                       
+  @if(!empty($weatherA))
+  {{-- The variable is not empty --}}
+ @if ($weatherA == 'SUNNY')
+    <!-- Sunny -->
+<figure> 
+<svg class="hrs24icon" viewbox="0 0 100 100">
+  <use xlink:href="#sun" />
+</svg> 
+<figcaption class="text-center fw-bold">Sunny</figcaption>
+</figure>
+ @elseif($weatherA == '-TSRA')
+ <figure>
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+    <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/> 
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+    <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
+</figure>
+
+ @elseif($weatherA == 'TSRA')
+ <figure>
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+    <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+    <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+    <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
+</figure>
+ @elseif($weatherA == '+TSRA')
+ <figure>
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+    <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+    <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+    <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
+</figure>
+ @elseif($weatherA == '-RAINDAY')
+ <figure>
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+   <use xlink:href="#sun" x="-12" y="-18"/>
+   <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+   <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+   <use xlink:href="#whiteCloud" x="5" y="-7"/>
+ </svg> 
+ <figcaption class="text-center fw-bold text-muted">Slight Rain Day</figcaption>
+</figure>
+@elseif($weatherA == '-RAINNIGHT')
+<figure>
+ <svg class="hrs24icon" viewbox="0 0 100 100">
+  <use xlink:href="#moon" x="-20" y="-15"/>
+   <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+   <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+   <use xlink:href="#whiteCloud" x="5" y="-7"/>
+ </svg> 
+ <figcaption class="text-center fw-bold text-muted">Slight Rain Night</figcaption>
+</figure>
+
+ @elseif($weatherA == 'RAINDAY')
+ <figure>
+<svg class="hrs24icon" viewbox="0 0 100 100">
+   <use xlink:href="#sun" x="-12" y="-18"/>
+   <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+   <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+   <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+   <use xlink:href="#whiteCloud" x="5" y="-7"/>
+ </svg> 
+ <figcaption class="text-center fw-bold text-muted">Moderate  Rain Day</figcaption>
+</figure>
+  @elseif($weatherA == 'RAINNIGHT')
   <figure>
-    <svg class="hrs24icon" viewbox="0 0 100 100">
-      <use xlink:href="#sun"/>
-    </svg>
-    <figcaption class="text-center fw-bold text-muted">Sunny</figcaption>
-  </figure>
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#moon" x="-20" y="-15"/>
+  <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#whiteCloud" x="5" y="-7"/>
+   </svg> 
+   <figcaption class="text-center fw-bold text-muted">Moderate Rain Night</figcaption>
+ </figure>
+
+
+ @elseif($weatherA == '+RAINDAY')
+
+ <figure>
+   <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+    <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+    <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+    <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+    <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg> 
+  <figcaption class="text-center fw-bold text-muted">Heavy Rain Day</figcaption>
+</figure>
+@elseif($weatherA == '+RAINNIGHT')
+
+<figure>
+ <svg class="hrs24icon" viewbox="0 0 100 100">
+  <use xlink:href="#moon" x="-20" y="-15"/>
+   <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+   <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+   <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+   <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+   <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+   <use xlink:href="#whiteCloud" x="5" y="-7"/>
+ </svg> 
+ <figcaption class="text-center fw-bold text-muted">Heavy Rain Night</figcaption>
+</figure>
+
+
+
+ @elseif($weatherA == '-DRIZZLEDAY')
+ <figure>
+ <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+    <use xlink:href="#rainDrizzle" x="35" y="65"/>
+    <use xlink:href="#rainDrizzle" x="40" y="65"/>
+    <use xlink:href="#rainDrizzle" x="45" y="65"/>
+    <use xlink:href="#rainDrizzle" x="50" y="65"/>
+    <use xlink:href="#rainDrizzle" x="55" y="65"/>
+    <use xlink:href="#rainDrizzle" x="60" y="65"/>
+    <use xlink:href="#whiteCloud" x="7" />
+  </svg> 
+  <figcaption class="text-center fw-bold text-muted">Slight Drizzle Day</figcaption>
+</figure>
+@elseif($weatherA == '-DRIZZLENIGHT')
+<figure>
+ <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#moon" x="-20" y="-15"/>
+    <use xlink:href="#rainDrizzle" x="30" y="65"/>
+    <use xlink:href="#rainDrizzle" x="35" y="65"/>
+    <use xlink:href="#rainDrizzle" x="40" y="65"/>
+    <use xlink:href="#rainDrizzle" x="45" y="65"/>
+    <use xlink:href="#rainDrizzle" x="50" y="65"/>
+    <use xlink:href="#rainDrizzle" x="55" y="65"/>
+    <use xlink:href="#rainDrizzle" x="60" y="65"/>
+    <use xlink:href="#whiteCloud" x="7" />
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">Slight Drizzle Night</figcaption>
+</figure>
+
+ @elseif($weatherA == 'DRIZZLEDAY')
+ <figure>
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+    <use xlink:href="#rainDrizzle" x="30" y="65"/>
+    <use xlink:href="#rainDrizzle" x="35" y="65"/>
+    <use xlink:href="#rainDrizzle" x="40" y="65"/>
+    <use xlink:href="#rainDrizzle" x="45" y="65"/>
+    <use xlink:href="#rainDrizzle" x="50" y="65"/>
+    <use xlink:href="#rainDrizzle" x="55" y="65"/>
+    <use xlink:href="#rainDrizzle" x="60" y="65"/>
+    <use xlink:href="#whiteCloud" x="7" />
+  </svg> 
+  <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Day</figcaption>
+</figure>
+@elseif($weatherA == 'DRIZZLENIGHT')
+<figure>
+   <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#moon" x="-20" y="-15"/>
+    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+    <use xlink:href="#rainDrizzle" x="30" y="65"/>
+    <use xlink:href="#rainDrizzle" x="35" y="65"/>
+    <use xlink:href="#rainDrizzle" x="40" y="65"/>
+    <use xlink:href="#rainDrizzle" x="45" y="65"/>
+    <use xlink:href="#rainDrizzle" x="50" y="65"/>
+    <use xlink:href="#rainDrizzle" x="55" y="65"/>
+    <use xlink:href="#rainDrizzle" x="60" y="65"/>
+    <use xlink:href="#whiteCloud" x="7" />
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Night</figcaption>
+</figure>
+@elseif($weatherA == '+DRIZZLEDAY')
+<figure>
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#sun" x="-12" y="-18"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg> 
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle Day</figcaption>
+</figure>
+@elseif($weatherA == '+DRIZZLENIGHT')
+<figure>
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-20" y="-15"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg>
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle NIGHT</figcaption>
+</figure>
+
+ 
+ @elseif($weatherA == 'HAIL')
+ <figure>
+ <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+    <use id="ice4" xlink:href="#icePellet" x="25" y="65"/>
+    <use id="ice1" xlink:href="#icePellet" x="35" y="65"/>
+    <use id="ice2" xlink:href="#icePellet" x="47" y="65"/>
+    <use id="ice3" xlink:href="#icePellet" x="60" y="65"/>
+    <use xlink:href="#whiteCloud" x="5" y="-7"/>
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">HAIL</figcaption>
+</figure>
+
+ @elseif($weatherA == 'MIST')
+ <figure>
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)" x="0" y="20"/>
+    <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+    <use id="mist" xlink:href="#mist" x="0" y="30"/>
+  </svg> 
+  <figcaption class="text-center fw-bold text-muted">MIST</figcaption>
+ </figure>
+ @elseif($weatherA == 'FOG') 
+<figure>  
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+    <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+    <use id="mist" xlink:href="#mist" x="0" y="30"/>
+  </svg> 
+  <figcaption class="text-center fw-bold text-muted">FOG</figcaption>
+ </figure>
+
+ @elseif($weatherA == 'HAZE') 
+ <figure>
+ <svg class="icon wind" viewBox="0 0 100 100" id="wind">
+   <path id="wind1" d="M 8,37 L 35,37"/>
+    <path id="wind2" d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35"/>
+    <path id="wind3" d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41"/>
+    <path id="wind4" d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76"/>
+    <path id="wind5" d="M 5,75 L 48,75"/>  
+    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+    {{-- <use xlink:href="#whiteCloud" x="7" /> --}}
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">HAZE</figcaption>
+</figure>
+
+
+ @elseif($weatherA == 'SUNNY BREAKS')
+ <figure>
+   <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#whiteCloud" x="-7" y="-15"/>
+    <use xlink:href="#whiteCloud" x="7" />
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    <use xlink:href="#whiteCloud" x="7" />
+    <use xlink:href="#whiteCloud" x="7" />
+  </svg> 
+  <figcaption class="text-center fw-bold text-muted">SUNNY BREAKS</figcaption>
+</figure>
+ @elseif($weatherA == 'SUNNY INTERVALS')
+ <figure>
+  <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    <use xlink:href="#whiteCloud" x="7" />
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">SUNNY INTERVALS</figcaption>
+</figure>
+ @elseif($weatherA == 'FEW CLOUDS')
+<figure>
+ <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
+</figure>
+
+ @elseif($weatherA == 'PARTLY CLOUDY(DAY)')
+ <figure>
+ <svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#sun" x="-12" y="-18"/>
+    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+    <use xlink:href="#whiteCloud" x="7" />
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">Partly Cloudy Day</figcaption>
+</figure>
+ @elseif($weatherA == 'PARTLY CLOUDY(NIGHT)')
+ {{-- Partly Cloudy Night --}}
+ <figure>
+<svg class="hrs24icon" viewbox="0 0 100 100">
+    <use xlink:href="#moon" x="-20" y="-15"/>
+    <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+    <use xlink:href="#whiteCloud" x="7" />
+  </svg>
+  <figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+</figure>
+ @elseif($weatherA == 'CLOUDY')
+ <figure>
+ <svg class="hrs24icon" viewbox="0 0 100 100">
+     <use xlink:href="#grayCloud" class="small-cloud"
+         fill="url(#gradGray)" />
+     <use xlink:href="#whiteCloud" x="7" />
+ </svg>
+ <figcaption class="text-center fw-bold text-muted">Cloudy</figcaption>
+ </figure>
+ @elseif($weatherA == 'CLEAR NIGHT')
+   <!-- Clear Night -->
+<figure> 
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-15"/>
+<use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+<use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+<use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+</svg>
+<figcaption class="text-center fw-bold text-muted">Clear Night</figcaption>
+</figure>
+@endif
+
+@else
+{{-- The variable is empty --}}
+{{ 'No Value' }}
+@endif
+
 <h5 class="fw-bold text-center">
-  31°C
+  @if(!empty($maxTempA))
+  {{-- The variable is not empty --}}
+{{$maxTempA}}°C
+@else
+  {{-- The variable is empty --}}
+{{ 'No Value' }}
+ @endif
 </h5>
 <figure>
   <svg class="hrs24iconwind wind" viewBox="0 0 100 100"
@@ -2923,56 +5035,484 @@
       <path id="wind5" d="M 5,75 L 48,75" />
   </svg>
   <figcaption> 
-    <small class="text-muted fw-bold">Wind(SW-12m/s)</small> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-circle-fill  bouncingSW-arrow " viewBox="0 0 16 16">
-      <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8zm5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707l-4.096 4.096z"/>
-    </svg> </figcaption>
+    <small class="text-muted fw-bold">
+    
+      Wind
+             @if(!empty($windA))
+            {{-- The variable is not empty --}}
+           {{($windA)}}
+       @else
+          {{-- The variable is empty --}}
+           {{ 'No Value' }}
+       @endif
+          
+      </small>
+      @if ($winddirA !== null || !empty($winddirA))
+      @if ($winddirA == 'SW' || $winddirA == 'WS')
+       <i id="arrow-sw" class="bi bi-arrow-up-right-circle-fill active animation-sw"></i>
+
+          @elseif ($winddirA == 'SE' || $winddirA == 'ES')
+          <i id="arrow-se" class="bi bi-arrow-up-left-circle-fill active animation-se "></i>
+
+         @elseif ($winddirA == 'NE' || $winddirA == 'EN')
+         <i id="arrow-ne" class="bi bi-arrow-down-left-circle-fill active animation-ne "></i>
+
+         @elseif ($winddirA == 'NW' || $winddirA == 'WN')
+         <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fill active animation-nw"></i>
+         
+         @elseif ($winddirA == 'S')
+         <i id="arrow-s" class="bi bi-arrow-down-circle-fill  active animation-s"></i>
+         
+         @elseif ($winddirA == 'N')
+         <i id="arrow-n" class="bi bi-arrow-up-circle-fill  active animation-n"></i>
+
+         @elseif ($winddirA == 'E')
+         <i id="arrow-e" class="bi bi-arrow-right-circle-fill active animation-e"></i>
+
+         @elseif ($winddirA == 'W')
+         <i id="arrow-w" class="bi bi-arrow-right-circle-fill active animation-w "></i>
+       @endif
+
+     @else
+       {{  'no direction provided...' }}
+     @endif
+    
+    </figcaption>
 </figure>
+
+
+
   </div>
   <div class="vr"></div>
   <div class="col px-2">
-    <p class="card-text"><small class="text-muted"> Evening(6:00 -
+    <p class="card-text"><small class="text-muted"> Evening(6:00pm -
       11:59pm)
   </small></p>
-<!-- Partly Cloudy Night -->
+
+  @if(!empty($weatherE))
+                                          {{-- The variable is not empty --}}
+                                         @if ($weatherE == 'SUNNY')
+                                            <!-- Sunny -->
+                                    <figure> 
+                                      <svg class="hrs24icon" viewbox="0 0 100 100">
+                                          <use xlink:href="#sun" />
+                                      </svg> 
+                                      <figcaption class="text-center fw-bold">Sunny</figcaption>
+                                    </figure>
+                                         @elseif($weatherE == '-TSRA')
+                                         <figure>
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+                                            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+                                            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/> 
+                                            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
+                                        </figure>
+                                        
+                                         @elseif($weatherE == 'TSRA')
+                                         <figure>
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+                                            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+                                            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+                                            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
+                                        </figure>
+                                         @elseif($weatherE == '+TSRA')
+                                         <figure>
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+                                            <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+                                            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+                                            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                            <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+                                            <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+                                            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                            <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
+                                        </figure>
+                                         @elseif($weatherE == '-RAINDAY')
+                                         <figure>
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                           <use xlink:href="#sun" x="-12" y="-18"/>
+                                           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+                                           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+                                           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                         </svg> 
+                                         <figcaption class="text-center fw-bold text-muted">Slight Rain Day</figcaption>
+                                       </figure>
+                                        @elseif($weatherE == '-RAINNIGHT')
+                                        <figure>
+                                         <svg class="hrs24icon" viewbox="0 0 100 100">
+                                          <use xlink:href="#moon" x="-20" y="-15"/>
+                                           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+                                           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+                                           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                         </svg> 
+                                         <figcaption class="text-center fw-bold text-muted">Slight Rain Night</figcaption>
+                                       </figure>
+
+                                         @elseif($weatherE == 'RAINDAY')
+                                         <figure>
+                                        <svg class="hrs24icon" viewbox="0 0 100 100">
+                                           <use xlink:href="#sun" x="-12" y="-18"/>
+                                           <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+                                           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+                                           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                         </svg> 
+                                         <figcaption class="text-center fw-bold text-muted">Moderate  Rain Day</figcaption>
+                                       </figure>
+                                          @elseif($weatherE == 'RAINNIGHT')
+                                          <figure>
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#moon" x="-20" y="-15"/>
+                                          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                             <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+                                             <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+                                             <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                           </svg> 
+                                           <figcaption class="text-center fw-bold text-muted">Moderate Rain Night</figcaption>
+                                         </figure>
+
+
+                                         @elseif($weatherE == '+RAINDAY')
+                                        
+                                         <figure>
+                                           <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#sun" x="-12" y="-18"/>
+                                            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+                                            <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+                                            <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                            <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+                                            <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+                                            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                          </svg> 
+                                          <figcaption class="text-center fw-bold text-muted">Heavy Rain Day</figcaption>
+                                        </figure>
+                                        @elseif($weatherE == '+RAINNIGHT')
+                                        
+                                        <figure>
+                                         <svg class="hrs24icon" viewbox="0 0 100 100">
+                                          <use xlink:href="#moon" x="-20" y="-15"/>
+                                           <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+                                           <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+                                           <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+                                           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+                                           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+                                           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                         </svg> 
+                                         <figcaption class="text-center fw-bold text-muted">Heavy Rain Night</figcaption>
+                                       </figure>
+
+
+
+                                         @elseif($weatherE == '-DRIZZLEDAY')
+                                         <figure>
+                                         <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#sun" x="-12" y="-18"/>
+                                             <use xlink:href="#rainDrizzle" x="30" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                          </svg> 
+                                          <figcaption class="text-center fw-bold text-muted">Slight Drizzle Day</figcaption>
+                                        </figure>
+                                        @elseif($weatherE == '-DRIZZLENIGHT')
+                                        <figure>
+                                         <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#moon" x="-20" y="-15"/>
+                                            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">Slight Drizzle Night</figcaption>
+                                        </figure>
+
+                                         @elseif($weatherE == 'DRIZZLEDAY')
+                                         <figure>
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#sun" x="-12" y="-18"/>
+                                            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                          </svg> 
+                                          <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Day</figcaption>
+                                        </figure>
+                                        @elseif($weatherE == 'DRIZZLENIGHT')
+                                        <figure>
+                                           <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#moon" x="-20" y="-15"/>
+                                            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                            <use xlink:href="#rainDrizzle" x="30" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="35" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="40" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="45" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="50" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="55" y="65"/>
+                                            <use xlink:href="#rainDrizzle" x="60" y="65"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Night</figcaption>
+                                        </figure>
+     @elseif($weatherE == '+DRIZZLEDAY')
+<figure>
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#sun" x="-12" y="-18"/>
+<use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
+<use xlink:href="#whiteCloud" x="7" />
+</svg> 
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle Day</figcaption>
+</figure>
+@elseif($weatherE == '+DRIZZLENIGHT')
 <figure>
 <svg class="hrs24icon" viewbox="0 0 100 100">
 <use xlink:href="#moon" x="-20" y="-15"/>
 <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+<use xlink:href="#rainDrizzle" x="25" y="65"/>
+<use xlink:href="#rainDrizzle" x="30" y="65"/>
+<use xlink:href="#rainDrizzle" x="35" y="65"/>
+<use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+<use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+<use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+<use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+<use xlink:href="#rainDrizzle" x="40" y="65"/>
+<use xlink:href="#rainDrizzle" x="45" y="65"/>
 <use xlink:href="#whiteCloud" x="7" />
 </svg>
-<figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+<figcaption class="text-center fw-bold text-muted">Heavy Drizzle NIGHT</figcaption>
 </figure>
-<h5 class="fw-bold text-center">
-  15°C
-</h5>
-<figure>
-  <svg class="hrs24iconwind wind" viewBox="0 0 100 100"
-      id="wind">
-      <path id="wind1" d="M 8,37 L 35,37" />
-      <path id="wind2"
-          d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
-      <path id="wind3"
-          d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
-      <path id="wind4"
-          d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
-      <path id="wind5" d="M 5,75 L 48,75" />
-  </svg>
-  <figcaption><small class="text-muted fw-bold">Wind(SE-08m/s)</small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-circle-fill bouncingSE-arrow" viewBox="0 0 16 16">
-    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-5.904 2.803a.5.5 0 1 0 .707-.707L6.707 6h2.768a.5.5 0 1 0 0-1H5.5a.5.5 0 0 0-.5.5v3.975a.5.5 0 0 0 1 0V6.707l4.096 4.096z"/>
-  </svg></figcaption>
+
+                                         
+                                         @elseif($weatherE == 'HAIL')
+                                         <figure>
+                                         <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+                                            <use id="ice4" xlink:href="#icePellet" x="25" y="65"/>
+                                            <use id="ice1" xlink:href="#icePellet" x="35" y="65"/>
+                                            <use id="ice2" xlink:href="#icePellet" x="47" y="65"/>
+                                            <use id="ice3" xlink:href="#icePellet" x="60" y="65"/>
+                                            <use xlink:href="#whiteCloud" x="5" y="-7"/>
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">HAIL</figcaption>
+                                        </figure>
+                                      
+                                         @elseif($weatherE == 'MIST')
+                                         <figure>
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)" x="0" y="20"/>
+                                            <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+                                            <use id="mist" xlink:href="#mist" x="0" y="30"/>
+                                          </svg> 
+                                          <figcaption class="text-center fw-bold text-muted">MIST</figcaption>
+                                         </figure>
+                                         @elseif($weatherE == 'FOG') 
+                                       <figure>  
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+                                            <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+                                            <use id="mist" xlink:href="#mist" x="0" y="30"/>
+                                          </svg> 
+                                          <figcaption class="text-center fw-bold text-muted">FOG</figcaption>
+                                         </figure>
+
+                                         @elseif($weatherE == 'HAZE') 
+                                         <figure>
+                                         <svg class="icon wind" viewBox="0 0 100 100" id="wind">
+                                           <path id="wind1" d="M 8,37 L 35,37"/>
+                                            <path id="wind2" d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35"/>
+                                            <path id="wind3" d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41"/>
+                                            <path id="wind4" d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76"/>
+                                            <path id="wind5" d="M 5,75 L 48,75"/>  
+                                            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                            {{-- <use xlink:href="#whiteCloud" x="7" /> --}}
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">HAZE</figcaption>
+                                        </figure>
+
+
+                                         @elseif($weatherE == 'SUNNY BREAKS')
+                                         <figure>
+                                           <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#whiteCloud" x="-7" y="-15"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                            <use xlink:href="#sun" x="-12" y="-18"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                          </svg> 
+                                          <figcaption class="text-center fw-bold text-muted">SUNNY BREAKS</figcaption>
+                                        </figure>
+                                         @elseif($weatherE == 'SUNNY INTERVALS')
+                                         <figure>
+                                          <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#sun" x="-12" y="-18"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">SUNNY INTERVALS</figcaption>
+                                        </figure>
+                                         @elseif($weatherE == 'FEW CLOUDS')
+                                       <figure>
+                                         <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#sun" x="-12" y="-18"/>
+                                            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
+                                        </figure>
+
+                                         @elseif($weatherE == 'PARTLY CLOUDY(DAY)')
+                                         <figure>
+                                         <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#sun" x="-12" y="-18"/>
+                                            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">Partly Cloudy Day</figcaption>
+                                        </figure>
+                                         @elseif($weatherE == 'PARTLY CLOUDY(NIGHT)')
+                                         {{-- Partly Cloudy Night --}}
+                                         <figure>
+                                        <svg class="hrs24icon" viewbox="0 0 100 100">
+                                            <use xlink:href="#moon" x="-20" y="-15"/>
+                                            <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+                                            <use xlink:href="#whiteCloud" x="7" />
+                                          </svg>
+                                          <figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+                                        </figure>
+                                         @elseif($weatherE == 'CLOUDY')
+                                         <figure>
+                                         <svg class="hrs24icon" viewbox="0 0 100 100">
+                                             <use xlink:href="#grayCloud" class="small-cloud"
+                                                 fill="url(#gradGray)" />
+                                             <use xlink:href="#whiteCloud" x="7" />
+                                         </svg>
+                                         <figcaption class="text-center fw-bold text-muted">Cloudy</figcaption>
+                                         </figure>
+                                         @elseif($weatherE == 'CLEAR NIGHT')
+                                           <!-- Clear Night -->
+<figure> 
+<svg class="hrs24icon" viewbox="0 0 100 100">
+<use xlink:href="#moon" x="-15"/>
+<use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+<use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+<use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+</svg>
+<figcaption class="text-center fw-bold text-muted">Clear Night</figcaption>
 </figure>
+@endif
+
+     @else
+             {{-- The variable is empty --}}
+        {{ 'No Value' }}
+          @endif
+
+          <h5 class="fw-bold text-center">
+            @if(!empty($maxTempE))
+            {{-- The variable is not empty --}}
+           {{$maxTempE}}°C
+    @else
+            {{-- The variable is empty --}}
+  {{ 'No Value' }}
+           @endif
+          </h5>
+          <figure>
+              <svg class="hrs24iconwind wind" viewBox="0 0 100 100"
+                  id="wind">
+                  <path id="wind1" d="M 8,37 L 35,37" />
+                  <path id="wind2"
+                      d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35" />
+                  <path id="wind3"
+                      d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41" />
+                  <path id="wind4"
+                      d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76" />
+                  <path id="wind5" d="M 5,75 L 48,75" />
+              </svg>
+              <figcaption><small class="text-muted fw-bold">
+                Wind
+                         @if(!empty($windE))
+                        {{-- The variable is not empty --}}
+                       {{($windE)}}
+                   @else
+                      {{-- The variable is empty --}}
+                       {{ 'No Value' }}
+                   @endif
+                      
+              
+              </small>
+              @if ($winddirE !== null || !empty($winddirE))
+              @if ($winddirE == 'SW' || $winddirE == 'WS')
+               <i id="arrow-sw" class="bi bi-arrow-up-right-circle-fill active animation-sw"></i>
+
+                  @elseif ($winddirE == 'SE' || $winddirE == 'ES')
+                  <i id="arrow-se" class="bi bi-arrow-up-left-circle-fill active animation-se "></i>
+
+                 @elseif ($winddirE == 'NE' || $winddirE == 'EN')
+                 <i id="arrow-ne" class="bi bi-arrow-down-left-circle-fill active animation-ne "></i>
+
+                 @elseif ($winddirE == 'NW' || $winddirE == 'WN')
+                 <i id="arrow-nw" class="bi bi-arrow-down-right-circle-fill active animation-nw"></i>
+                 
+                 @elseif ($winddirE == 'S')
+                 <i id="arrow-s" class="bi bi-arrow-down-circle-fill  active animation-s"></i>
+                 
+                 @elseif ($winddirE == 'N')
+                 <i id="arrow-n" class="bi bi-arrow-up-circle-fill  active animation-n"></i>
+
+                 @elseif ($winddirE == 'E')
+                 <i id="arrow-e" class="bi bi-arrow-right-circle-fill active animation-e"></i>
+
+                 @elseif ($winddirE == 'W')
+                 <i id="arrow-w" class="bi bi-arrow-right-circle-fill active animation-w "></i>
+               @endif
+
+             @else
+               {{  'no direction provided...' }}
+             @endif
+            
+            </figcaption>
+          </figure>
 
   </div>
 </div>
 <hr>
 {{-- 5-days forecast for district page  --}}
 <h5 class="fw-bold p-2"> 5-Days Forecast</h5>
-<ul class="list-group list-group-flush">
-  {{--  today--}}
  
-    <ul class="list-group list-group-horizontal">
+<ul class="list-group list-group-flush">
+ 
+
+    {{-- <ul class="list-group list-group-horizontal">
       <li class="list-group-item"> 
-        {{--day--}}
+       
         <h5 class=" text-left">Now</h5></li>
 
       <li class="list-group-item"> 
@@ -2983,100 +5523,390 @@
           </svg>
           <figcaption class="text-center fw-bold">Sunny</figcaption>
       </figure></li>
-      <li class="list-group-item"> {{-- temperature --}}
-        <h5 class="fw-bold" style="font-size: 20px; ">
+      <li class="list-group-item"> 
+        <h5 class="fw-bold" style="font-size: 20px;">
           27°C / 31°C
       </h5></li>
-    </ul>
+    </ul> --}}
 {{-- endo of today --}}
 
-    {{--  tues--}}
-   
-      <ul class="list-group list-group-horizontal">
-        <li class="list-group-item"> 
-          {{--day--}}
-          <h5 class=" text-left">Tue</h5></li>
-  
-        <li class="list-group-item"> 
-           <!-- Sunny -->
-          <figure> 
-            <svg class="districtsicon" viewbox="0 0 100 100">
-                <use xlink:href="#sun" />
-            </svg>
-            <figcaption class="text-center fw-bold">Sunny</figcaption>
-        </figure></li>
-        <li class="list-group-item"> {{-- temperature --}}
-          <h5 class="fw-bold" style="font-size: 20px; ">
-            27°C / 31°C
-        </h5></li>
-      </ul>
-  {{-- endo of tues --}}
-  
-   {{--  wed--}}
-  
-    <ul class="list-group list-group-horizontal">
-      <li class="list-group-item"> 
-        {{--day--}}
-        <h5 class=" text-left">Wed</h5></li>
+ {{--  today--}}
+ @forelse ($fivedayforecasts as $fivedayforecast )
+    
+ <div class="card m-2" style="border-radius: 20px;">
+  <div class="card-body">
+    <div class="d-flex">
+      <div class="col-4 align-self-start">
+        <h3 class="card-title text-left text-dark fw-bold fs-5">
+         {{ \Carbon\Carbon::parse($fivedayforecast->date)->format('l') }}
+       </h3> 
+      </div>
+      <div class="col-4">
+        @if(!empty($fivedayforecast->weather))
+        {{-- The variable is not empty --}}
+       @if ($fivedayforecast->weather == 'SUNNY')
+          <!-- Sunny -->
+     <figure> <figcaption class="text-center fw-bold">Sunny</figcaption>
+     <svg class="hrs24icon" viewbox="0 0 100 100">
+        <use xlink:href="#sun" />
+     </svg>  </figure>
+       @elseif($fivedayforecast->weather == '-TSRA')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Thunderstorms With Rain</figcaption>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+         
+          <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+          <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/> 
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+        </svg>
+      </figure>
+      
+       @elseif($fivedayforecast->weather == 'TSRA')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Moderate Thunderstorms With Rain</figcaption>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+          <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+          <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+        </svg>
+      </figure>
+       @elseif($fivedayforecast->weather == '+TSRA')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Heavy Thunderstorms With Rain</figcaption>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+          <use xlink:href="#thunderBolt" x="30" y="61" class="lighting animated infinite flash"/>
+          <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+          <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+          <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+          <use xlink:href="#thunderBolt" x="45" y="56" class="lighting animated infinite flash delay-1s"/>
+        </svg>
+      </figure>
+       @elseif($fivedayforecast->weather == '-RAINDAY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Rain Day</figcaption>
+       <svg class="hrs24icon" viewbox="0 0 100 100">
+         <use xlink:href="#sun" x="-12" y="-18"/>
+         <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+         <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+         <use xlink:href="#whiteCloud" x="5" y="-7"/>
+       </svg> 
+     </figure>
+      @elseif($fivedayforecast->weather == '-RAINNIGHT')
+      <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Rain Night</figcaption>
+       <svg class="hrs24icon" viewbox="0 0 100 100">
+        <use xlink:href="#moon" x="-20" y="-15"/>
+         <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+         <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+         <use xlink:href="#whiteCloud" x="5" y="-7"/>
+       </svg> 
+     </figure>
+     
+       @elseif($fivedayforecast->weather == 'RAINDAY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Moderate  Rain Day</figcaption>
+       <svg class="hrs24icon" viewbox="0 0 100 100">
+         <use xlink:href="#sun" x="-12" y="-18"/>
+         
+         <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+         <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+         <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+         <use xlink:href="#whiteCloud" x="5" y="-7"/>
+       </svg> 
+     </figure>
+        @elseif($fivedayforecast->weather == 'RAINNIGHT')
+        <figure>
+          <figcaption class="text-center fw-bold text-muted">Moderate Rain Night</figcaption>
+         <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+        
+           <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+           <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+           <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+           <use xlink:href="#whiteCloud" x="5" y="-7"/>
+         </svg> 
+       </figure>
+     
+     
+       @elseif($fivedayforecast->weather == '+RAINDAY')
+      
+       <figure>
+         <figcaption class="text-center fw-bold text-muted">Heavy Rain Day</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+          <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+          <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+          <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+          <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+        </svg> 
+      </figure>
+      @elseif($fivedayforecast->weather == '+RAINNIGHT')
+      
+      <figure>
+        <figcaption class="text-center fw-bold text-muted">Heavy Rain Night</figcaption>
+       <svg class="hrs24icon" viewbox="0 0 100 100">
+        <use xlink:href="#moon" x="-20" y="-15"/>
+         <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+         <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+         <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+         <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+         <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+         <use xlink:href="#whiteCloud" x="5" y="-7"/>
+       </svg> 
+     </figure>
+     
+     
+     
+       @elseif($fivedayforecast->weather == '-DRIZZLEDAY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Drizzle Day</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+           <use xlink:href="#rainDrizzle" x="30" y="65"/>
+          <use xlink:href="#rainDrizzle" x="35" y="65"/>
+          <use xlink:href="#rainDrizzle" x="40" y="65"/>
+          <use xlink:href="#rainDrizzle" x="45" y="65"/>
+          <use xlink:href="#rainDrizzle" x="50" y="65"/>
+          <use xlink:href="#rainDrizzle" x="55" y="65"/>
+          <use xlink:href="#rainDrizzle" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg> 
+      </figure>
+      @elseif($fivedayforecast->weather == '-DRIZZLENIGHT')
+      <figure>
+        <figcaption class="text-center fw-bold text-muted">Slight Drizzle Night</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+          <use xlink:href="#rainDrizzle" x="30" y="65"/>
+          <use xlink:href="#rainDrizzle" x="35" y="65"/>
+          <use xlink:href="#rainDrizzle" x="40" y="65"/>
+          <use xlink:href="#rainDrizzle" x="45" y="65"/>
+          <use xlink:href="#rainDrizzle" x="50" y="65"/>
+          <use xlink:href="#rainDrizzle" x="55" y="65"/>
+          <use xlink:href="#rainDrizzle" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+      </figure>
+     
+       @elseif($fivedayforecast->weather == 'DRIZZLEDAY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Day</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          <use xlink:href="#rainDrizzle" x="30" y="65"/>
+          <use xlink:href="#rainDrizzle" x="35" y="65"/>
+          <use xlink:href="#rainDrizzle" x="40" y="65"/>
+          <use xlink:href="#rainDrizzle" x="45" y="65"/>
+          <use xlink:href="#rainDrizzle" x="50" y="65"/>
+          <use xlink:href="#rainDrizzle" x="55" y="65"/>
+          <use xlink:href="#rainDrizzle" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg> 
+      </figure>
+      @elseif($fivedayforecast->weather == 'DRIZZLENIGHT')
+      <figure>
+        <figcaption class="text-center fw-bold text-muted">Moderate Drizzle Night</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          <use xlink:href="#rainDrizzle" x="30" y="65"/>
+          <use xlink:href="#rainDrizzle" x="35" y="65"/>
+          <use xlink:href="#rainDrizzle" x="40" y="65"/>
+          <use xlink:href="#rainDrizzle" x="45" y="65"/>
+          <use xlink:href="#rainDrizzle" x="50" y="65"/>
+          <use xlink:href="#rainDrizzle" x="55" y="65"/>
+          <use xlink:href="#rainDrizzle" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+      </figure>
+     @elseif($fivedayforecast->weather == '+DRIZZLEDAY')
+     <figure>
+     <figcaption class="text-center fw-bold text-muted">Heavy Drizzle Day</figcaption>
+     <svg class="hrs24icon" viewbox="0 0 100 100">
+     <use xlink:href="#sun" x="-12" y="-18"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#rainDrizzle" x="25" y="65"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+     </svg> 
+     </figure>
+     @elseif($fivedayforecast->weather == '+DRIZZLENIGHT')
+     <figure>
+     <figcaption class="text-center fw-bold text-muted">Heavy Drizzle NIGHT</figcaption>
+     <svg class="hrs24icon" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-20" y="-15"/>
+     <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+     <use xlink:href="#rainDrizzle" x="25" y="65"/>
+     <use xlink:href="#rainDrizzle" x="30" y="65"/>
+     <use xlink:href="#rainDrizzle" x="35" y="65"/>
+     <use id="drop4" xlink:href="#rainDrop" x="15" y="65"/>
+     <use id="drop1" xlink:href="#rainDrop" x="25" y="65"/>
+     <use id="drop2" xlink:href="#rainDrop" x="37" y="65"/>
+     <use id="drop3" xlink:href="#rainDrop" x="50" y="65"/>
+     <use xlink:href="#rainDrizzle" x="40" y="65"/>
+     <use xlink:href="#rainDrizzle" x="45" y="65"/>
+     <use xlink:href="#whiteCloud" x="7" />
+     </svg>
+     </figure>
+     
+       
+       @elseif($fivedayforecast->weather == 'HAIL')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">HAIL</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" x="25" y="10" class="reverse-small-cloud" fill="url(#gradDarkGray)"/>
+          <use id="ice4" xlink:href="#icePellet" x="25" y="65"/>
+          <use id="ice1" xlink:href="#icePellet" x="35" y="65"/>
+          <use id="ice2" xlink:href="#icePellet" x="47" y="65"/>
+          <use id="ice3" xlink:href="#icePellet" x="60" y="65"/>
+          <use xlink:href="#whiteCloud" x="5" y="-7"/>
+        </svg>
+      </figure>
+     
+       @elseif($fivedayforecast->weather == 'MIST')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">MIST</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)" x="0" y="20"/>
+          <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+          <use id="mist" xlink:href="#mist" x="0" y="30"/>
+        </svg> 
+       </figure>
+       @elseif($fivedayforecast->weather == 'FOG') 
+     <figure>  
+        <figcaption class="text-center fw-bold text-muted">FOG</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradDarkGray)" x="0" y="20"/>
+          <use xlink:href="#grayCloud" x="30" y="30" class="reverse-small-cloud" fill="url(#gradGray)"/>
+          <use id="mist" xlink:href="#mist" x="0" y="30"/>
+        </svg> 
+       </figure>
+     
+       @elseif($fivedayforecast->weather == 'HAZE') 
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">HAZE</figcaption>
+        <svg class="hrs24icon wind" viewBox="0 0 100 100" id="wind">
+         
+          <path id="wind1" d="M 8,37 L 35,37"/>
+          <path id="wind2" d="M 2,45 L 45,45 C65,45 64,25 52,25 C47,24 42,30 44,35"/>
+          <path id="wind3" d="M 20,55 L 75,55 C90,53 90,35 80,32 C70,28 60,42 70,48 C80,50 80,40 78,41"/>
+          <path id="wind4" d="M 12,65 L 65,65 C85,68 75,87 65,83 C60,81 60,78 61,76"/>
+          <path id="wind5" d="M 5,75 L 48,75"/>  
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          {{-- <use xlink:href="#whiteCloud" x="7" /> --}}
+        </svg>
+      </figure>
+     
+     
+       @elseif($fivedayforecast->weather == 'SUNNY BREAKS')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">SUNNY BREAKS</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#whiteCloud" x="-7" y="-15"/>
+          <use xlink:href="#whiteCloud" x="7" />
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#whiteCloud" x="7" />
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg> 
+      </figure>
+       @elseif($fivedayforecast->weather == 'SUNNY INTERVALS')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">SUNNY INTERVALS</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+       
+      </figure>
+       @elseif($fivedayforecast->weather == 'FEW CLOUDS')
+     <figure>
+        <figcaption class="text-center fw-bold text-muted">Few Clouds</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+        </svg>
+       
+      </figure>
+     
+       @elseif($fivedayforecast->weather == 'PARTLY CLOUDY(DAY)')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Partly Cloudy Day</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#sun" x="-12" y="-18"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+      </figure>
+       @elseif($fivedayforecast->weather == 'PARTLY CLOUDY(NIGHT)')
+       {{-- Partly Cloudy Night --}}
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Partly Cloudy Night</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+          <use xlink:href="#moon" x="-20" y="-15"/>
+          <use xlink:href="#grayCloud" class="small-cloud" fill="url(#gradGray)"/>
+          <use xlink:href="#whiteCloud" x="7" />
+        </svg>
+      </figure>
+       @elseif($fivedayforecast->weather == 'CLOUDY')
+       <figure>
+        <figcaption class="text-center fw-bold text-muted">Cloudy</figcaption>
+        <svg class="hrs24icon" viewbox="0 0 100 100">
+           <use xlink:href="#grayCloud" class="small-cloud"
+               fill="url(#gradGray)" />
+           <use xlink:href="#whiteCloud" x="7" />
+       </svg>
+       </figure>
+       @elseif($fivedayforecast->weather == 'CLEAR NIGHT')
+         <!-- Clear Night -->
+     <figure> 
+     <figcaption class="text-center fw-bold text-muted">Clear Night</figcaption>
+     <svg class="hrs24icon" viewbox="0 0 100 100">
+     <use xlink:href="#moon" x="-15"/>
+     <use xlink:href="#star" x="42" y="30" class="stars animated infinite flash"/>
+     <use xlink:href="#star" x="61" y="32" class="stars animated infinite flash delay-1s"/>
+     <use xlink:href="#star" x="55" y="50" class="stars animated infinite flash delay-2s"/>
+     </svg>
+     </figure>
+     @endif
+     
+     
+     
+     @else
+      {{-- The variable is empty --}}
+       {{ 'No Value' }}
+     @endif
+     
+        
 
-      <li class="list-group-item"> 
-         <!-- Sunny -->
-        <figure> 
-          <svg class="districtsicon" viewbox="0 0 100 100">
-              <use xlink:href="#sun" />
-          </svg>
-          <figcaption class="text-center fw-bold">Sunny</figcaption>
-      </figure></li>
-      <li class="list-group-item"> {{-- temperature --}}
-        <h5 class="fw-bold" >
-          27°C / 31°C
-      </h5></li>
-    </ul>
-{{-- endo of wed --}}
- 
-
-    <ul class="list-group list-group-horizontal">
-      <li class="list-group-item"> 
-        {{--day--}}
-        <h5 class=" text-left">Thu</h5></li>
-
-      <li class="list-group-item"> 
-         <!-- Sunny -->
-        <figure> 
-          <svg class="districtsicon" viewbox="0 0 100 100">
-              <use xlink:href="#sun" />
-          </svg>
-          <figcaption class="text-center fw-bold">Sunny</figcaption>
-      </figure></li>
-      <li class="list-group-item"> {{-- temperature --}}
-        <h5 class="fw-bold">
-          27°C / 31°C
-      </h5></li>
-    </ul>
-{{-- endo of thursday --}}
- 
-
-  {{--  fri--}}
-  
-    <ul class="list-group list-group-horizontal">
-      <li class="list-group-item"> 
-        {{--day--}}
-        <h5 class=" text-left">Fri</h5></li>
-
-      <li class="list-group-item"> 
-         <!-- Sunny -->
-        <figure> 
-          <svg class="districtsicon" viewbox="0 0 100 100">
-              <use xlink:href="#sun" />
-          </svg>
-          <figcaption class="text-center fw-bold">Sunny</figcaption>
-      </figure></li>
-      <li class="list-group-item"> {{-- temperature --}}
-        <h5 class="fw-bold" >
-          27°C / 31°C
-      </h5></li>
-    </ul>
-{{-- endo of fri --}}
+      </div>
+      <div class="col">
+        <h3 class="text-dark fw-bold fs-5" style="font-size: 30px; text-align: right"> {{$fivedayforecast->min_temp}}°C / {{$fivedayforecast->max_temp}}°C</h3>
+         </div>
+    </div>
+  </div>
+</div>
+<br>
+     @empty
+    <p> No 5 days Forecast Provided</p>
+  @endforelse
 
 
 </ul>
@@ -3089,12 +5919,114 @@
                   </div>
                    </div>
                 </div>
-                 <div class="content seasonal-content">seasonal-content goes here
-                  
+                 <div class="content seasonal-content">
+                  {{-- seasonal-content --}}
+                  <div class="d-flex justify-content-center align-items-center" style="height: 80vh; ">
+                  <p class="text-center">
+                  <div class="card bg-white text-dark shadow-lg" style="border-radius: 20px;">
+                    <div class="card-body text-dark">
+                    <h3 class="fw-light fs-3  text-center">Seasonal Forecast <strong><h1 class=" font-monospace text-center">Coming Soon!!!</h1></strong></h3>  
+                    </div>
+                  </div>
+                </p>
+              </div>
+
                  </div>
-                 <div class="content marine-content">marine content goes here</div>
+                 <div class="content marine-content">
+                  <div class="d-flex justify-content-center align-items-center" style="height: 80vh; ">
+                    <p class="text-center">
+                    <div class="card bg-primary text-white shadow-lg" style="border-radius: 20px;">
+                      <div class="card-body text-white">
+                      <h3 class="fw-light fs-3  text-center">Marine Forecast <strong><h1 class=" font-monospace text-center">Coming Soon!!!</h1></strong></h3>  
+                      </div>
+                    </div>
+                  </p>
+                </div>
+
+                 </div>
                  
-                <div class="content feedback-content">feedback content goes here</div>
+                <div class="content feedback-content">
+                   <div class="d-flex justify-content-center align-items-center" style="height: 80vh; ">
+                    <p class="text-center">
+                      <div class="card text-start bg-white shadow-lg" style="border-radius: 20px;">
+                        <div class="card-body">
+                          <h4 class="card-title">Leave Us A Feedback📢 About Our Forecast⛈️</h4>
+                          <p class="card-text">
+                            <form method="POST" action="{{ route('feedbackpost') }}">
+                              @csrf
+                              <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                  <input type="email" class="form-control form-control-sm" name="email1" id="inputEmail3">
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                                <div class="col-sm-10">
+                                  <input type="tel" class="form-control form-control-sm" name="phoneNum" id="phone">
+                                </div>
+                              </div>
+                              <p class="text-center">
+                              <div class="row mb-3">
+                                <div class="col-sm-10">
+                                <div class="form-floating"> 
+                              <select class="form-select form-select-sm" aria-label="Default select" id="feedbackselectedDist" name="selectCity">
+                                <option value="null">Select City</option>
+                                @forelse ($districts as $districtt)
+                                <option value="{{ $districtt->districtname }}">{{ $districtt->districtname }}</option> 
+                                @empty
+                                <option value="2">No Cities available</option>
+                                @endforelse
+                              </select>
+                              <label for="feedbackselectedDist"> Select Feedback City:</label>
+                            </div>
+                            </div>
+                          </div>
+                          {{--  --}}
+                            <div class="row mb-3">
+                              <div class="col-sm-10">
+                              <div class="form-floating"> 
+                            <select class="form-select form-select-sm" aria-label="Default select" id="feedbackForcastype" name="forecastType">
+                              <option value="null">Forecast Type</option>
+                              <option value="dailyForecast">Daily Forecast</option> 
+                              <option value="fiveDaysForecast">5 Days Forecast</option> 
+                              <option value="seasonalForecast">Seasonal Forecast</option> 
+                              <option value="marine">Marine</option> 
+                            </select>
+                            <label for="feedbackForcastype"> Select Feedback Forecast Type:</label>
+                          </div>
+                          </div>
+                        </div>
+                        {{--  Accuracy --}}
+                          <div class="row mb-3">
+                            <div class="col-sm-10">
+                              <div class="form-floating"> 
+                                <select class="form-select form-select-sm" aria-label="Default select" id="feedbackaccuracy" name="feedbackaccuracy">
+                                  <option value="null">Select Forecast Accuracy </option>
+                                  <option value="1">1</option> 
+                                  <option value="2">2</option> 
+                                  <option value="3">3</option> 
+                                  <option value="4">4</option> 
+                                  <option value="5">5</option> 
+                                </select>
+                                <label for="feedbackaccuracy">Rate Our Accuracy Level:</label>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="comment" style="height: 100px" name="comment"></textarea>
+                            <label for="comment">Comments</label>
+                          </div>
+                        </p>
+ <button type="submit" class="btn btn-primary" id="submitFeedback" >Submit</button>
+                            </form>
+                          </p>
+                        </div>
+                      </div>
+                    
+                    </p>
+                </div>
+                </div>
                 
             </div>
 

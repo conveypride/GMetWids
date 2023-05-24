@@ -26,6 +26,7 @@
   @vite(['resources/sass/app.scss', 'resources/css/adminPortal.css', 'resources/css/adminIndex.css', 'resources/js/app.js', 'resources/js/adminApp.js', 'resources/js/adminCharts-demo.js', 'resources/js/adminIndex-charts.js', ])
 {{-- inject css file of cafoDistrict here csss  --}}
   @yield('cafodistrictCss')
+
 </head>
 </head>
 <body>
@@ -419,5 +420,6 @@
         <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
      {{-- inject css file of cafoDistrict here js  --}}
   @yield('cafodistrictJs')
+  @yield('fivedayForecastJs')
 </body>
 </html>

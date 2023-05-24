@@ -2914,14 +2914,6 @@ savetoDatabase(masterContainer);
 
 // 
  function savetoDatabase(masterContainer){
- 
-  
-    
-    // const formData = new FormData();
-    // formData.append('masterContainer', masterContainer); 
-    // var data = {
-    //     'masterContainer': masterContainer
-    //   };
     if(masterContainer){
     var pubBtn =  document.getElementById('buttonpublish');
     pubBtn.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>';
@@ -2940,6 +2932,8 @@ savetoDatabase(masterContainer);
         pubBtn.textContent = 'Successful';
         const response = xhr.response;
          console.log(response);
+        window.location.href = "/admin/dailyforecast";
+        
 
       } else {
         console.error('Error:', xhr.status);
@@ -2949,19 +2943,6 @@ savetoDatabase(masterContainer);
     console.log("no data available")
 }
     console.log("MMMMMMMMMMMMMMMMMMMmaster:", masterContainer[0]);
-
-
-
-
-
-
-
-
-//     if(publishType == "Publish-Forecast"){
-//         console.log("Publish-Forecast",publishType,schdate,warningtype,textareaweatherwarning,);
-        
-//     }else if(publishType == "Draft-Forecast"){
-// console.log("Draft-Forecast", publishType,schdate,warningtype,textareaweatherwarning,);
-//     }
-   
 }
+
+

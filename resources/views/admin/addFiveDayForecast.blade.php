@@ -63,147 +63,262 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr class="eachrow">
                 <th scope="row">
                     {{-- date --}}
-                      <input type="date" class="form-control" id="datefor5day"> 
+                      <input type="date" class="form-control fiverequired" > 
                 </th>
                 <td>
                     {{--weather condition  --}}
   {{-- weather --}}
-  <select class="form-select form-select-sm" aria-label="Small select">
-    <option selected="">Select Weather</option>
-    <option value="1">CLOUDY</option>
-    <option value="2">TSRA</option>
-    <option value="3">HAZE</option>
-    <option value="3">Sunny</option>
+  <select class="form-select form-select-sm fiverequired" aria-label="Small select">
+    <option value="null">Select Weather</option>
+    <option value="-TSRA">SLIGHT TSRA(-)</option>
+     <option value="TSRA">MODERATE TSRA</option>
+    <option value="+TSRA">HEAVY TSRA(+)</option>
+    <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+     <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+     <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+     <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+    <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+    <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+    <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+    <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+    <option value="HAIL">HAIL</option>
+    <option value="MIST">MIST</option>
+    <option value="FOG">FOG</option>
+    <option value="HAZE">HAZE</option>
+    <option value="SUNNY">SUNNY</option>
+    <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+    <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+    <option value="FEW CLOUDS">FEW CLOUDS</option>
+    <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+    <option value="CLOUDY">CLOUDY</option>
+    <option value="CLEAR NIGHT">CLEAR NIGHT</option>
   </select>
                 </td>
                 <td>
                     <div class="form-floating">
-                    <input type="number" class="form-control" id="temp5dayMin" >
+                    <input type="number" class="form-control fiverequired"  >
                     <label for="temp5dayMin">Temperature</label>
                   </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="temp5dayMin" >
+                        <input type="number" class="form-control fiverequired" >
                         <label for="temp5dayMin">Temperature</label>
                       </div> 
                 </td>
               </tr>
-              <tr>
+              <tr class="eachrow">
                 <th scope="row">
                     {{-- date --}}
-                      <input type="date" class="form-control" id="datefor5day"> 
+                      <input type="date" class="form-control fiverequired" > 
                 </th>
                 <td>
                     {{--weather condition  --}}
   {{-- weather --}}
-  <select class="form-select form-select-sm" aria-label="Small select">
-    <option selected="">Select Weather</option>
-    <option value="1">CLOUDY</option>
-    <option value="2">TSRA</option>
-    <option value="3">HAZE</option>
-    <option value="3">Sunny</option>
+  <select class="form-select form-select-sm fiverequired" aria-label="Small select">
+    <option value="null">Select Weather</option>
+    <option value="-TSRA">SLIGHT TSRA(-)</option>
+     <option value="TSRA">MODERATE TSRA</option>
+    <option value="+TSRA">HEAVY TSRA(+)</option>
+    <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+     <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+     <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+     <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+    <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+    <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+    <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+    <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+    <option value="HAIL">HAIL</option>
+    <option value="MIST">MIST</option>
+    <option value="FOG">FOG</option>
+    <option value="HAZE">HAZE</option>
+    <option value="SUNNY">SUNNY</option>
+    <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+    <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+    <option value="FEW CLOUDS">FEW CLOUDS</option>
+    <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+    <option value="CLOUDY">CLOUDY</option>
+    <option value="CLEAR NIGHT">CLEAR NIGHT</option>
   </select>
                 </td>
                 <td>
                     <div class="form-floating">
-                    <input type="number" class="form-control" id="temp5dayMin" >
+                    <input type="number" class="form-control fiverequired" >
                     <label for="temp5dayMin">Temperature</label>
                   </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="temp5dayMin" >
+                        <input type="number" class="form-control fiverequired" >
                         <label for="temp5dayMin">Temperature</label>
                       </div> 
                 </td>
               </tr>
-              <tr>
+              <tr class="eachrow">
                 <th scope="row">
                     {{-- date --}}
-                      <input type="date" class="form-control" id="datefor5day"> 
+                      <input type="date" class="form-control fiverequired"> 
                 </th>
                 <td>
                     {{--weather condition  --}}
   {{-- weather --}}
-  <select class="form-select form-select-sm" aria-label="Small select">
-    <option selected="">Select Weather</option>
-    <option value="1">CLOUDY</option>
-    <option value="2">TSRA</option>
-    <option value="3">HAZE</option>
-    <option value="3">Sunny</option>
+  <select class="form-select form-select-sm fiverequired" aria-label="Small select">
+    <option value="null">Select Weather</option>
+    <option value="-TSRA">SLIGHT TSRA(-)</option>
+     <option value="TSRA">MODERATE TSRA</option>
+    <option value="+TSRA">HEAVY TSRA(+)</option>
+    <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+     <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+     <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+     <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+    <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+    <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+    <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+    <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+    <option value="HAIL">HAIL</option>
+    <option value="MIST">MIST</option>
+    <option value="FOG">FOG</option>
+    <option value="HAZE">HAZE</option>
+    <option value="SUNNY">SUNNY</option>
+    <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+    <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+    <option value="FEW CLOUDS">FEW CLOUDS</option>
+    <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+    <option value="CLOUDY">CLOUDY</option>
+    <option value="CLEAR NIGHT">CLEAR NIGHT</option>
   </select>
                 </td>
                 <td>
                     <div class="form-floating">
-                    <input type="number" class="form-control" id="temp5dayMin" >
+                    <input type="number" class="form-control fiverequired"  >
                     <label for="temp5dayMin">Temperature</label>
                   </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="temp5dayMin" >
+                        <input type="number" class="form-control fiverequired">
                         <label for="temp5dayMin">Temperature</label>
                       </div> 
                 </td>
               </tr>
-              <tr>
+              <tr class="eachrow">
                 <th scope="row">
                     {{-- date --}}
-                      <input type="date" class="form-control" id="datefor5day"> 
+                      <input type="date" class="form-control fiverequired" > 
                 </th>
                 <td>
                     {{--weather condition  --}}
   {{-- weather --}}
-  <select class="form-select form-select-sm" aria-label="Small select">
-    <option selected="">Select Weather</option>
-    <option value="1">CLOUDY</option>
-    <option value="2">TSRA</option>
-    <option value="3">HAZE</option>
-    <option value="3">Sunny</option>
+  <select class="form-select form-select-sm fiverequired" aria-label="Small select">
+    <option value="null">Select Weather</option>
+    <option value="-TSRA">SLIGHT TSRA(-)</option>
+     <option value="TSRA">MODERATE TSRA</option>
+    <option value="+TSRA">HEAVY TSRA(+)</option>
+    <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+     <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+     <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+     <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+    <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+    <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+    <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+    <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+    <option value="HAIL">HAIL</option>
+    <option value="MIST">MIST</option>
+    <option value="FOG">FOG</option>
+    <option value="HAZE">HAZE</option>
+    <option value="SUNNY">SUNNY</option>
+    <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+    <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+    <option value="FEW CLOUDS">FEW CLOUDS</option>
+    <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+    <option value="CLOUDY">CLOUDY</option>
+    <option value="CLEAR NIGHT">CLEAR NIGHT</option>
   </select>
                 </td>
                 <td>
                     <div class="form-floating">
-                    <input type="number" class="form-control" id="temp5dayMin" >
+                    <input type="number" class="form-control fiverequired"  >
                     <label for="temp5dayMin">Temperature</label>
                   </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="temp5dayMin" >
+                        <input type="number" class="form-control fiverequired">
                         <label for="temp5dayMin">Temperature</label>
                       </div> 
                 </td>
               </tr>
-              <tr>
+              <tr class="eachrow">
                 <th scope="row">
                     {{-- date --}}
-                      <input type="date" class="form-control" id="datefor5day"> 
+                      <input type="date" class="form-control fiverequired" > 
                 </th>
                 <td>
                     {{--weather condition  --}}
   {{-- weather --}}
-  <select class="form-select form-select-sm" aria-label="Small select">
-    <option selected="">Select Weather</option>
-    <option value="1">CLOUDY</option>
-    <option value="2">TSRA</option>
-    <option value="3">HAZE</option>
-    <option value="3">Sunny</option>
+  <select class="form-select form-select-sm fiverequired" aria-label="Small select">
+    <option value="null">Select Weather</option>
+    <option value="-TSRA">SLIGHT TSRA(-)</option>
+     <option value="TSRA">MODERATE TSRA</option>
+    <option value="+TSRA">HEAVY TSRA(+)</option>
+    <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+     <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+     <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+     <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+    <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+    <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+    <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+    <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+    <option value="HAIL">HAIL</option>
+    <option value="MIST">MIST</option>
+    <option value="FOG">FOG</option>
+    <option value="HAZE">HAZE</option>
+    <option value="SUNNY">SUNNY</option>
+    <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+    <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+    <option value="FEW CLOUDS">FEW CLOUDS</option>
+    <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+    <option value="CLOUDY">CLOUDY</option>
+    <option value="CLEAR NIGHT">CLEAR NIGHT</option>
   </select>
                 </td>
                 <td>
                     <div class="form-floating">
-                    <input type="number" class="form-control" id="temp5dayMin" >
+                    <input type="number" class="form-control fiverequired" >
                     <label for="temp5dayMin">Temperature</label>
                   </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="temp5dayMin" >
+                        <input type="number" class="form-control fiverequired" >
                         <label for="temp5dayMin">Temperature</label>
                       </div> 
                 </td>
@@ -216,14 +331,14 @@
   {{-- ==================submit============================== --}}
   <div class="my-3">
     {{-- Summit /Publish Weather --}}
-    <button type="button" class="btn btn-primary text-white " id="buttonpublish5Day">Publish-Forecast</button>
-    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+    <button type="button" class="btn btn-primary text-white" id="buttonpublish5Day">Publish-Forecast</button>
+    {{-- <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu overflow-scroll" style="max-width: 260px; max-height: 160px;">
       <li><a class="dropdown-item " id="publishForecast">Publish-Forecast</a></li>
       <li><a class="dropdown-item " id="publishForecast">Draft-Forecast</a></li>
-       </ul> 
+       </ul>  --}}
   </div>
    
         </div>
@@ -235,6 +350,8 @@
 	    @include('admin.footer') 
 	    
     </div><!--//app-wrapper-->    					
-
+    @section('fivedayForecastJs')
+    <script src="{{ asset('assets/js/addfivedayForecast.js') }}"></script>
+@endsection
  
     @endsection

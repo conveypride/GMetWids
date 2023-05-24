@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AddDailyForecast;
+use App\Models\AddFiveDayForecast;
 use App\Models\Afternoon_general_variables;
 use App\Models\Evening_general_variables;
 use App\Models\Morning_general_variables;
@@ -26,7 +27,8 @@ class Userhome extends Controller
     public $polygons = [];
     public $markers = [];
     public $time = [];
-    
+    public $eachDistrictWeather;
+    public $fivedayforecast;
 public function timeOfDay()
     {
         $currentTime = date('H:i');
@@ -45,12 +47,13 @@ public function timeOfDay()
 
 public function endsWith($string)
 {
-    $pattern = '/(S[EWN]?|E[NSW]?|N[ESW]?|W[SEN]?)/i';
-    $matches = [];
-    if (preg_match($pattern, strtoupper($string), $matches) === 1) {
+    $lastTwoChars = substr(strtoupper($string), -2);
+    $regexPattern = '/(SW|WS|NW|WN|NE|SE|EN|ES|[SNWE])$/i';
+
+    if (preg_match($regexPattern, $lastTwoChars, $matches)) {
         return $matches[0];
     }
-    return null;
+return null;
 }
 
 
@@ -64,6 +67,12 @@ public function endsWith($string)
 
         $districts = DB::table('cafodistricts')->orderBy('districtname')->get();
         
+// Retrieve records from the database
+$this->fivedayforecast =  AddFiveDayForecast::orderBy('created_at', 'desc')
+->take(5)
+->get();
+
+        // $this->fivedayforecast = AddFiveDayForecast::whereDate('date', today())->latest('created_at')->value('add_daily_forecast_id');
 
         // NOW GET THE CONDITIONS BY TIME OF THE DAY
 if($whatthisIsIt == 'Morning'){
@@ -76,6 +85,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the morning date from all the morning table in mysql
 $this->latestGeneralData =  $addDailyForecast->morning_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->morning_table_values()->where('districts', '!=', 'Accra')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->morning_general_variables()->value('itd');
@@ -123,8 +133,6 @@ foreach ($markerIds as $index => $markerId) {
 
 $this->markers = $markers;
 
-
-
 }else{
     $yesterday = Carbon::now()->subDay()->format('Y-m-d');
     // get the latest morning forecast from the morning_general_variables table
@@ -134,6 +142,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the morning date from all the morning table in mysql
 $this->latestGeneralData =  $addDailyForecast->morning_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->morning_table_values()->where('districts', '!=', 'Accra')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->morning_general_variables()->value('itd');
@@ -193,6 +202,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the afternoon date from all the afternoon table in mysql
 $this->latestGeneralData =  $addDailyForecast->afternoon_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->afternoon_table_values()->where('districts', '!=', 'Accra')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->afternoon_general_variables()->value('itd');
@@ -250,6 +260,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the afternoon date from all the afternoon table in mysql
 $this->latestGeneralData =  $addDailyForecast->afternoon_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->afternoon_table_values()->where('districts', '!=', 'Accra')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->afternoon_general_variables()->value('itd');
@@ -312,6 +323,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the evening date from all the evening table in mysql
 $this->latestGeneralData =  $addDailyForecast->evening_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->evening_table_values()->where('districts', '!=', 'Accra')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->evening_general_variables()->value('itd');
@@ -371,6 +383,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the evening date from all the evening table in mysql
 $this->latestGeneralData =  $addDailyForecast->evening_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->evening_table_values()->where('districts', '!=', 'Accra')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->evening_general_variables()->value('itd');
@@ -498,6 +511,8 @@ $weatherE =  $addDailyForecastE->evening_table_values()->where('districts', 'Acc
 $winddirE = $this->endsWith($windE);
 }
 // dd($this->polygons);
+// dd($this->eachDistrictWeather);
+// dd($this->winddir);
         return view('welcome', ['districts' => $districts, 
         'time' => $this->time,
         'addDailyForecast' => $addDailyForecast,
@@ -528,7 +543,8 @@ $winddirE = $this->endsWith($windE);
         'maxTempE' => $maxTempE,
         'windE' => $windE,
         'winddirE' => $winddirE,
-        
+        'eachDistrictWeathers' =>$this->eachDistrictWeather,
+        'fivedayforecasts' => $this->fivedayforecast
     ]);
     }
 
@@ -537,6 +553,13 @@ $winddirE = $this->endsWith($windE);
 // on district changed
 public function seeDetailsOfCity(Request $request, $city)
 {
+
+// Retrieve records from the database
+$this->fivedayforecast =  AddFiveDayForecast::orderBy('created_at', 'desc')
+->take(5)
+->get();
+
+
     $selectedCity = $city;
     $whatthisIsIt = $this->timeOfDay();
 
@@ -554,6 +577,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the morning date from all the morning table in mysql
 $this->latestGeneralData =  $addDailyForecast->morning_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->morning_table_values()->where('districts', '!=', $selectedCity)->get();
 
 
 $this->currentConditionItd = $addDailyForecast->morning_general_variables()->value('itd');
@@ -614,6 +638,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the morning date from all the morning table in mysql
 $this->latestGeneralData =  $addDailyForecast->morning_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->morning_table_values()->where('districts', '!=', $selectedCity)->get();
 
 
 $this->currentConditionItd = $addDailyForecast->morning_general_variables()->value('itd');
@@ -674,6 +699,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the afternoon date from all the afternoon table in mysql
 $this->latestGeneralData =  $addDailyForecast->afternoon_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->afternoon_table_values()->where('districts', '!=', $selectedCity)->get();
 
 
 $this->currentConditionItd = $addDailyForecast->afternoon_general_variables()->value('itd');
@@ -732,6 +758,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the afternoon date from all the afternoon table in mysql
 $this->latestGeneralData =  $addDailyForecast->afternoon_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->afternoon_table_values()->where('districts', '!=', $selectedCity)->get();
 
 
 $this->currentConditionItd = $addDailyForecast->afternoon_general_variables()->value('itd');
@@ -794,6 +821,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the evening date from all the evening table in mysql
 $this->latestGeneralData =  $addDailyForecast->evening_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->evening_table_values()->where('districts', '!=', $selectedCity)->get();
 
 
 $this->currentConditionItd = $addDailyForecast->evening_general_variables()->value('itd');
@@ -852,6 +880,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the evening date from all the evening table in mysql
 $this->latestGeneralData =  $addDailyForecast->evening_general_variables();
+$this->eachDistrictWeather = $addDailyForecast->evening_table_values()->where('districts', '!=', $selectedCity)->get();
 
 
 $this->currentConditionItd = $addDailyForecast->evening_general_variables()->value('itd');
@@ -1011,7 +1040,9 @@ $winddirE = $this->endsWith($windE);
     'minTempE' => $minTempE,
     'maxTempE' => $maxTempE,
     'windE' => $windE,
-    'winddirE' => $winddirE
+    'winddirE' => $winddirE,
+    'eachDistrictWeathers' =>$this->eachDistrictWeather,
+    'fivedayforecasts' => $this->fivedayforecast
 ]);
 }
 

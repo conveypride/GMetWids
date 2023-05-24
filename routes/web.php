@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\Userhome::class,'index'])->name('welcome');
 Route::get('/{city}', [App\Http\Controllers\Userhome::class,'seeDetailsOfCity'])->name('welcomeSelectCity');
-
+Route::post('/feedbackpost', [App\Http\Controllers\Feedback::class,'create'])->name('feedbackpost');
 Route::get('/verify', function () {
     return view('auth.verify');
 });
@@ -31,13 +31,12 @@ Route::get('/test', function () {
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
     Route::get('/dailyforecast', [App\Http\Controllers\dailyForecast::class,'index'])->name('df');
     
-    Route::get('/addFiveDayForecast', function () {
-        return view('admin.addFiveDayForecast');
-    })->name('addNewFD');
-    
-    Route::get('/fiveDayForecast', function () {
-        return view('admin.fivedayForecast');
-    })->name('fiveDayForecast');
+    Route::get('/addFiveDayForecast', [App\Http\Controllers\AddFiveDayForecast::class,'index'])->name('addNewFD');
+    Route::post('/addFiveDayForecastpost', [App\Http\Controllers\AddFiveDayForecast::class,'create']);
+
+
+
+    Route::get('/fiveDayForecast',  [App\Http\Controllers\fiveDayForecast::class,'index'])->name('fiveDayForecast');
     
     Route::get('/docs', function () {
         return view('admin.docs');
