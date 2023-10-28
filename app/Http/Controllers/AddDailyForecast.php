@@ -15,20 +15,103 @@ use App\Models\Morning_general_variables;
 use App\Models\Morning_table_values;
 use App\Models\MorningMarkers;
 use App\Models\MorningPolygon;
+use App\Models\Cafodistricts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class AddDailyForecast extends Controller
 {
+
+    public function getTimeOfDay()
+    {
+        // Convert the created_at timestamp to a Carbon instance
+        $created_at = Carbon::parse(now());
+    
+        // Get the hour of the day
+        $hour = $created_at->hour;
+    
+        // Determine the post time of day
+        // if published betwen 12am to 7am start from the morning
+        if ($hour >= 00 && $hour < 7) {
+            return 'Morning';
+        }
+        // else if published betwen 7am to 12pm start from the afternoon
+     elseif ($hour >= 7 && $hour < 13) {
+            return 'Afternoon';
+
+        } elseif ($hour >=13 && $hour < 24) {
+            return 'Evening';
+           
+        }
+    }
+
+
     //
     public function index()
     {
+        $idd = ModelsAddDailyForecast::where('publishType', 'Publish-Forecast')->latest('created_at')->value('id'); ;
+
+        $dailyforecast = ModelsAddDailyForecast::where('id', $idd)->first();
+       
+        $genMorning= $dailyforecast->morning_general_variables()->first();
+         $genAfternoon= $dailyforecast->afternoon_general_variables()->first();
+        $genEvening= $dailyforecast->evening_general_variables()->first();
+       
+         $morning = $dailyforecast->morning_table_values()->get();
+          $afternoon = $dailyforecast->afternoon_table_values()->get();
+        $evening =  $dailyforecast->evening_table_values()->get(); 
+
+        $polygonDatemorning = $dailyforecast->morning_polygons()->first();
+        $polygonDateafternoon = $dailyforecast->afternoon_polygons()->first();
+      $polygonDateevening =  $dailyforecast->evening_polygons()->first(); 
+
+   
         $districts = DB::table('cafodistricts')->orderBy('districtname')->get();
-        // dd($districts);
-    return view('admin.addNewDailyForecast', ['districts' => $districts]);
+
+        $districtss = Cafodistricts::pluck('districtname')->toArray() ; 
+
+
+        $morningcitiesavailable = $dailyforecast->morning_table_values()->whereIn('districts',$districtss )->pluck('districts')->toArray();
+        $afternooncitiesavailable = $dailyforecast->afternoon_table_values()->whereIn('districts',$districtss )->pluck('districts')->toArray();
+        $eveningcitiesavailable = $dailyforecast->evening_table_values()->whereIn('districts',$districtss )->pluck('districts')->toArray();
+      
+        $missingmorningcities =  array_diff($districtss,$morningcitiesavailable);
+        $missingafternooncities =  array_diff($districtss,$afternooncitiesavailable);
+        $missingeveningcities =  array_diff($districtss,$eveningcitiesavailable);
+
+    //     $afternoon1 = $dailyforecast->afternoon_table_values()->get();
+    //   $evening1 =  $dailyforecast->evening_table_values()->get(); 
+
+
+
+        // dd($missingeveningcities);
+
+        // dd( $evening);
+
+        // exit();
+    return view('admin.addNewDailyForecast', [
+        'districts' => $districts,
+        'genMorning' => $genMorning,
+        'genAfternoon' => $genAfternoon,
+        'genEvening' => $genEvening,
+        'morningtablevalue' => $morning,
+        'afternoontablevalue' => $afternoon,
+        'eveningtablevalue' => $evening,
+        'polygonDatemorning' => $polygonDatemorning,
+        'polygonDateafternoon' => $polygonDateafternoon,
+        'polygonDateevening' => $polygonDateevening,
+        'forecasttype' => $this->getTimeOfDay(),
+        'missingmorningcities' => $missingmorningcities,
+        'missingafternooncities' => $missingafternooncities,
+        'missingeveningcities' => $missingeveningcities
+
+
+
+]);
     }
 
  

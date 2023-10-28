@@ -64,7 +64,7 @@
       <label for="selectProduct" style="font-size: 15px; font-weight: bold;">Select District</label>
       <select class="form-select" id="selectProduct" aria-label="size 5 select example">
         <option>Accra</option>
-        <option>Ada</option>
+        <option>ADA</option>
         <option>Kumasi</option>
       </select>
     </div>

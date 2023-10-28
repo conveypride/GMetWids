@@ -6,7 +6,7 @@ use App\Models\MarineDistricts as ModelsMarineDistricts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Str;
 class MarineDistricts extends Controller
 {
     //
@@ -22,8 +22,8 @@ class MarineDistricts extends Controller
     {
 // insert a new record
 ModelsMarineDistricts::create([
-    'districtname' => ucwords($request->get('districtname')) ,
-    'districtZone' =>  ucwords($request->get('districtZone')),
+    'districtname' =>  Str::upper($request->get('districtname')) ,
+    'districtZone' =>   Str::upper($request->get('districtZone')),
     'user' => Auth::user()->name
 ]);
   return response('Success');

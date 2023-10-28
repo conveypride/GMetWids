@@ -41,6 +41,11 @@ Route::post('createUser', [AddnewuserController::class, 'createUser'])->name('cr
     Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
     
     Route::get('/dailyforecast', [App\Http\Controllers\dailyForecast::class,'index'])->name('df');
+
+Route::post('/deleteforecast', [App\Http\Controllers\dailyForecast::class,'deleteforecast'])->name('deleteforecast');
+
+Route::post('/approveforecast', [App\Http\Controllers\dailyForecast::class,'approveforecast'])->name('approveforecast');
+    
     Route::get('/viewdailyforecast/{id}', [App\Http\Controllers\dailyForecast::class,'viewdailyforecast'])->name('viewdailyforecast');
  Route::get('/viewdailyforecastMap/{id}', [App\Http\Controllers\dailyForecast::class,'viewdailyforecastMap'])->name('viewdailyforecastMap');
 

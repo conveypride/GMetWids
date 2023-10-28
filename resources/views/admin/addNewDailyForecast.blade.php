@@ -59,19 +59,11 @@
  
 {{-- table FORECAST TAB --}}
 <div class="tab-pane fade " id="tableForecast" role="tabpanel" aria-labelledby="tableForecast-tab">
-  <div class="container">
-    {{-- <div class="alert alert-danger alert-dismissible fade show p-2 m-2" role="alert">
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      <h4><strong> Error: </strong></h4>
-      <p class="tableerror"> </p>
-    </div> --}}
-    <div class="row">
-        <div class="d-flex justify-content-between bd-highlight mb-2">
-       <div></div>  
-       <button type="button" class="btn btn-success text-white" id="nextBtn2ndpage">Save and Continue</button>
-  </div>
-    </div>
-  </div>
+ 
+  @if ($forecasttype == 'Morning')
+      
+ 
+
     {{-- morning forecast table --}}
     <div class="table-responsive">
     <table class="table table-bordered text-center">
@@ -84,18 +76,12 @@
                 <div class="row">
                 <div class="col-6">
                     <label for="datetableMorning" class="form-label">Set Date</label>
-                    <input type="date" class="form-control required" id="datetableMorning">
+                    <input type="date" class="form-control required" id="datetableMorning" value="{{ !empty($genMorning)  ? $genMorning->date : '' }}">
                   </div>
                   <div class="col-6">
                     <label for="itdtableMorning" class="form-label">Set ITD Position</label>
-                    <input type="number" class="form-control required" id="itdtableMorning" placeholder="e.g: 1">
-                  </div>
-
-                  {{-- <div class="col-4">
-                    <label for="prestableMorning" class="form-label">Set Pressure</label>
-                    <input type="number" class="form-control required" id="prestableMorning" placeholder="e.g: 150">
-                  </div> --}}
-                
+                    <input type="number" class="form-control required" id="itdtableMorning" placeholder="e.g: 1" value="{{ !empty($genMorning)  ? $genMorning->itd : '' }}">
+                  </div> 
                 </div>
                 </th>
             </tr>
@@ -110,7 +96,7 @@
             <th>Weather</th>
             <th>Min Temp °C</th>
             <th>Max Temp °C</th>
-            <th> Wind (m/s)</th>
+            <th> Wind (m/s) <small>- E.g; 12SE</small></th>
             <th>Chance of  Occurring</th>
             <th>Humidity</th>
            
@@ -119,11 +105,16 @@
         </thead>
 
         <tbody>
-          
+         
             {{-- 1st row  --}}
             @if (!empty($districts))
-            @foreach ($districts as $district) 
-          <tr class="morning" districtnam="{{ $district->districtname }}" >
+            @foreach ($districts as $key => $district) 
+            
+            @if (!empty($morningtablevalue))
+            @if (!empty($missingmorningcities))
+ @foreach ($missingmorningcities as $missingmorningcitie)
+ @if ($district->districtname == $missingmorningcitie)
+ <tr class="morning" districtnam="{{ $district->districtname }}" >
   <td>{{ $district->districtname }}</td> 
             {{-- morning --}}
             <td>
@@ -178,7 +169,7 @@
             <td>
                 <div class="form-floating">
                     <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" >
-                    <label for="morningfloatingInputwind{{ $district->id }}">Wind diecton & speed</label>
+                    <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
                   </div>
             </td>
             {{-- Chance of  Occurring --}}
@@ -186,15 +177,16 @@
                 <select class="form-select form-select-sm required" aria-label="Small select">
                     <option value="null">Select Chance of  Occurring</option>
 
-                    <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
+                    <option value="0% - 10%">0% - 10%</option>
+                    <option value="10% - 20%">10% - 20%</option>
+                     <option value="20% - 30%">20% - 30%</option>
+                    <option value="30% - 40%">30% - 40%</option>
+                    <option value="40% - 50%">40% - 50%</option>
+                    <option value="50% - 60%">50% - 60%</option>
+                    <option value="60% - 70%">60% - 70%</option>
+                    <option value="70% - 80%%">70% - 80%</option>
+                    <option value="80% - 90%">80% - 90%</option>
+                    <option value="90% - 100%">90% - 100%</option>
 
                   </select>
             </td>
@@ -202,18 +194,228 @@
             <td>
                 <select class="form-select form-select-sm required" aria-label="Small select">
                     <option value="null">Select Humidity</option>
-                    <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
+                    <option value="0% - 10%">0% - 10%</option>
+                    <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                    <option value="30% - 40%">30% - 40%</option>
+                    <option value="40% - 50%">40% - 50%</option>
+                    <option value="50% - 60%">50% - 60%</option>
+                    <option value="60% - 70%">60% - 70%</option>
+                    <option value="70% - 80%%">70% - 80%</option>
+                    <option value="80% - 90%">80% - 90%</option>
+                    <option value="90% - 100%">90% - 100%</option>
+
                   </select>
             </td>
           </tr>
+ @endif
+ @endforeach
+
+ @endif
+            @foreach ($morningtablevalue as $morningtablevalues)
+              
+              @if ($district->districtname == $morningtablevalues['districts'])
+                <tr class="morning" districtnam="{{ $district->districtname }}">
+                <td>{{ $district->districtname }}</td> 
+                          {{-- morning --}}
+                          <td>
+                              {{-- weather --}}
+                              <select class="form-select form-select-sm weatherdetail required" aria-label="Small select">
+                                <option value="{{ $morningtablevalues['weather']  }}">{{ $morningtablevalues['weather']  }} </option>
+                                 <option value="null">Select Weather</option>
+                                  <option value="-TSRA">SLIGHT TSRA(-)</option>
+                                   <option value="TSRA">MODERATE TSRA</option>
+                                  <option value="+TSRA">HEAVY TSRA(+)</option>
+                                  <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                                  {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                                   <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                                   {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                                   <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                                   {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                                  <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                                  {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                                  <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                                  {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                                  <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                                  {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                                  
+                                  <option value="HAIL">HAIL</option>
+                                  <option value="MIST">MIST</option>
+                                  <option value="FOG">FOG</option>
+                                  <option value="HAZE">HAZE</option>
+                                  <option value="SUNNY">SUNNY</option>
+                                  <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                                  <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                                  <option value="FEW CLOUDS">FEW CLOUDS</option>
+                                  <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                                  {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                                  <option value="CLOUDY">CLOUDY</option>
+                                  {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                                </select>
+                          </td>
+                          {{-- min TEMPERATURE --}}
+                          <td>
+                              <div class="form-floating">
+                                  <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}" value="{{ $morningtablevalues['min_temp']}}" >
+                                  <label for="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+                                </div>
+                          </td>
+                           {{--max temp --}}
+                          <td> 
+                            <div class="form-floating">
+                              <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}" value="{{ $morningtablevalues['max_temp']}}">
+                              <label for="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+                            </div>
+                          </td>
+                          {{-- WIND --}}
+                          <td>
+                              <div class="form-floating">
+                                  <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" value="{{ $morningtablevalues['wind']}}" >
+                                  <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                                </div>
+                          </td>
+                          {{-- Chance of  Occurring --}}
+                          <td>
+                              <select class="form-select form-select-sm required" aria-label="Small select">
+                                <option value="{{ $morningtablevalues['rain_chance']  }}">{{ $morningtablevalues['rain_chance']  }} </option>
+                                  <option value="null">Select Chance of  Occurring</option>
+                                  <option value="0% - 10%">0% - 10%</option>
+                                  <option value="10% - 20%">10% - 20%</option>
+                                   <option value="20% - 30%">20% - 30%</option>
+                                  <option value="30% - 40%">30% - 40%</option>
+                                  <option value="40% - 50%">40% - 50%</option>
+                                  <option value="50% - 60%">50% - 60%</option>
+                                  <option value="60% - 70%">60% - 70%</option>
+                                  <option value="70% - 80%%">70% - 80%</option>
+                                  <option value="80% - 90%">80% - 90%</option>
+                                  <option value="90% - 100%">90% - 100%</option>
+              
+                                </select>
+                          </td>
+                          {{-- humidity 0% - 100%--}}
+                          <td>
+                              <select class="form-select form-select-sm required" aria-label="Small select">
+                                <option value="{{ $morningtablevalues['humidity']  }}">{{ $morningtablevalues['humidity']  }} </option>
+                                  <option value="null">Select Humidity</option>
+                                  <option value="0% - 10%">0% - 10%</option>
+                                  <option value="10% - 20%">10% - 20%</option>
+                                  <option value="20% - 30%">20% - 30%</option>
+                                  <option value="30% - 40%">30% - 40%</option>
+                                  <option value="40% - 50%">40% - 50%</option>
+                                  <option value="50% - 60%">50% - 60%</option>
+                                  <option value="60% - 70%">60% - 70%</option>
+                                  <option value="70% - 80%%">70% - 80%</option>
+                                  <option value="80% - 90%">80% - 90%</option>
+                                  <option value="90% - 100%">90% - 100%</option>
+              
+                                </select>
+                          </td>
+                        </tr>
+               
+                @endif
+                @endforeach
+
+
+
+            @else 
+             <tr class="morning" districtnam="{{ $district->districtname }}" >
+              <td>{{ $district->districtname }}</td> 
+                        {{-- morning --}}
+                        <td>
+                            {{-- weather --}}
+                            <select class="form-select form-select-sm weatherdetail required" aria-label="Small select">
+                                <option value="null">Select Weather</option>
+                                <option value="-TSRA">SLIGHT TSRA(-)</option>
+                                 <option value="TSRA">MODERATE TSRA</option>
+                                <option value="+TSRA">HEAVY TSRA(+)</option>
+                                <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                                {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                                 <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                                 {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                                 <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                                 {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                                <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                                {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                                <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                                {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                                <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                                {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                                
+                                <option value="HAIL">HAIL</option>
+                                <option value="MIST">MIST</option>
+                                <option value="FOG">FOG</option>
+                                <option value="HAZE">HAZE</option>
+                                <option value="SUNNY">SUNNY</option>
+                                <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                                <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                                <option value="FEW CLOUDS">FEW CLOUDS</option>
+                                <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                                {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                                <option value="CLOUDY">CLOUDY</option>
+                                {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                              </select>
+                        </td>
+                        {{-- min TEMPERATURE --}}
+                        <td>
+                            <div class="form-floating">
+                                <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}" >
+                                <label for="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+                              </div>
+                        </td>
+                         {{--max temp --}}
+                        <td> 
+                          <div class="form-floating">
+                            <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}" >
+                            <label for="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+                          </div>
+                        </td>
+                        {{-- WIND --}}
+                        <td>
+                            <div class="form-floating">
+                                <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" >
+                                <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                              </div>
+                        </td>
+                        {{-- Chance of  Occurring --}}
+                        <td>
+                            <select class="form-select form-select-sm required" aria-label="Small select">
+                                <option value="null">Select Chance of  Occurring</option>
+            
+                                <option value="0% - 10%">0% - 10%</option>
+                                <option value="10% - 20%">10% - 20%</option>
+                                 <option value="20% - 30%">20% - 30%</option>
+                                <option value="30% - 40%">30% - 40%</option>
+                                <option value="40% - 50%">40% - 50%</option>
+                                <option value="50% - 60%">50% - 60%</option>
+                                <option value="60% - 70%">60% - 70%</option>
+                                <option value="70% - 80%%">70% - 80%</option>
+                                <option value="80% - 90%">80% - 90%</option>
+                                <option value="90% - 100%">90% - 100%</option>
+            
+                              </select>
+                        </td>
+                        {{-- humidity 0% - 100%--}}
+                        <td>
+                            <select class="form-select form-select-sm required" aria-label="Small select">
+                                <option value="null">Select Humidity</option>
+                                <option value="0% - 10%">0% - 10%</option>
+                                <option value="10% - 20%">10% - 20%</option>
+                                <option value="20% - 30%">20% - 30%</option>
+                                <option value="30% - 40%">30% - 40%</option>
+                                <option value="40% - 50%">40% - 50%</option>
+                                <option value="50% - 60%">50% - 60%</option>
+                                <option value="60% - 70%">60% - 70%</option>
+                                <option value="70% - 80%%">70% - 80%</option>
+                                <option value="80% - 90%">80% - 90%</option>
+                                <option value="90% - 100%">90% - 100%</option>
+            
+                              </select>
+                        </td>
+                      </tr>
+
+            @endif
+
+        
           @endforeach 
           @else
           <tr> <td>No dristricts found</td> </tr>
@@ -223,7 +425,7 @@
     </div>
 
 <br>
-  {{-- afternoon forecast table --}}
+  {{-- afternoon  table --}}
   <div class="table-responsive mt-2">
     <table class="table table-bordered text-center">
         {{-- time of day --}}
@@ -235,11 +437,11 @@
                 <div class="row">
                 <div class="col-6">
                     <label for="datetableAfternoon" class="form-label">Set Date</label>
-                    <input type="date" class="form-control required" id="datetableAfternoon">
+                    <input type="date" class="form-control required" id="datetableAfternoon" value="{{ !empty($genAfternoon)  ? $genAfternoon->date : '' }}">
                   </div> 
                   <div class="col-6">
                     <label for="itdtableAfternoon" class="form-label">Set ITD Position</label>
-                    <input type="number" class="form-control required" id="itdtableAfternoon" placeholder="e.g: 1">
+                    <input type="number" class="form-control required" id="itdtableAfternoon" placeholder="e.g: 1" value="{{ !empty($genAfternoon)  ? $genAfternoon->itd : '' }}">
                   </div>
                   {{-- <div class="col-4">
                     <label for="prestableAfternoon" class="form-label">Set Pressure</label>
@@ -259,7 +461,7 @@
             <th>Weather</th>
             <th>Min Temp °C</th>
             <th>Max Temp °C</th>
-            <th>Wind (m/s)</th>
+            <th>Wind (m/s) <small>- E.g; 12SE</small> </th>
             <th>Chance of  Occurring</th>
             <th>Humidity</th> 
              
@@ -271,97 +473,321 @@
             {{-- 1st row  --}}
              @if (!empty($districts))
             @foreach ($districts as $district) 
-          <tr class="afternoon" districtnam="{{ $district->districtname }}">
+            @if (!empty($afternoontablevalue))
+            @if (!empty($missingafternooncities))
+            @foreach ($missingafternooncities as $missingafternooncitie)
+            @if ($district->districtname == $missingafternooncitie)
+
+            <tr class="afternoon" districtnam="{{ $district->districtname }}">
            
-  <td>{{ $district->districtname }}</td> 
+              <td>{{ $district->districtname }}</td> 
             {{-- Afternoon --}}
             <td>
-                {{-- weather --}}
-                <select class="form-select form-select-sm required" aria-label="Small select">
-                    <option value="null">Select Weather</option> 
-                    <option value="-TSRA">SLIGHT TSRA(-)</option>
-                     <option value="TSRA">MODERATE TSRA</option>
-                    <option value="+TSRA">HEAVY TSRA(+)</option>
-                    <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
-                    {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
-                    <option value="RAINDAY">MODERATE RAIN(DAY)</option>
-                    {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
-                    <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
-                    {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
-                    <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
-                    {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
-                    <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
-                    {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
-                     <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
-                     {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
-                     
-                    <option value="HAIL">HAIL</option>
-                    <option value="MIST">MIST</option>
-                    <option value="FOG">FOG</option>
-                    <option value="HAZE">HAZE</option>
-                    <option value="SUNNY">SUNNY</option>
-                    <option value="SUNNY BREAKS">SUNNY BREAKS</option>
-                    <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
-                    <option value="FEW CLOUDS">FEW CLOUDS</option>
-                    <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
-                    {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
-                    <option value="CLOUDY">CLOUDY</option>
-                    {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
-                  </select>
+               {{-- weather --}}
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Weather</option> 
+                   <option value="-TSRA">SLIGHT TSRA(-)</option>
+                    <option value="TSRA">MODERATE TSRA</option>
+                   <option value="+TSRA">HEAVY TSRA(+)</option>
+                   <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                   {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                   <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                   {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                   <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                   {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                   <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                   {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                   <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                   {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                    {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                    
+                   <option value="HAIL">HAIL</option>
+                   <option value="MIST">MIST</option>
+                   <option value="FOG">FOG</option>
+                   <option value="HAZE">HAZE</option>
+                   <option value="SUNNY">SUNNY</option>
+                   <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                   <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                   <option value="FEW CLOUDS">FEW CLOUDS</option>
+                   <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                   {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                   <option value="CLOUDY">CLOUDY</option>
+                   {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                 </select>
             </td>
-             {{--min  TEMPERATURE --}}
-    <td>
-      <div class="form-floating">
-          <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" >
-          <label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
-        </div>
-  </td>
-{{--max temp --}}
-<td> 
-<div class="form-floating">
-  <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" >
-  <label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
-</div>
-</td>
+            {{--min  TEMPERATURE --}}
+            <td>
+            <div class="form-floating">
+            <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" >
+            <label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+            </div>
+            </td>
+            {{--max temp --}}
+            <td> 
+            <div class="form-floating">
+            <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" >
+            <label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+            </div>
+            </td>
             {{-- WIND --}}
             <td>
-                <div class="form-floating">
-                    <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" >
-                    <label for="afternoonfloatingInputwind{{ $district->id }}">Wind diecton & speed</label>
-                  </div>
+               <div class="form-floating">
+                   <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" >
+                   <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                 </div>
             </td>
             {{-- Chance of  Occurring --}}
             <td>
-                <select class="form-select form-select-sm required" aria-label="Small select">
-                    <option value="null">Select Chance of  Occurring</option>
-                    <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
-                  </select>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Chance of  Occurring</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+            
+                 </select>
             </td>
             {{-- humidity 0% - 100%--}}
             <td>
-                <select class="form-select form-select-sm required" aria-label="Small select">
-                    <option value="null">Select Humidity</option>
-                    <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
-                  </select>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Humidity</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+            
+                 </select>
             </td>
+            
+            </tr>
+            @endif
+
+            @endforeach
+@endif
+
+            @foreach ($afternoontablevalue as $afternoontablevalues)
+      
+            @if ($district->districtname == $afternoontablevalues['districts'])
              
-          </tr>
+              <tr class="afternoon" districtnam="{{ $district->districtname }}">
+           
+              <td>{{ $district->districtname }}</td> 
+           {{-- Afternoon --}}
+           <td>
+               {{-- weather --}}
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                 <option value="{{ $afternoontablevalues['weather'] }}">{{ $afternoontablevalues['weather'] }}</option> 
+                   <option value="null">Select Weather</option> 
+                   <option value="-TSRA">SLIGHT TSRA(-)</option>
+                    <option value="TSRA">MODERATE TSRA</option>
+                   <option value="+TSRA">HEAVY TSRA(+)</option>
+                   <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                   {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                   <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                   {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                   <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                   {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                   <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                   {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                   <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                   {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                    {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                    
+                   <option value="HAIL">HAIL</option>
+                   <option value="MIST">MIST</option>
+                   <option value="FOG">FOG</option>
+                   <option value="HAZE">HAZE</option>
+                   <option value="SUNNY">SUNNY</option>
+                   <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                   <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                   <option value="FEW CLOUDS">FEW CLOUDS</option>
+                   <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                   {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                   <option value="CLOUDY">CLOUDY</option>
+                   {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                 </select>
+           </td>
+            {{--min  TEMPERATURE --}}
+   <td>
+     <div class="form-floating">
+         <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" value="{{ $afternoontablevalues['min_temp'] }}" >
+         <label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+       </div>
+ </td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+ <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" value="{{ $afternoontablevalues['min_temp'] }}" >
+ <label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+           {{-- WIND --}}
+           <td>
+               <div class="form-floating">
+                   <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" value="{{ $afternoontablevalues['wind'] }}">
+                   <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                 </div>
+           </td>
+           {{-- Chance of  Occurring --}}
+           <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                <option value="{{ $afternoontablevalues['rain_chance'] }}">{{ $afternoontablevalues['rain_chance'] }}</option>
+                   <option value="null">Select Chance of  Occurring</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+
+                 </select>
+           </td>
+           {{-- humidity 0% - 100%--}}
+           <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                <option value="{{ $afternoontablevalues['humidity'] }}">{{ $afternoontablevalues['humidity'] }}</option>
+                   <option value="null">Select Humidity</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+
+                 </select>
+           </td>
+            
+         </tr>
+
+ 
+        
+            @endif
+            
+            @endforeach  
+
+
+        
+            @else
+ <tr class="afternoon" districtnam="{{ $district->districtname }}">
+           
+  <td>{{ $district->districtname }}</td> 
+{{-- Afternoon --}}
+<td>
+   {{-- weather --}}
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Weather</option> 
+       <option value="-TSRA">SLIGHT TSRA(-)</option>
+        <option value="TSRA">MODERATE TSRA</option>
+       <option value="+TSRA">HEAVY TSRA(+)</option>
+       <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+       {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+       <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+       {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+       <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+       {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+       <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+       {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+       <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+       {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+        <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+        {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+        
+       <option value="HAIL">HAIL</option>
+       <option value="MIST">MIST</option>
+       <option value="FOG">FOG</option>
+       <option value="HAZE">HAZE</option>
+       <option value="SUNNY">SUNNY</option>
+       <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+       <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+       <option value="FEW CLOUDS">FEW CLOUDS</option>
+       <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+       {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+       <option value="CLOUDY">CLOUDY</option>
+       {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+     </select>
+</td>
+{{--min  TEMPERATURE --}}
+<td>
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" >
+<label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+</div>
+</td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" >
+<label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+{{-- WIND --}}
+<td>
+   <div class="form-floating">
+       <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" >
+       <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+     </div>
+</td>
+{{-- Chance of  Occurring --}}
+<td>
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Chance of  Occurring</option>
+       <option value="0% - 10%">0% - 10%</option>
+       <option value="10% - 20%">10% - 20%</option>
+        <option value="20% - 30%">20% - 30%</option>
+       <option value="30% - 40%">30% - 40%</option>
+       <option value="40% - 50%">40% - 50%</option>
+       <option value="50% - 60%">50% - 60%</option>
+       <option value="60% - 70%">60% - 70%</option>
+       <option value="70% - 80%%">70% - 80%</option>
+       <option value="80% - 90%">80% - 90%</option>
+       <option value="90% - 100%">90% - 100%</option>
+
+     </select>
+</td>
+{{-- humidity 0% - 100%--}}
+<td>
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Humidity</option>
+       <option value="0% - 10%">0% - 10%</option>
+       <option value="10% - 20%">10% - 20%</option>
+        <option value="20% - 30%">20% - 30%</option>
+       <option value="30% - 40%">30% - 40%</option>
+       <option value="40% - 50%">40% - 50%</option>
+       <option value="50% - 60%">50% - 60%</option>
+       <option value="60% - 70%">60% - 70%</option>
+       <option value="70% - 80%%">70% - 80%</option>
+       <option value="80% - 90%">80% - 90%</option>
+       <option value="90% - 100%">90% - 100%</option>
+
+     </select>
+</td>
+
+</tr>
+            @endif
+
+          
           @endforeach 
           @else
           <tr> <td>No dristricts found</td> </tr>
@@ -372,7 +798,9 @@
     </div>
 
     <br>
-      {{-- evening forecast table --}}
+
+
+      {{-- evening  table --}}
       <div class="table-responsive my-2">
         <table class="table table-bordered text-center">
             {{-- time of day --}}
@@ -384,16 +812,13 @@
                     <div class="row">
                     <div class="col-6">
                         <label for="datetableEvening" class="form-label">Set Date</label>
-                        <input type="date" class="form-control required" id="datetableEvening">
+                        <input type="date" class="form-control required" id="datetableEvening" value="{{ !empty($genEvening)  ? $genEvening->date : '' }}">
                       </div> 
                       <div class="col-6">
                         <label for="itdtableEvening" class="form-label">Set ITD Position</label>
-                        <input type="number" class="form-control required" id="itdtableEvening" placeholder="e.g: 1">
+                        <input type="number" class="form-control required" id="itdtableEvening" placeholder="e.g: 1" value="{{ !empty($genEvening)  ? $genEvening->itd : '' }}">
                       </div>
-                      {{-- <div class="col-4">
-                        <label for="prestableEvening" class="form-label">Set Pressure</label>
-                        <input type="number" class="form-control required" id="prestableEvening" placeholder="e.g: 150">
-                      </div> --}}
+                      
                     </div>
                 </th>
                 </tr>
@@ -408,7 +833,7 @@
                 <th>Weather</th>
                 <th>Min Temp °C</th>
                 <th>Max Temp °C</th>
-                <th> Wind (m/s)</th>
+                <th> Wind (m/s) <small>- E.g; 12SE</small></th>
                 <th>Chance of  Occurring</th>
                 <th>Humidity</th> 
                 </tr>
@@ -419,95 +844,312 @@
                 {{-- 1st row  --}}
                  @if (!empty($districts))
                 @foreach ($districts as $district)  
-                 <tr class="evening" districtnam="{{ $district->districtname }}"> 
-      <td>{{ $district->districtname }}</td> 
-                <td>
-                    {{-- weather --}}
-                    <select class="form-select form-select-sm required" aria-label="Small select">
-                      <option value="null">Select Weather</option>
-                      <option value="-TSRA">SLIGHT TSRA(-)</option>
-                       <option value="TSRA">MODERATE TSRA</option>
-                      <option value="+TSRA">HEAVY TSRA(+)</option>
-                      {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
-                      <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
-                      {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
-                      <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
-                       {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
-                       <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
-                      {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
-                      <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
-                      {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
-                       <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
-                       {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
-                       <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
-                       
-                      <option value="HAIL">HAIL</option>
-                      <option value="MIST">MIST</option>
-                      <option value="FOG">FOG</option>
-                      <option value="HAZE">HAZE</option>
-                      {{-- <option value="SUNNY">SUNNY</option> --}}
-                      {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
-                      {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
-                      {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
-                      {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
-                      <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
-                      <option value="CLOUDY">CLOUDY</option>
-                       <option value="CLEAR NIGHT">CLEAR NIGHT</option>
-                      </select>
-                </td>
-                     {{--min  TEMPERATURE --}}
-    <td>
-      <div class="form-floating">
+                @if (!empty($eveningtablevalue))
+                @if (!empty($missingeveningcities))
+                @foreach ($missingeveningcities as $missingeveningcitie)
+                @if ($district->districtname == $missingeveningcitie)
+                <tr class="evening" districtnam="{{ $district->districtname }}"> 
+                  <td>{{ $district->districtname }}</td> 
+              <td>
+                  {{-- weather --}}
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="null">Select Weather</option>
+                    <option value="-TSRA">SLIGHT TSRA(-)</option>
+                     <option value="TSRA">MODERATE TSRA</option>
+                    <option value="+TSRA">HEAVY TSRA(+)</option>
+                    {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+                    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+                    {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+                    <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+                     {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+                     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+                    {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+                    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+                    {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+                     <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+                     {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+                     <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+                     
+                    <option value="HAIL">HAIL</option>
+                    <option value="MIST">MIST</option>
+                    <option value="FOG">FOG</option>
+                    <option value="HAZE">HAZE</option>
+                    {{-- <option value="SUNNY">SUNNY</option> --}}
+                    {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+                    {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+                    {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+                    {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+                    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+                    <option value="CLOUDY">CLOUDY</option>
+                     <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+                    </select>
+              </td>
+                   {{--min  TEMPERATURE --}}
+          <td>
+          <div class="form-floating">
           <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}" >
           <label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
-        </div>
-  </td>
+          </div>
+          </td>
+          {{--max temp --}}
+          <td> 
+          <div class="form-floating">
+          <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}" >
+          <label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+          </div>
+          </td>
+              {{-- WIND --}}
+              <td>
+                  <div class="form-floating">
+                      <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}" >
+                      <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                    </div>
+              </td>
+              {{-- Chance of  Occurring --}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                      <option value="null">Select Chance of  Occurring</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+          
+                    </select>
+              </td>
+              {{-- humidity 0% - 100%--}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                      <option value="null">Select Humidity</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+          
+                    </select>
+              </td> 
+          
+            </tr>
+                @endif
+                @endforeach
+@endif
+
+                @foreach ($eveningtablevalue as $eveningtablevalues)
+       
+ 
+                @if ($district->districtname == $eveningtablevalues['districts'])
+                 
+                <tr class="evening" districtnam="{{ $district->districtname }}"> 
+                  <td>{{ $district->districtname }}</td> 
+                 <td>
+                  {{-- weather --}}
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['weather'] }}"> {{ $eveningtablevalues['weather'] }} </option>
+                    <option value="null">Select Weather</option>
+                    <option value="-TSRA">SLIGHT TSRA(-)</option>
+                     <option value="TSRA">MODERATE TSRA</option>
+                    <option value="+TSRA">HEAVY TSRA(+)</option>
+                    {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+                    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+                    {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+                    <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+                     {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+                     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+                    {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+                    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+                    {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+                     <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+                     {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+                     <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+                     
+                    <option value="HAIL">HAIL</option>
+                    <option value="MIST">MIST</option>
+                    <option value="FOG">FOG</option>
+                    <option value="HAZE">HAZE</option>
+                    {{-- <option value="SUNNY">SUNNY</option> --}}
+                    {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+                    {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+                    {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+                    {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+                    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+                    <option value="CLOUDY">CLOUDY</option>
+                     <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+                    </select>
+              </td>
+                   {{--min  TEMPERATURE --}}
+  <td>
+    <div class="form-floating">
+        <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}"  value="{{ $eveningtablevalues['min_temp'] }}" >
+        <label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+      </div>
+</td>
 {{--max temp --}}
 <td> 
 <div class="form-floating">
-  <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}" >
-  <label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}"  value="{{ $eveningtablevalues['max_temp'] }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
 </div>
 </td>
-                {{-- WIND --}}
-                <td>
-                    <div class="form-floating">
-                        <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}" >
-                        <label for="eveningfloatingInputwind{{ $district->id }}">Wind diecton & speed</label>
-                      </div>
-                </td>
-                {{-- Chance of  Occurring --}}
-                <td>
-                    <select class="form-select form-select-sm required" aria-label="Small select">
-                        <option value="null">Select Chance of  Occurring</option>
-                        <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
-                      </select>
-                </td>
-                {{-- humidity 0% - 100%--}}
-                <td>
-                    <select class="form-select form-select-sm required" aria-label="Small select">
-                        <option value="null">Select Humidity</option>
-                        <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
-                      </select>
-                </td> 
-     
-              </tr>
+              {{-- WIND --}}
+              <td>
+                  <div class="form-floating">
+                      <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}"  value="{{ $eveningtablevalues['wind'] }}">
+                      <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                    </div>
+              </td>
+              {{-- Chance of  Occurring --}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['rain_chance'] }}"> {{ $eveningtablevalues['rain_chance'] }} </option>
+                      <option value="null">Select Chance of  Occurring</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+  
+                    </select>
+              </td>
+              {{-- humidity 0% - 100%--}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['humidity'] }}"> {{ $eveningtablevalues['humidity'] }} </option>
+                      <option value="null">Select Humidity</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+  
+                    </select>
+              </td> 
+   
+            </tr>
+
+          
+                @endif
+      
+                @endforeach 
+
+                @else
+      <tr class="evening" districtnam="{{ $district->districtname }}"> 
+        <td>{{ $district->districtname }}</td> 
+    <td>
+        {{-- weather --}}
+        <select class="form-select form-select-sm required" aria-label="Small select">
+          <option value="null">Select Weather</option>
+          <option value="-TSRA">SLIGHT TSRA(-)</option>
+           <option value="TSRA">MODERATE TSRA</option>
+          <option value="+TSRA">HEAVY TSRA(+)</option>
+          {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+          <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+          {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+          <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+           {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+           <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+          {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+          <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+          {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+           <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+           {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+           <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+           
+          <option value="HAIL">HAIL</option>
+          <option value="MIST">MIST</option>
+          <option value="FOG">FOG</option>
+          <option value="HAZE">HAZE</option>
+          {{-- <option value="SUNNY">SUNNY</option> --}}
+          {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+          {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+          {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+          {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+          <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+          <option value="CLOUDY">CLOUDY</option>
+           <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+          </select>
+    </td>
+         {{--min  TEMPERATURE --}}
+<td>
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+</div>
+</td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+    {{-- WIND --}}
+    <td>
+        <div class="form-floating">
+            <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}" >
+            <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+          </div>
+    </td>
+    {{-- Chance of  Occurring --}}
+    <td>
+        <select class="form-select form-select-sm required" aria-label="Small select">
+            <option value="null">Select Chance of  Occurring</option>
+            <option value="0% - 10%">0% - 10%</option>
+            <option value="10% - 20%">10% - 20%</option>
+             <option value="20% - 30%">20% - 30%</option>
+            <option value="30% - 40%">30% - 40%</option>
+            <option value="40% - 50%">40% - 50%</option>
+            <option value="50% - 60%">50% - 60%</option>
+            <option value="60% - 70%">60% - 70%</option>
+            <option value="70% - 80%%">70% - 80%</option>
+            <option value="80% - 90%">80% - 90%</option>
+            <option value="90% - 100%">90% - 100%</option>
+
+          </select>
+    </td>
+    {{-- humidity 0% - 100%--}}
+    <td>
+        <select class="form-select form-select-sm required" aria-label="Small select">
+            <option value="null">Select Humidity</option>
+            <option value="0% - 10%">0% - 10%</option>
+            <option value="10% - 20%">10% - 20%</option>
+             <option value="20% - 30%">20% - 30%</option>
+            <option value="30% - 40%">30% - 40%</option>
+            <option value="40% - 50%">40% - 50%</option>
+            <option value="50% - 60%">50% - 60%</option>
+            <option value="60% - 70%">60% - 70%</option>
+            <option value="70% - 80%%">70% - 80%</option>
+            <option value="80% - 90%">80% - 90%</option>
+            <option value="90% - 100%">90% - 100%</option>
+
+          </select>
+    </td> 
+
+  </tr>
+
+    @endif
+
+                 
   @endforeach 
 @else
 <tr> <td>No dristricts found</td> </tr>
@@ -515,18 +1157,2230 @@
             </tbody>
           </table>
         </div>
+
+<br>
+
+
+@elseif ($forecasttype == 'Afternoon')
+
+  {{-- afternoon forecast table --}}
+  <div class="table-responsive mt-2">
+    <table class="table table-bordered text-center">
+        {{-- time of day --}}
+        <thead class="thead-dark">
+          <tr>
+            <th></th>
+            <th colspan="7">
+                Afternoon
+                <div class="row">
+                <div class="col-6">
+                    <label for="datetableAfternoon" class="form-label">Set Date</label>
+                    <input type="date" class="form-control required" id="datetableAfternoon" value="{{ !empty($genAfternoon)  ? $genAfternoon->date : '' }}">
+                  </div> 
+                  <div class="col-6">
+                    <label for="itdtableAfternoon" class="form-label">Set ITD Position</label>
+                    <input type="number" class="form-control required" id="itdtableAfternoon" placeholder="e.g: 1" value="{{ !empty($genAfternoon)  ? $genAfternoon->itd : '' }}">
+                  </div>
+                  {{-- <div class="col-4">
+                    <label for="prestableAfternoon" class="form-label">Set Pressure</label>
+                    <input type="number" class="form-control required" id="prestableAfternoon" placeholder="e.g: 150">
+                  </div> --}}
+                </div>
+                </th>
+            </tr>
+           {{-- time of day --}}
+        </thead>
+
+        {{-- sub titles --}}
+        <thead class="thead-light">
+          <tr>
+            <th>Cities</th>
+            {{-- Afternoon section --}}
+            <th>Weather</th>
+            <th>Min Temp °C</th>
+            <th>Max Temp °C</th>
+            <th>Wind (m/s) <small>- E.g; 12SE</small> </th>
+            <th>Chance of  Occurring</th>
+            <th>Humidity</th> 
+             
+             </tr>
+           {{-- end of sub titles --}}
+        </thead>
+
+        <tbody>
+            {{-- 1st row  --}}
+             @if (!empty($districts))
+            @foreach ($districts as $district) 
+            @if (!empty($afternoontablevalue))
+            @if (!empty($missingafternooncities))
+            @foreach ($missingafternooncities as $missingafternooncitie)
+            @if ($district->districtname == $missingafternooncitie)
+
+            <tr class="afternoon" districtnam="{{ $district->districtname }}">
+           
+              <td>{{ $district->districtname }}</td> 
+            {{-- Afternoon --}}
+            <td>
+               {{-- weather --}}
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Weather</option> 
+                   <option value="-TSRA">SLIGHT TSRA(-)</option>
+                    <option value="TSRA">MODERATE TSRA</option>
+                   <option value="+TSRA">HEAVY TSRA(+)</option>
+                   <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                   {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                   <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                   {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                   <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                   {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                   <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                   {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                   <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                   {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                    {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                    
+                   <option value="HAIL">HAIL</option>
+                   <option value="MIST">MIST</option>
+                   <option value="FOG">FOG</option>
+                   <option value="HAZE">HAZE</option>
+                   <option value="SUNNY">SUNNY</option>
+                   <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                   <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                   <option value="FEW CLOUDS">FEW CLOUDS</option>
+                   <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                   {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                   <option value="CLOUDY">CLOUDY</option>
+                   {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                 </select>
+            </td>
+            {{--min  TEMPERATURE --}}
+            <td>
+            <div class="form-floating">
+            <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" >
+            <label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+            </div>
+            </td>
+            {{--max temp --}}
+            <td> 
+            <div class="form-floating">
+            <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" >
+            <label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+            </div>
+            </td>
+            {{-- WIND --}}
+            <td>
+               <div class="form-floating">
+                   <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" >
+                   <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                 </div>
+            </td>
+            {{-- Chance of  Occurring --}}
+            <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Chance of  Occurring</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+            
+                 </select>
+            </td>
+            {{-- humidity 0% - 100%--}}
+            <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Humidity</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+            
+                 </select>
+            </td>
+            
+            </tr>
+            @endif
+
+            @endforeach
+
+@endif
+
+
+  @foreach ($afternoontablevalue as $afternoontablevalues)
+      
+    @if ($district->districtname == $afternoontablevalues['districts'])
+            
+              <tr class="afternoon" districtnam="{{ $district->districtname }}">
+            {{ "yes" }}
+              <td>{{ $district->districtname }}</td> 
+           {{-- Afternoon --}}
+           <td>
+               {{-- weather --}}
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                 <option value="{{ $afternoontablevalues['weather'] }}">{{ $afternoontablevalues['weather'] }}</option> 
+                   <option value="null">Select Weather</option> 
+                   <option value="-TSRA">SLIGHT TSRA(-)</option>
+                    <option value="TSRA">MODERATE TSRA</option>
+                   <option value="+TSRA">HEAVY TSRA(+)</option>
+                   <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                   {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                   <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                   {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                   <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                   {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                   <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                   {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                   <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                   {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                    {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                    
+                   <option value="HAIL">HAIL</option>
+                   <option value="MIST">MIST</option>
+                   <option value="FOG">FOG</option>
+                   <option value="HAZE">HAZE</option>
+                   <option value="SUNNY">SUNNY</option>
+                   <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                   <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                   <option value="FEW CLOUDS">FEW CLOUDS</option>
+                   <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                   {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                   <option value="CLOUDY">CLOUDY</option>
+                   {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                 </select>
+           </td>
+            {{--min  TEMPERATURE --}}
+   <td>
+     <div class="form-floating">
+         <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" value="{{ $afternoontablevalues['min_temp'] }}" >
+         <label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+       </div>
+ </td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+ <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" value="{{ $afternoontablevalues['min_temp'] }}" >
+ <label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+           {{-- WIND --}}
+           <td>
+               <div class="form-floating">
+                   <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" value="{{ $afternoontablevalues['wind'] }}">
+                   <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                 </div>
+           </td>
+           {{-- Chance of  Occurring --}}
+           <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                <option value="{{ $afternoontablevalues['rain_chance'] }}">{{ $afternoontablevalues['rain_chance'] }}</option>
+                   <option value="null">Select Chance of  Occurring</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+
+                 </select>
+           </td>
+           {{-- humidity 0% - 100%--}}
+           <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                <option value="{{ $afternoontablevalues['humidity'] }}">{{ $afternoontablevalues['humidity'] }}</option>
+                   <option value="null">Select Humidity</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+
+                 </select>
+           </td>
+            
+         </tr>
+
+        
+  
+            @endif
+
+            @endforeach       
+
+
+  
+            @else
+ <tr class="afternoon" districtnam="{{ $district->districtname }}">
+           
+  <td>{{ $district->districtname }}</td> 
+{{-- Afternoon --}}
+<td>
+   {{-- weather --}}
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Weather</option> 
+       <option value="-TSRA">SLIGHT TSRA(-)</option>
+        <option value="TSRA">MODERATE TSRA</option>
+       <option value="+TSRA">HEAVY TSRA(+)</option>
+       <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+       {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+       <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+       {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+       <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+       {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+       <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+       {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+       <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+       {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+        <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+        {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+        
+       <option value="HAIL">HAIL</option>
+       <option value="MIST">MIST</option>
+       <option value="FOG">FOG</option>
+       <option value="HAZE">HAZE</option>
+       <option value="SUNNY">SUNNY</option>
+       <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+       <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+       <option value="FEW CLOUDS">FEW CLOUDS</option>
+       <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+       {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+       <option value="CLOUDY">CLOUDY</option>
+       {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+     </select>
+</td>
+{{--min  TEMPERATURE --}}
+<td>
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" >
+<label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+</div>
+</td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" >
+<label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+{{-- WIND --}}
+<td>
+   <div class="form-floating">
+       <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" >
+       <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+     </div>
+</td>
+{{-- Chance of  Occurring --}}
+<td>
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Chance of  Occurring</option>
+       <option value="0% - 10%">0% - 10%</option>
+       <option value="10% - 20%">10% - 20%</option>
+        <option value="20% - 30%">20% - 30%</option>
+       <option value="30% - 40%">30% - 40%</option>
+       <option value="40% - 50%">40% - 50%</option>
+       <option value="50% - 60%">50% - 60%</option>
+       <option value="60% - 70%">60% - 70%</option>
+       <option value="70% - 80%%">70% - 80%</option>
+       <option value="80% - 90%">80% - 90%</option>
+       <option value="90% - 100%">90% - 100%</option>
+
+     </select>
+</td>
+{{-- humidity 0% - 100%--}}
+<td>
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Humidity</option>
+       <option value="0% - 10%">0% - 10%</option>
+       <option value="10% - 20%">10% - 20%</option>
+        <option value="20% - 30%">20% - 30%</option>
+       <option value="30% - 40%">30% - 40%</option>
+       <option value="40% - 50%">40% - 50%</option>
+       <option value="50% - 60%">50% - 60%</option>
+       <option value="60% - 70%">60% - 70%</option>
+       <option value="70% - 80%%">70% - 80%</option>
+       <option value="80% - 90%">80% - 90%</option>
+       <option value="90% - 100%">90% - 100%</option>
+
+     </select>
+</td>
+
+</tr>
+            @endif
+
+          
+          @endforeach 
+          @else
+          <tr> <td>No dristricts found</td> </tr>
+          @endif
+     
+        </tbody>
+      </table>
+    </div>
+
+    <br>
+
+    
+      {{-- evening  table --}}
+      <div class="table-responsive my-2">
+        <table class="table table-bordered text-center">
+            {{-- time of day --}}
+            <thead class="thead-dark">
+              <tr>
+                <th></th>
+                <th colspan="7">
+                    Evening
+                    <div class="row">
+                    <div class="col-6">
+                        <label for="datetableEvening" class="form-label">Set Date</label>
+                        <input type="date" class="form-control required" id="datetableEvening" value="{{ !empty($genEvening)  ? $genEvening->date : '' }}">
+                      </div> 
+                      <div class="col-6">
+                        <label for="itdtableEvening" class="form-label">Set ITD Position</label>
+                        <input type="number" class="form-control required" id="itdtableEvening" placeholder="e.g: 1" value="{{ !empty($genEvening)  ? $genEvening->itd : '' }}">
+                      </div>
+                      
+                    </div>
+                </th>
+                </tr>
+               {{-- time of day --}}
+            </thead>
+    
+            {{-- sub titles --}}
+            <thead class="thead-light">
+              <tr>
+                <th>Cities</th>
+                {{-- evening section --}}
+                <th>Weather</th>
+                <th>Min Temp °C</th>
+                <th>Max Temp °C</th>
+                <th> Wind (m/s) <small>- E.g; 12SE</small></th>
+                <th>Chance of  Occurring</th>
+                <th>Humidity</th> 
+                </tr>
+               {{-- end of sub titles --}}
+            </thead>
+    
+            <tbody>
+                {{-- 1st row  --}}
+                 @if (!empty($districts))
+                @foreach ($districts as $district)  
+                @if (!empty($eveningtablevalue))
+                @if (!empty($missingeveningcities))
+                @foreach ($missingeveningcities as $missingeveningcitie)
+                @if ($district->districtname == $missingeveningcitie)
+                <tr class="evening" districtnam="{{ $district->districtname }}"> 
+                  <td>{{ $district->districtname }}</td> 
+              <td>
+                  {{-- weather --}}
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="null">Select Weather</option>
+                    <option value="-TSRA">SLIGHT TSRA(-)</option>
+                     <option value="TSRA">MODERATE TSRA</option>
+                    <option value="+TSRA">HEAVY TSRA(+)</option>
+                    {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+                    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+                    {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+                    <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+                     {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+                     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+                    {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+                    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+                    {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+                     <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+                     {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+                     <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+                     
+                    <option value="HAIL">HAIL</option>
+                    <option value="MIST">MIST</option>
+                    <option value="FOG">FOG</option>
+                    <option value="HAZE">HAZE</option>
+                    {{-- <option value="SUNNY">SUNNY</option> --}}
+                    {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+                    {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+                    {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+                    {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+                    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+                    <option value="CLOUDY">CLOUDY</option>
+                     <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+                    </select>
+              </td>
+                   {{--min  TEMPERATURE --}}
+          <td>
+          <div class="form-floating">
+          <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}" >
+          <label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+          </div>
+          </td>
+          {{--max temp --}}
+          <td> 
+          <div class="form-floating">
+          <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}" >
+          <label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+          </div>
+          </td>
+              {{-- WIND --}}
+              <td>
+                  <div class="form-floating">
+                      <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}" >
+                      <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                    </div>
+              </td>
+              {{-- Chance of  Occurring --}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                      <option value="null">Select Chance of  Occurring</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+          
+                    </select>
+              </td>
+              {{-- humidity 0% - 100%--}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                      <option value="null">Select Humidity</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+          
+                    </select>
+              </td> 
+          
+            </tr>
+                @endif
+                @endforeach
+@endif
+
+         @foreach ($eveningtablevalue as $eveningtablevalues)
+       
+ 
+                @if ($district->districtname == $eveningtablevalues['districts'])
+                 
+                <tr class="evening" districtnam="{{ $district->districtname }}"> 
+                  <td>{{ $district->districtname }}</td> 
+              <td>
+                  {{-- weather --}}
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['weather'] }}"> {{ $eveningtablevalues['weather'] }} </option>
+                    <option value="null">Select Weather</option>
+                    <option value="-TSRA">SLIGHT TSRA(-)</option>
+                     <option value="TSRA">MODERATE TSRA</option>
+                    <option value="+TSRA">HEAVY TSRA(+)</option>
+                    {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+                    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+                    {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+                    <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+                     {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+                     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+                    {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+                    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+                    {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+                     <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+                     {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+                     <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+                     
+                    <option value="HAIL">HAIL</option>
+                    <option value="MIST">MIST</option>
+                    <option value="FOG">FOG</option>
+                    <option value="HAZE">HAZE</option>
+                    {{-- <option value="SUNNY">SUNNY</option> --}}
+                    {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+                    {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+                    {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+                    {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+                    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+                    <option value="CLOUDY">CLOUDY</option>
+                     <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+                    </select>
+              </td>
+                   {{--min  TEMPERATURE --}}
+  <td>
+    <div class="form-floating">
+        <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}"  value="{{ $eveningtablevalues['min_temp'] }}" >
+        <label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+      </div>
+</td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}"  value="{{ $eveningtablevalues['max_temp'] }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+              {{-- WIND --}}
+              <td>
+                  <div class="form-floating">
+                      <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}"  value="{{ $eveningtablevalues['wind'] }}">
+                      <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                    </div>
+              </td>
+              {{-- Chance of  Occurring --}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['rain_chance'] }}"> {{ $eveningtablevalues['rain_chance'] }} </option>
+                      <option value="null">Select Chance of  Occurring</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+  
+                    </select>
+              </td>
+              {{-- humidity 0% - 100%--}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['humidity'] }}"> {{ $eveningtablevalues['humidity'] }} </option>
+                      <option value="null">Select Humidity</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+  
+                    </select>
+              </td> 
+   
+            </tr>
+
+   
+                @endif
+      
+                
+            @endforeach 
+
+                @else
+      <tr class="evening" districtnam="{{ $district->districtname }}"> 
+        <td>{{ $district->districtname }}</td> 
+    <td>
+        {{-- weather --}}
+        <select class="form-select form-select-sm required" aria-label="Small select">
+          <option value="null">Select Weather</option>
+          <option value="-TSRA">SLIGHT TSRA(-)</option>
+           <option value="TSRA">MODERATE TSRA</option>
+          <option value="+TSRA">HEAVY TSRA(+)</option>
+          {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+          <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+          {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+          <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+           {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+           <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+          {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+          <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+          {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+           <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+           {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+           <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+           
+          <option value="HAIL">HAIL</option>
+          <option value="MIST">MIST</option>
+          <option value="FOG">FOG</option>
+          <option value="HAZE">HAZE</option>
+          {{-- <option value="SUNNY">SUNNY</option> --}}
+          {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+          {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+          {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+          {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+          <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+          <option value="CLOUDY">CLOUDY</option>
+           <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+          </select>
+    </td>
+         {{--min  TEMPERATURE --}}
+<td>
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+</div>
+</td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+    {{-- WIND --}}
+    <td>
+        <div class="form-floating">
+            <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}" >
+            <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+          </div>
+    </td>
+    {{-- Chance of  Occurring --}}
+    <td>
+        <select class="form-select form-select-sm required" aria-label="Small select">
+            <option value="null">Select Chance of  Occurring</option>
+            <option value="0% - 10%">0% - 10%</option>
+            <option value="10% - 20%">10% - 20%</option>
+             <option value="20% - 30%">20% - 30%</option>
+            <option value="30% - 40%">30% - 40%</option>
+            <option value="40% - 50%">40% - 50%</option>
+            <option value="50% - 60%">50% - 60%</option>
+            <option value="60% - 70%">60% - 70%</option>
+            <option value="70% - 80%%">70% - 80%</option>
+            <option value="80% - 90%">80% - 90%</option>
+            <option value="90% - 100%">90% - 100%</option>
+
+          </select>
+    </td>
+    {{-- humidity 0% - 100%--}}
+    <td>
+        <select class="form-select form-select-sm required" aria-label="Small select">
+            <option value="null">Select Humidity</option>
+            <option value="0% - 10%">0% - 10%</option>
+            <option value="10% - 20%">10% - 20%</option>
+             <option value="20% - 30%">20% - 30%</option>
+            <option value="30% - 40%">30% - 40%</option>
+            <option value="40% - 50%">40% - 50%</option>
+            <option value="50% - 60%">50% - 60%</option>
+            <option value="60% - 70%">60% - 70%</option>
+            <option value="70% - 80%%">70% - 80%</option>
+            <option value="80% - 90%">80% - 90%</option>
+            <option value="90% - 100%">90% - 100%</option>
+
+          </select>
+    </td> 
+
+  </tr>
+
+    @endif
+
+                 
+  @endforeach 
+@else
+<tr> <td>No dristricts found</td> </tr>
+@endif
+            </tbody>
+          </table>
+        </div>
+
+<br>
+ {{-- morning  table --}}
+ <div class="table-responsive">
+  <table class="table table-bordered text-center">
+      {{-- time of day --}}
+      <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th colspan="7">
+              Morning
+              <div class="row">
+              <div class="col-6">
+                  <label for="datetableMorning" class="form-label">Set Date</label>
+                  <input type="date" class="form-control required" id="datetableMorning" value="{{ !empty($genMorning)  ? $genMorning->date : '' }}">
+                </div>
+                <div class="col-6">
+                  <label for="itdtableMorning" class="form-label">Set ITD Position</label>
+                  <input type="number" class="form-control required" id="itdtableMorning" placeholder="e.g: 1" value="{{ !empty($genMorning)  ? $genMorning->itd : '' }}">
+                </div> 
+              </div>
+              </th>
+          </tr>
+         {{-- time of day --}}
+      </thead>
+
+      {{-- sub titles --}}
+      <thead class="thead-light">
+        <tr>
+          <th>Cities</th>
+          {{-- morning section --}}
+          <th>Weather</th>
+          <th>Min Temp °C</th>
+          <th>Max Temp °C</th>
+          <th> Wind (m/s) <small>- E.g; 12SE</small></th>
+          <th>Chance of  Occurring</th>
+          <th>Humidity</th>
+         
+           </tr>
+         {{-- end of sub titles --}}
+      </thead>
+
+      <tbody>
+       
+          {{-- 1st row  --}}
+          @if (!empty($districts))
+          @foreach ($districts as $district) 
+          @if (!empty($morningtablevalue))
+          @if (!empty($missingmorningcities))
+          @foreach ($missingmorningcities as $missingmorningcitie)
+          @if ($district->districtname == $missingmorningcitie)
+          <tr class="morning" districtnam="{{ $district->districtname }}" >
+           <td>{{ $district->districtname }}</td> 
+                     {{-- morning --}}
+                     <td>
+                         {{-- weather --}}
+                         <select class="form-select form-select-sm weatherdetail required" aria-label="Small select">
+                             <option value="null">Select Weather</option>
+                             <option value="-TSRA">SLIGHT TSRA(-)</option>
+                              <option value="TSRA">MODERATE TSRA</option>
+                             <option value="+TSRA">HEAVY TSRA(+)</option>
+                             <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                             {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                              <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                              {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                              <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                              {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                             <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                             {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                             <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                             {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                             <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                             {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                             
+                             <option value="HAIL">HAIL</option>
+                             <option value="MIST">MIST</option>
+                             <option value="FOG">FOG</option>
+                             <option value="HAZE">HAZE</option>
+                             <option value="SUNNY">SUNNY</option>
+                             <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                             <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                             <option value="FEW CLOUDS">FEW CLOUDS</option>
+                             <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                             {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                             <option value="CLOUDY">CLOUDY</option>
+                             {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                           </select>
+                     </td>
+                     {{-- min TEMPERATURE --}}
+                     <td>
+                         <div class="form-floating">
+                             <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}" >
+                             <label for="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+                           </div>
+                     </td>
+                      {{--max temp --}}
+                     <td> 
+                       <div class="form-floating">
+                         <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}" >
+                         <label for="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+                       </div>
+                     </td>
+                     {{-- WIND --}}
+                     <td>
+                         <div class="form-floating">
+                             <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" >
+                             <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                           </div>
+                     </td>
+                     {{-- Chance of  Occurring --}}
+                     <td>
+                         <select class="form-select form-select-sm required" aria-label="Small select">
+                             <option value="null">Select Chance of  Occurring</option>
+         
+                             <option value="0% - 10%">0% - 10%</option>
+                             <option value="10% - 20%">10% - 20%</option>
+                              <option value="20% - 30%">20% - 30%</option>
+                             <option value="30% - 40%">30% - 40%</option>
+                             <option value="40% - 50%">40% - 50%</option>
+                             <option value="50% - 60%">50% - 60%</option>
+                             <option value="60% - 70%">60% - 70%</option>
+                             <option value="70% - 80%%">70% - 80%</option>
+                             <option value="80% - 90%">80% - 90%</option>
+                             <option value="90% - 100%">90% - 100%</option>
+         
+                           </select>
+                     </td>
+                     {{-- humidity 0% - 100%--}}
+                     <td>
+                         <select class="form-select form-select-sm required" aria-label="Small select">
+                             <option value="null">Select Humidity</option>
+                             <option value="0% - 10%">0% - 10%</option>
+                             <option value="10% - 20%">10% - 20%</option>
+                             <option value="20% - 30%">20% - 30%</option>
+                             <option value="30% - 40%">30% - 40%</option>
+                             <option value="40% - 50%">40% - 50%</option>
+                             <option value="50% - 60%">50% - 60%</option>
+                             <option value="60% - 70%">60% - 70%</option>
+                             <option value="70% - 80%%">70% - 80%</option>
+                             <option value="80% - 90%">80% - 90%</option>
+                             <option value="90% - 100%">90% - 100%</option>
+         
+                           </select>
+                     </td>
+                   </tr>
+          @endif
+          @endforeach
+         @endif
+          @foreach ($morningtablevalue as $morningtablevalues)
+           
+              @if ($district->districtname == $morningtablevalues['districts'])
+              <tr class="morning" districtnam="{{ $district->districtname }}" >
+              <td>{{ $district->districtname }}</td> 
+                        {{-- morning --}}
+                        <td>
+                            {{-- weather --}}
+                            <select class="form-select form-select-sm weatherdetail required" aria-label="Small select">
+                              <option value="{{ $morningtablevalues['weather']  }}">{{ $morningtablevalues['weather']  }} </option>
+                               <option value="null">Select Weather</option>
+                                <option value="-TSRA">SLIGHT TSRA(-)</option>
+                                 <option value="TSRA">MODERATE TSRA</option>
+                                <option value="+TSRA">HEAVY TSRA(+)</option>
+                                <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                                {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                                 <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                                 {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                                 <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                                 {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                                <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                                {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                                <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                                {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                                <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                                {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                                
+                                <option value="HAIL">HAIL</option>
+                                <option value="MIST">MIST</option>
+                                <option value="FOG">FOG</option>
+                                <option value="HAZE">HAZE</option>
+                                <option value="SUNNY">SUNNY</option>
+                                <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                                <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                                <option value="FEW CLOUDS">FEW CLOUDS</option>
+                                <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                                {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                                <option value="CLOUDY">CLOUDY</option>
+                                {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                              </select>
+                        </td>
+                        {{-- min TEMPERATURE --}}
+                        <td>
+                            <div class="form-floating">
+                                <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}" value="{{ $morningtablevalues['min_temp']}}" >
+                                <label for="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+                              </div>
+                        </td>
+                         {{--max temp --}}
+                        <td> 
+                          <div class="form-floating">
+                            <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}" value="{{ $morningtablevalues['max_temp']}}">
+                            <label for="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+                          </div>
+                        </td>
+                        {{-- WIND --}}
+                        <td>
+                            <div class="form-floating">
+                                <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" value="{{ $morningtablevalues['wind']}}" >
+                                <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                              </div>
+                        </td>
+                        {{-- Chance of  Occurring --}}
+                        <td>
+                            <select class="form-select form-select-sm required" aria-label="Small select">
+                              <option value="{{ $morningtablevalues['rain_chance']  }}">{{ $morningtablevalues['rain_chance']  }} </option>
+                                <option value="null">Select Chance of  Occurring</option>
+                                <option value="0% - 10%">0% - 10%</option>
+                                <option value="10% - 20%">10% - 20%</option>
+                                 <option value="20% - 30%">20% - 30%</option>
+                                <option value="30% - 40%">30% - 40%</option>
+                                <option value="40% - 50%">40% - 50%</option>
+                                <option value="50% - 60%">50% - 60%</option>
+                                <option value="60% - 70%">60% - 70%</option>
+                                <option value="70% - 80%%">70% - 80%</option>
+                                <option value="80% - 90%">80% - 90%</option>
+                                <option value="90% - 100%">90% - 100%</option>
+            
+                              </select>
+                        </td>
+                        {{-- humidity 0% - 100%--}}
+                        <td>
+                            <select class="form-select form-select-sm required" aria-label="Small select">
+                              <option value="{{ $morningtablevalues['humidity']  }}">{{ $morningtablevalues['humidity']  }} </option>
+                                <option value="null">Select Humidity</option>
+                                <option value="0% - 10%">0% - 10%</option>
+                                <option value="10% - 20%">10% - 20%</option>
+                                <option value="20% - 30%">20% - 30%</option>
+                                <option value="30% - 40%">30% - 40%</option>
+                                <option value="40% - 50%">40% - 50%</option>
+                                <option value="50% - 60%">50% - 60%</option>
+                                <option value="60% - 70%">60% - 70%</option>
+                                <option value="70% - 80%%">70% - 80%</option>
+                                <option value="80% - 90%">80% - 90%</option>
+                                <option value="90% - 100%">90% - 100%</option>
+            
+                              </select>
+                        </td>
+                      </tr>
+
+              @endif
+
+
+     
+              @endforeach
+
+          @else 
+           <tr class="morning" districtnam="{{ $district->districtname }}" >
+            <td>{{ $district->districtname }}</td> 
+                      {{-- morning --}}
+                      <td>
+                          {{-- weather --}}
+                          <select class="form-select form-select-sm weatherdetail required" aria-label="Small select">
+                              <option value="null">Select Weather</option>
+                              <option value="-TSRA">SLIGHT TSRA(-)</option>
+                               <option value="TSRA">MODERATE TSRA</option>
+                              <option value="+TSRA">HEAVY TSRA(+)</option>
+                              <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                              {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                               <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                               {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                               <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                               {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                              <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                              {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                              <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                              {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                              <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                              {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                              
+                              <option value="HAIL">HAIL</option>
+                              <option value="MIST">MIST</option>
+                              <option value="FOG">FOG</option>
+                              <option value="HAZE">HAZE</option>
+                              <option value="SUNNY">SUNNY</option>
+                              <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                              <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                              <option value="FEW CLOUDS">FEW CLOUDS</option>
+                              <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                              {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                              <option value="CLOUDY">CLOUDY</option>
+                              {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                            </select>
+                      </td>
+                      {{-- min TEMPERATURE --}}
+                      <td>
+                          <div class="form-floating">
+                              <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}" >
+                              <label for="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+                            </div>
+                      </td>
+                       {{--max temp --}}
+                      <td> 
+                        <div class="form-floating">
+                          <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}" >
+                          <label for="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+                        </div>
+                      </td>
+                      {{-- WIND --}}
+                      <td>
+                          <div class="form-floating">
+                              <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" >
+                              <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                            </div>
+                      </td>
+                      {{-- Chance of  Occurring --}}
+                      <td>
+                          <select class="form-select form-select-sm required" aria-label="Small select">
+                              <option value="null">Select Chance of  Occurring</option>
+          
+                              <option value="0% - 10%">0% - 10%</option>
+                              <option value="10% - 20%">10% - 20%</option>
+                               <option value="20% - 30%">20% - 30%</option>
+                              <option value="30% - 40%">30% - 40%</option>
+                              <option value="40% - 50%">40% - 50%</option>
+                              <option value="50% - 60%">50% - 60%</option>
+                              <option value="60% - 70%">60% - 70%</option>
+                              <option value="70% - 80%%">70% - 80%</option>
+                              <option value="80% - 90%">80% - 90%</option>
+                              <option value="90% - 100%">90% - 100%</option>
+          
+                            </select>
+                      </td>
+                      {{-- humidity 0% - 100%--}}
+                      <td>
+                          <select class="form-select form-select-sm required" aria-label="Small select">
+                              <option value="null">Select Humidity</option>
+                              <option value="0% - 10%">0% - 10%</option>
+                              <option value="10% - 20%">10% - 20%</option>
+                              <option value="20% - 30%">20% - 30%</option>
+                              <option value="30% - 40%">30% - 40%</option>
+                              <option value="40% - 50%">40% - 50%</option>
+                              <option value="50% - 60%">50% - 60%</option>
+                              <option value="60% - 70%">60% - 70%</option>
+                              <option value="70% - 80%%">70% - 80%</option>
+                              <option value="80% - 90%">80% - 90%</option>
+                              <option value="90% - 100%">90% - 100%</option>
+          
+                            </select>
+                      </td>
+                    </tr>
+
+          @endif
+
+      
+        @endforeach 
+        @else
+        <tr> <td>No dristricts found</td> </tr>
+        @endif
+      </tbody>
+    </table>
+  </div>
+
+<br>
+
+
+    @elseif ($forecasttype == 'Evening')
+   
+
+      {{-- evening forecast table --}}
+      <div class="table-responsive my-2">
+        <table class="table table-bordered text-center">
+            {{-- time of day --}}
+            <thead class="thead-dark">
+              <tr>
+                <th></th>
+                <th colspan="7">
+                    Evening
+                    <div class="row">
+                    <div class="col-6">
+                        <label for="datetableEvening" class="form-label">Set Date</label>
+                        <input type="date" class="form-control required" id="datetableEvening" value="{{ !empty($genEvening)  ? $genEvening->date : '' }}">
+                      </div> 
+                      <div class="col-6">
+                        <label for="itdtableEvening" class="form-label">Set ITD Position</label>
+                        <input type="number" class="form-control required" id="itdtableEvening" placeholder="e.g: 1" value="{{ !empty($genEvening)  ? $genEvening->itd : '' }}">
+                      </div>
+                      
+                    </div>
+                </th>
+                </tr>
+               {{-- time of day --}}
+            </thead>
+    
+            {{-- sub titles --}}
+            <thead class="thead-light">
+              <tr>
+                <th>Cities</th>
+                {{-- evening section --}}
+                <th>Weather</th>
+                <th>Min Temp °C</th>
+                <th>Max Temp °C</th>
+                <th> Wind (m/s) <small>- E.g; 12SE</small></th>
+                <th>Chance of  Occurring</th>
+                <th>Humidity</th> 
+                </tr>
+               {{-- end of sub titles --}}
+            </thead>
+    
+            <tbody>
+                {{-- 1st row  --}}
+                 @if (!empty($districts))
+                @foreach ($districts as $district)  
+                @if (!empty($eveningtablevalue))
+                @if (!empty($missingeveningcities))
+                @foreach ($missingeveningcities as $missingeveningcitie)
+                @if ($district->districtname == $missingeveningcitie)
+                <tr class="evening" districtnam="{{ $district->districtname }}"> 
+                  <td>{{ $district->districtname }}</td> 
+              <td>
+                  {{-- weather --}}
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="null">Select Weather</option>
+                    <option value="-TSRA">SLIGHT TSRA(-)</option>
+                     <option value="TSRA">MODERATE TSRA</option>
+                    <option value="+TSRA">HEAVY TSRA(+)</option>
+                    {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+                    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+                    {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+                    <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+                     {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+                     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+                    {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+                    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+                    {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+                     <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+                     {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+                     <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+                     
+                    <option value="HAIL">HAIL</option>
+                    <option value="MIST">MIST</option>
+                    <option value="FOG">FOG</option>
+                    <option value="HAZE">HAZE</option>
+                    {{-- <option value="SUNNY">SUNNY</option> --}}
+                    {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+                    {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+                    {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+                    {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+                    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+                    <option value="CLOUDY">CLOUDY</option>
+                     <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+                    </select>
+              </td>
+                   {{--min  TEMPERATURE --}}
+          <td>
+          <div class="form-floating">
+          <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}" >
+          <label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+          </div>
+          </td>
+          {{--max temp --}}
+          <td> 
+          <div class="form-floating">
+          <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}" >
+          <label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+          </div>
+          </td>
+              {{-- WIND --}}
+              <td>
+                  <div class="form-floating">
+                      <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}" >
+                      <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                    </div>
+              </td>
+              {{-- Chance of  Occurring --}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                      <option value="null">Select Chance of  Occurring</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+          
+                    </select>
+              </td>
+              {{-- humidity 0% - 100%--}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                      <option value="null">Select Humidity</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+          
+                    </select>
+              </td> 
+          
+            </tr>
+                @endif
+                @endforeach
+@endif
+
+                @foreach ($eveningtablevalue as $eveningtablevalues)
+       
+                @if ($district->districtname == $eveningtablevalues['districts'])
+                 
+                <tr class="evening" districtnam="{{ $district->districtname }}"> 
+                  <td>{{ $district->districtname }}</td> 
+              <td>
+                  {{-- weather --}}
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['weather'] }}"> {{ $eveningtablevalues['weather'] }} </option>
+                    <option value="null">Select Weather</option>
+                    <option value="-TSRA">SLIGHT TSRA(-)</option>
+                     <option value="TSRA">MODERATE TSRA</option>
+                    <option value="+TSRA">HEAVY TSRA(+)</option>
+                    {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+                    <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+                    {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+                    <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+                     {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+                     <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+                    {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+                    <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+                    {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+                     <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+                     {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+                     <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+                     
+                    <option value="HAIL">HAIL</option>
+                    <option value="MIST">MIST</option>
+                    <option value="FOG">FOG</option>
+                    <option value="HAZE">HAZE</option>
+                    {{-- <option value="SUNNY">SUNNY</option> --}}
+                    {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+                    {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+                    {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+                    {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+                    <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+                    <option value="CLOUDY">CLOUDY</option>
+                     <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+                    </select>
+              </td>
+                   {{--min  TEMPERATURE --}}
+  <td>
+    <div class="form-floating">
+        <input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}"  value="{{ $eveningtablevalues['min_temp'] }}" >
+        <label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+      </div>
+</td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}"  value="{{ $eveningtablevalues['max_temp'] }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+              {{-- WIND --}}
+              <td>
+                  <div class="form-floating">
+                      <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}"  value="{{ $eveningtablevalues['wind'] }}">
+                      <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                    </div>
+              </td>
+              {{-- Chance of  Occurring --}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['rain_chance'] }}"> {{ $eveningtablevalues['rain_chance'] }} </option>
+                      <option value="null">Select Chance of  Occurring</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+  
+                    </select>
+              </td>
+              {{-- humidity 0% - 100%--}}
+              <td>
+                  <select class="form-select form-select-sm required" aria-label="Small select">
+                    <option value="{{ $eveningtablevalues['humidity'] }}"> {{ $eveningtablevalues['humidity'] }} </option>
+                      <option value="null">Select Humidity</option>
+                      <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                       <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
+  
+                    </select>
+              </td> 
+   
+            </tr>
+
+ 
+                @endif
+      
+                @endforeach 
+
+
+                @else
+      <tr class="evening" districtnam="{{ $district->districtname }}"> 
+        <td>{{ $district->districtname }}</td> 
+    <td>
+        {{-- weather --}}
+        <select class="form-select form-select-sm required" aria-label="Small select">
+          <option value="null">Select Weather</option>
+          <option value="-TSRA">SLIGHT TSRA(-)</option>
+           <option value="TSRA">MODERATE TSRA</option>
+          <option value="+TSRA">HEAVY TSRA(+)</option>
+          {{-- <option value="-RAINDAY">SLIGHT RAIN(DAY)</option> --}}
+          <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option>
+          {{-- <option value="RAINDAY">MODERATE RAIN(DAY)</option> --}}
+          <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option>
+           {{-- <option value="+RAINDAY">HEAVY RAIN(DAY)</option> --}}
+           <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option>
+          {{-- <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option> --}}
+          <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option>
+          {{-- <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option> --}}
+           <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option>
+           {{-- <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option> --}}
+           <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option>
+           
+          <option value="HAIL">HAIL</option>
+          <option value="MIST">MIST</option>
+          <option value="FOG">FOG</option>
+          <option value="HAZE">HAZE</option>
+          {{-- <option value="SUNNY">SUNNY</option> --}}
+          {{-- <option value="SUNNY BREAKS">SUNNY BREAKS</option> --}}
+          {{-- <option value="SUNNY INTERVALS">SUNNY INTERVALS</option> --}}
+          {{-- <option value="FEW CLOUDS">FEW CLOUDS</option> --}}
+          {{-- <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option> --}}
+          <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option>
+          <option value="CLOUDY">CLOUDY</option>
+           <option value="CLEAR NIGHT">CLEAR NIGHT</option>
+          </select>
+    </td>
+         {{--min  TEMPERATURE --}}
+<td>
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+</div>
+</td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}" >
+<label for="{{ $district->districtname }}EfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+    {{-- WIND --}}
+    <td>
+        <div class="form-floating">
+            <input type="text" class="form-control required" id="eveningfloatingInputwind{{ $district->id }}" >
+            <label for="eveningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+          </div>
+    </td>
+    {{-- Chance of  Occurring --}}
+    <td>
+        <select class="form-select form-select-sm required" aria-label="Small select">
+            <option value="null">Select Chance of  Occurring</option>
+            <option value="0% - 10%">0% - 10%</option>
+            <option value="10% - 20%">10% - 20%</option>
+             <option value="20% - 30%">20% - 30%</option>
+            <option value="30% - 40%">30% - 40%</option>
+            <option value="40% - 50%">40% - 50%</option>
+            <option value="50% - 60%">50% - 60%</option>
+            <option value="60% - 70%">60% - 70%</option>
+            <option value="70% - 80%%">70% - 80%</option>
+            <option value="80% - 90%">80% - 90%</option>
+            <option value="90% - 100%">90% - 100%</option>
+
+          </select>
+    </td>
+    {{-- humidity 0% - 100%--}}
+    <td>
+        <select class="form-select form-select-sm required" aria-label="Small select">
+            <option value="null">Select Humidity</option>
+            <option value="0% - 10%">0% - 10%</option>
+            <option value="10% - 20%">10% - 20%</option>
+             <option value="20% - 30%">20% - 30%</option>
+            <option value="30% - 40%">30% - 40%</option>
+            <option value="40% - 50%">40% - 50%</option>
+            <option value="50% - 60%">50% - 60%</option>
+            <option value="60% - 70%">60% - 70%</option>
+            <option value="70% - 80%%">70% - 80%</option>
+            <option value="80% - 90%">80% - 90%</option>
+            <option value="90% - 100%">90% - 100%</option>
+
+          </select>
+    </td> 
+
+  </tr>
+
+    @endif
+
+                 
+  @endforeach 
+@else
+<tr> <td>No dristricts found</td> </tr>
+@endif
+            </tbody>
+          </table>
+        </div>
+
+ {{-- morning  table --}}
+ <div class="table-responsive">
+  <table class="table table-bordered text-center">
+      {{-- time of day --}}
+      <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th colspan="7">
+              Morning
+              <div class="row">
+              <div class="col-6">
+                  <label for="datetableMorning" class="form-label">Set Date</label>
+                  <input type="date" class="form-control required" id="datetableMorning" value="{{ !empty($genMorning)  ? $genMorning->date : '' }}">
+                </div>
+                <div class="col-6">
+                  <label for="itdtableMorning" class="form-label">Set ITD Position</label>
+                  <input type="number" class="form-control required" id="itdtableMorning" placeholder="e.g: 1" value="{{ !empty($genMorning)  ? $genMorning->itd : '' }}">
+                </div> 
+              </div>
+              </th>
+          </tr>
+         {{-- time of day --}}
+      </thead>
+
+      {{-- sub titles --}}
+      <thead class="thead-light">
+        <tr>
+          <th>Cities</th>
+          {{-- morning section --}}
+          <th>Weather</th>
+          <th>Min Temp °C</th>
+          <th>Max Temp °C</th>
+          <th> Wind (m/s) <small>- E.g; 12SE</small></th>
+          <th>Chance of  Occurring</th>
+          <th>Humidity</th>
+         
+           </tr>
+         {{-- end of sub titles --}}
+      </thead>
+
+      <tbody>
+       
+          {{-- 1st row  --}}
+          @if (!empty($districts))
+          @foreach ($districts as $district) 
+          @if (!empty($morningtablevalue))
+          @if (!empty($missingmorningcities))
+          @foreach ($missingmorningcities as $missingmorningcitie)
+          @if ($district->districtname == $missingmorningcitie)
+          <tr class="morning" districtnam="{{ $district->districtname }}" >
+           <td>{{ $district->districtname }}</td> 
+                     {{-- morning --}}
+                     <td>
+                         {{-- weather --}}
+                         <select class="form-select form-select-sm weatherdetail required" aria-label="Small select">
+                             <option value="null">Select Weather</option>
+                             <option value="-TSRA">SLIGHT TSRA(-)</option>
+                              <option value="TSRA">MODERATE TSRA</option>
+                             <option value="+TSRA">HEAVY TSRA(+)</option>
+                             <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                             {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                              <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                              {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                              <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                              {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                             <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                             {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                             <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                             {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                             <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                             {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                             
+                             <option value="HAIL">HAIL</option>
+                             <option value="MIST">MIST</option>
+                             <option value="FOG">FOG</option>
+                             <option value="HAZE">HAZE</option>
+                             <option value="SUNNY">SUNNY</option>
+                             <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                             <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                             <option value="FEW CLOUDS">FEW CLOUDS</option>
+                             <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                             {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                             <option value="CLOUDY">CLOUDY</option>
+                             {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                           </select>
+                     </td>
+                     {{-- min TEMPERATURE --}}
+                     <td>
+                         <div class="form-floating">
+                             <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}" >
+                             <label for="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+                           </div>
+                     </td>
+                      {{--max temp --}}
+                     <td> 
+                       <div class="form-floating">
+                         <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}" >
+                         <label for="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+                       </div>
+                     </td>
+                     {{-- WIND --}}
+                     <td>
+                         <div class="form-floating">
+                             <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" >
+                             <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                           </div>
+                     </td>
+                     {{-- Chance of  Occurring --}}
+                     <td>
+                         <select class="form-select form-select-sm required" aria-label="Small select">
+                             <option value="null">Select Chance of  Occurring</option>
+         
+                             <option value="0% - 10%">0% - 10%</option>
+                             <option value="10% - 20%">10% - 20%</option>
+                              <option value="20% - 30%">20% - 30%</option>
+                             <option value="30% - 40%">30% - 40%</option>
+                             <option value="40% - 50%">40% - 50%</option>
+                             <option value="50% - 60%">50% - 60%</option>
+                             <option value="60% - 70%">60% - 70%</option>
+                             <option value="70% - 80%%">70% - 80%</option>
+                             <option value="80% - 90%">80% - 90%</option>
+                             <option value="90% - 100%">90% - 100%</option>
+         
+                           </select>
+                     </td>
+                     {{-- humidity 0% - 100%--}}
+                     <td>
+                         <select class="form-select form-select-sm required" aria-label="Small select">
+                             <option value="null">Select Humidity</option>
+                             <option value="0% - 10%">0% - 10%</option>
+                             <option value="10% - 20%">10% - 20%</option>
+                             <option value="20% - 30%">20% - 30%</option>
+                             <option value="30% - 40%">30% - 40%</option>
+                             <option value="40% - 50%">40% - 50%</option>
+                             <option value="50% - 60%">50% - 60%</option>
+                             <option value="60% - 70%">60% - 70%</option>
+                             <option value="70% - 80%%">70% - 80%</option>
+                             <option value="80% - 90%">80% - 90%</option>
+                             <option value="90% - 100%">90% - 100%</option>
+         
+                           </select>
+                     </td>
+                   </tr>
+          @endif
+          @endforeach
+         @endif
+
+          @foreach ($morningtablevalue as $morningtablevalues)
+               
+             @if ($district->districtname == $morningtablevalues['districts'])
+              <tr class="morning" districtnam="{{ $district->districtname }}" >
+              <td>{{ $district->districtname }}</td> 
+                        {{-- morning --}}
+                        <td>
+                            {{-- weather --}}
+                            <select class="form-select form-select-sm weatherdetail required" aria-label="Small select">
+                              <option value="{{ $morningtablevalues['weather']  }}">{{ $morningtablevalues['weather']  }} </option>
+                               <option value="null">Select Weather</option>
+                                <option value="-TSRA">SLIGHT TSRA(-)</option>
+                                 <option value="TSRA">MODERATE TSRA</option>
+                                <option value="+TSRA">HEAVY TSRA(+)</option>
+                                <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                                {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                                 <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                                 {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                                 <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                                 {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                                <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                                {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                                <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                                {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                                <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                                {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                                
+                                <option value="HAIL">HAIL</option>
+                                <option value="MIST">MIST</option>
+                                <option value="FOG">FOG</option>
+                                <option value="HAZE">HAZE</option>
+                                <option value="SUNNY">SUNNY</option>
+                                <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                                <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                                <option value="FEW CLOUDS">FEW CLOUDS</option>
+                                <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                                {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                                <option value="CLOUDY">CLOUDY</option>
+                                {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                              </select>
+                        </td>
+                        {{-- min TEMPERATURE --}}
+                        <td>
+                            <div class="form-floating">
+                                <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}" value="{{ $morningtablevalues['min_temp']}}" >
+                                <label for="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+                              </div>
+                        </td>
+                         {{--max temp --}}
+                        <td> 
+                          <div class="form-floating">
+                            <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}" value="{{ $morningtablevalues['max_temp']}}">
+                            <label for="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+                          </div>
+                        </td>
+                        {{-- WIND --}}
+                        <td>
+                            <div class="form-floating">
+                                <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" value="{{ $morningtablevalues['wind']}}" >
+                                <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                              </div>
+                        </td>
+                        {{-- Chance of  Occurring --}}
+                        <td>
+                            <select class="form-select form-select-sm required" aria-label="Small select">
+                              <option value="{{ $morningtablevalues['rain_chance']  }}">{{ $morningtablevalues['rain_chance']  }} </option>
+                                <option value="null">Select Chance of  Occurring</option>
+                                <option value="0% - 10%">0% - 10%</option>
+                                <option value="10% - 20%">10% - 20%</option>
+                                 <option value="20% - 30%">20% - 30%</option>
+                                <option value="30% - 40%">30% - 40%</option>
+                                <option value="40% - 50%">40% - 50%</option>
+                                <option value="50% - 60%">50% - 60%</option>
+                                <option value="60% - 70%">60% - 70%</option>
+                                <option value="70% - 80%%">70% - 80%</option>
+                                <option value="80% - 90%">80% - 90%</option>
+                                <option value="90% - 100%">90% - 100%</option>
+            
+                              </select>
+                        </td>
+                        {{-- humidity 0% - 100%--}}
+                        <td>
+                            <select class="form-select form-select-sm required" aria-label="Small select">
+                              <option value="{{ $morningtablevalues['humidity']  }}">{{ $morningtablevalues['humidity']  }} </option>
+                                <option value="null">Select Humidity</option>
+                                <option value="0% - 10%">0% - 10%</option>
+                                <option value="10% - 20%">10% - 20%</option>
+                                <option value="20% - 30%">20% - 30%</option>
+                                <option value="30% - 40%">30% - 40%</option>
+                                <option value="40% - 50%">40% - 50%</option>
+                                <option value="50% - 60%">50% - 60%</option>
+                                <option value="60% - 70%">60% - 70%</option>
+                                <option value="70% - 80%%">70% - 80%</option>
+                                <option value="80% - 90%">80% - 90%</option>
+                                <option value="90% - 100%">90% - 100%</option>
+            
+                              </select>
+                        </td>
+                      </tr>
+ 
+             
+              @endif
+
+              @endforeach
+
+          @else 
+           <tr class="morning" districtnam="{{ $district->districtname }}" >
+            <td>{{ $district->districtname }}</td> 
+                      {{-- morning --}}
+                      <td>
+                          {{-- weather --}}
+                          <select class="form-select form-select-sm weatherdetail required" aria-label="Small select">
+                              <option value="null">Select Weather</option>
+                              <option value="-TSRA">SLIGHT TSRA(-)</option>
+                               <option value="TSRA">MODERATE TSRA</option>
+                              <option value="+TSRA">HEAVY TSRA(+)</option>
+                              <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                              {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                               <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                               {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                               <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                               {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                              <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                              {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                              <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                              {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                              <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                              {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                              
+                              <option value="HAIL">HAIL</option>
+                              <option value="MIST">MIST</option>
+                              <option value="FOG">FOG</option>
+                              <option value="HAZE">HAZE</option>
+                              <option value="SUNNY">SUNNY</option>
+                              <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                              <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                              <option value="FEW CLOUDS">FEW CLOUDS</option>
+                              <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                              {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                              <option value="CLOUDY">CLOUDY</option>
+                              {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                            </select>
+                      </td>
+                      {{-- min TEMPERATURE --}}
+                      <td>
+                          <div class="form-floating">
+                              <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}" >
+                              <label for="{{ $district->districtname }}MfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+                            </div>
+                      </td>
+                       {{--max temp --}}
+                      <td> 
+                        <div class="form-floating">
+                          <input type="number" class="form-control required" id="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}" >
+                          <label for="{{ $district->districtname }}MfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+                        </div>
+                      </td>
+                      {{-- WIND --}}
+                      <td>
+                          <div class="form-floating">
+                              <input type="text" class="form-control required" id="morningfloatingInputwind{{ $district->id }}" >
+                              <label for="morningfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                            </div>
+                      </td>
+                      {{-- Chance of  Occurring --}}
+                      <td>
+                          <select class="form-select form-select-sm required" aria-label="Small select">
+                              <option value="null">Select Chance of  Occurring</option>
+          
+                              <option value="0% - 10%">0% - 10%</option>
+                              <option value="10% - 20%">10% - 20%</option>
+                               <option value="20% - 30%">20% - 30%</option>
+                              <option value="30% - 40%">30% - 40%</option>
+                              <option value="40% - 50%">40% - 50%</option>
+                              <option value="50% - 60%">50% - 60%</option>
+                              <option value="60% - 70%">60% - 70%</option>
+                              <option value="70% - 80%%">70% - 80%</option>
+                              <option value="80% - 90%">80% - 90%</option>
+                              <option value="90% - 100%">90% - 100%</option>
+          
+                            </select>
+                      </td>
+                      {{-- humidity 0% - 100%--}}
+                      <td>
+                          <select class="form-select form-select-sm required" aria-label="Small select">
+                              <option value="null">Select Humidity</option>
+                              <option value="0% - 10%">0% - 10%</option>
+                              <option value="10% - 20%">10% - 20%</option>
+                              <option value="20% - 30%">20% - 30%</option>
+                              <option value="30% - 40%">30% - 40%</option>
+                              <option value="40% - 50%">40% - 50%</option>
+                              <option value="50% - 60%">50% - 60%</option>
+                              <option value="60% - 70%">60% - 70%</option>
+                              <option value="70% - 80%%">70% - 80%</option>
+                              <option value="80% - 90%">80% - 90%</option>
+                              <option value="90% - 100%">90% - 100%</option>
+          
+                            </select>
+                      </td>
+                    </tr>
+
+          @endif
+
+      
+        @endforeach 
+        @else
+        <tr> <td>No dristricts found</td> </tr>
+        @endif
+      </tbody>
+    </table>
+  </div>
+
+<br>
+
+
+
+<br>
+  {{-- afternoon  table --}}
+  <div class="table-responsive mt-2">
+    <table class="table table-bordered text-center">
+        {{-- time of day --}}
+        <thead class="thead-dark">
+          <tr>
+            <th></th>
+            <th colspan="7">
+                Afternoon
+                <div class="row">
+                <div class="col-6">
+                    <label for="datetableAfternoon" class="form-label">Set Date</label>
+                    <input type="date" class="form-control required" id="datetableAfternoon" value="{{ !empty($genAfternoon)  ? $genAfternoon->date : '' }}">
+                  </div> 
+                  <div class="col-6">
+                    <label for="itdtableAfternoon" class="form-label">Set ITD Position</label>
+                    <input type="number" class="form-control required" id="itdtableAfternoon" placeholder="e.g: 1" value="{{ !empty($genAfternoon)  ? $genAfternoon->itd : '' }}">
+                  </div>
+                  {{-- <div class="col-4">
+                    <label for="prestableAfternoon" class="form-label">Set Pressure</label>
+                    <input type="number" class="form-control required" id="prestableAfternoon" placeholder="e.g: 150">
+                  </div> --}}
+                </div>
+                </th>
+            </tr>
+           {{-- time of day --}}
+        </thead>
+
+        {{-- sub titles --}}
+        <thead class="thead-light">
+          <tr>
+            <th>Cities</th>
+            {{-- Afternoon section --}}
+            <th>Weather</th>
+            <th>Min Temp °C</th>
+            <th>Max Temp °C</th>
+            <th>Wind (m/s) <small>- E.g; 12SE</small> </th>
+            <th>Chance of  Occurring</th>
+            <th>Humidity</th> 
+             
+             </tr>
+           {{-- end of sub titles --}}
+        </thead>
+
+        <tbody>
+            {{-- 1st row  --}}
+             @if (!empty($districts))
+            @foreach ($districts as $district) 
+            @if (!empty($afternoontablevalue))
+            @if (!empty($missingafternooncities))
+            @foreach ($missingafternooncities as $missingafternooncitie)
+            @if ($district->districtname == $missingafternooncitie)
+
+            <tr class="afternoon" districtnam="{{ $district->districtname }}">
+           
+              <td>{{ $district->districtname }}</td> 
+            {{-- Afternoon --}}
+            <td>
+               {{-- weather --}}
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Weather</option> 
+                   <option value="-TSRA">SLIGHT TSRA(-)</option>
+                    <option value="TSRA">MODERATE TSRA</option>
+                   <option value="+TSRA">HEAVY TSRA(+)</option>
+                   <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                   {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                   <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                   {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                   <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                   {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                   <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                   {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                   <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                   {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                    {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                    
+                   <option value="HAIL">HAIL</option>
+                   <option value="MIST">MIST</option>
+                   <option value="FOG">FOG</option>
+                   <option value="HAZE">HAZE</option>
+                   <option value="SUNNY">SUNNY</option>
+                   <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                   <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                   <option value="FEW CLOUDS">FEW CLOUDS</option>
+                   <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                   {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                   <option value="CLOUDY">CLOUDY</option>
+                   {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                 </select>
+            </td>
+            {{--min  TEMPERATURE --}}
+            <td>
+            <div class="form-floating">
+            <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" >
+            <label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+            </div>
+            </td>
+            {{--max temp --}}
+            <td> 
+            <div class="form-floating">
+            <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" >
+            <label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+            </div>
+            </td>
+            {{-- WIND --}}
+            <td>
+               <div class="form-floating">
+                   <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" >
+                   <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                 </div>
+            </td>
+            {{-- Chance of  Occurring --}}
+            <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Chance of  Occurring</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+            
+                 </select>
+            </td>
+            {{-- humidity 0% - 100%--}}
+            <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                   <option value="null">Select Humidity</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+            
+                 </select>
+            </td>
+            
+            </tr>
+            @endif
+
+            @endforeach
+@endif
+
+
+         
+            @foreach ($afternoontablevalue as $afternoontablevalues)
+          
+            @if ($district->districtname == $afternoontablevalues['districts'])
+             
+              <tr class="afternoon" districtnam="{{ $district->districtname }}">
+           
+              <td>{{ $district->districtname }}</td> 
+           {{-- Afternoon --}}
+           <td>
+               {{-- weather --}}
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                 <option value="{{ $afternoontablevalues['weather'] }}">{{ $afternoontablevalues['weather'] }}</option> 
+                   <option value="null">Select Weather</option> 
+                   <option value="-TSRA">SLIGHT TSRA(-)</option>
+                    <option value="TSRA">MODERATE TSRA</option>
+                   <option value="+TSRA">HEAVY TSRA(+)</option>
+                   <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+                   {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+                   <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+                   {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+                   <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+                   {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+                   <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+                   {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+                   <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+                   {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+                    <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+                    {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+                    
+                   <option value="HAIL">HAIL</option>
+                   <option value="MIST">MIST</option>
+                   <option value="FOG">FOG</option>
+                   <option value="HAZE">HAZE</option>
+                   <option value="SUNNY">SUNNY</option>
+                   <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+                   <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+                   <option value="FEW CLOUDS">FEW CLOUDS</option>
+                   <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+                   {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+                   <option value="CLOUDY">CLOUDY</option>
+                   {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+                 </select>
+           </td>
+            {{--min  TEMPERATURE --}}
+   <td>
+     <div class="form-floating">
+         <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" value="{{ $afternoontablevalues['min_temp'] }}" >
+         <label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+       </div>
+ </td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+ <input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" value="{{ $afternoontablevalues['min_temp'] }}" >
+ <label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+           {{-- WIND --}}
+           <td>
+               <div class="form-floating">
+                   <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" value="{{ $afternoontablevalues['wind'] }}">
+                   <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+                 </div>
+           </td>
+           {{-- Chance of  Occurring --}}
+           <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                <option value="{{ $afternoontablevalues['rain_chance'] }}">{{ $afternoontablevalues['rain_chance'] }}</option>
+                   <option value="null">Select Chance of  Occurring</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+
+                 </select>
+           </td>
+           {{-- humidity 0% - 100%--}}
+           <td>
+               <select class="form-select form-select-sm required" aria-label="Small select">
+                <option value="{{ $afternoontablevalues['humidity'] }}">{{ $afternoontablevalues['humidity'] }}</option>
+                   <option value="null">Select Humidity</option>
+                   <option value="0% - 10%">0% - 10%</option>
+                   <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                   <option value="30% - 40%">30% - 40%</option>
+                   <option value="40% - 50%">40% - 50%</option>
+                   <option value="50% - 60%">50% - 60%</option>
+                   <option value="60% - 70%">60% - 70%</option>
+                   <option value="70% - 80%%">70% - 80%</option>
+                   <option value="80% - 90%">80% - 90%</option>
+                   <option value="90% - 100%">90% - 100%</option>
+
+                 </select>
+           </td>
+            
+         </tr>
+
+ 
+            @endif
+  
+            @endforeach    
+
+
+            @else
+ <tr class="afternoon" districtnam="{{ $district->districtname }}">
+           
+  <td>{{ $district->districtname }}</td> 
+{{-- Afternoon --}}
+<td>
+   {{-- weather --}}
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Weather</option> 
+       <option value="-TSRA">SLIGHT TSRA(-)</option>
+        <option value="TSRA">MODERATE TSRA</option>
+       <option value="+TSRA">HEAVY TSRA(+)</option>
+       <option value="-RAINDAY">SLIGHT RAIN(DAY)</option>
+       {{-- <option value="-RAINNIGHT">SLIGHT RAIN(NIGHT)</option> --}}
+       <option value="RAINDAY">MODERATE RAIN(DAY)</option>
+       {{-- <option value="RAINNIGHT">MODERATE RAIN(NIGHT)</option> --}}
+       <option value="+RAINDAY">HEAVY RAIN(DAY)</option>
+       {{-- <option value="+RAINNIGHT">HEAVY RAIN(NIGHT)</option> --}}
+       <option value="-DRIZZLEDAY">SLIGHT DRIZZLE(DAY)</option>
+       {{-- <option value="-DRIZZLENIGHT">SLIGHT DRIZZLE(NIGHT)</option> --}}
+       <option value="DRIZZLEDAY">MODERATE DRIZZLE(DAY)</option>
+       {{-- <option value="DRIZZLENIGHT">MODERATE DRIZZLE(NIGHT)</option> --}}
+        <option value="+DRIZZLEDAY">HEAVY DRIZZLE(DAY)</option>
+        {{-- <option value="+DRIZZLENIGHT">HEAVY DRIZZLE(NIGHT)</option> --}}
+        
+       <option value="HAIL">HAIL</option>
+       <option value="MIST">MIST</option>
+       <option value="FOG">FOG</option>
+       <option value="HAZE">HAZE</option>
+       <option value="SUNNY">SUNNY</option>
+       <option value="SUNNY BREAKS">SUNNY BREAKS</option>
+       <option value="SUNNY INTERVALS">SUNNY INTERVALS</option>
+       <option value="FEW CLOUDS">FEW CLOUDS</option>
+       <option value="PARTLY CLOUDY(DAY)">PARTLY CLOUDY(DAY)</option>
+       {{-- <option value="PARTLY CLOUDY(NIGHT)">PARTLY CLOUDY(NIGHT)</option> --}}
+       <option value="CLOUDY">CLOUDY</option>
+       {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
+     </select>
+</td>
+{{--min  TEMPERATURE --}}
+<td>
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}" >
+<label for="{{ $district->districtname }}AfloatingInputtempmin{{ $district->id }}">Min Temperature</label>
+</div>
+</td>
+{{--max temp --}}
+<td> 
+<div class="form-floating">
+<input type="number" class="form-control required" id="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}" >
+<label for="{{ $district->districtname }}AfloatingInputtempmax{{ $district->id }}">Max Temperature</label>
+</div>
+</td>
+{{-- WIND --}}
+<td>
+   <div class="form-floating">
+       <input type="text" class="form-control required" id="afternoonfloatingInputwind{{ $district->id }}" >
+       <label for="afternoonfloatingInputwind{{ $district->id }}">Wind Dir & Speed</label>
+     </div>
+</td>
+{{-- Chance of  Occurring --}}
+<td>
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Chance of  Occurring</option>
+       <option value="0% - 10%">0% - 10%</option>
+       <option value="10% - 20%">10% - 20%</option>
+        <option value="20% - 30%">20% - 30%</option>
+       <option value="30% - 40%">30% - 40%</option>
+       <option value="40% - 50%">40% - 50%</option>
+       <option value="50% - 60%">50% - 60%</option>
+       <option value="60% - 70%">60% - 70%</option>
+       <option value="70% - 80%%">70% - 80%</option>
+       <option value="80% - 90%">80% - 90%</option>
+       <option value="90% - 100%">90% - 100%</option>
+
+     </select>
+</td>
+{{-- humidity 0% - 100%--}}
+<td>
+   <select class="form-select form-select-sm required" aria-label="Small select">
+       <option value="null">Select Humidity</option>
+       <option value="0% - 10%">0% - 10%</option>
+       <option value="10% - 20%">10% - 20%</option>
+        <option value="20% - 30%">20% - 30%</option>
+       <option value="30% - 40%">30% - 40%</option>
+       <option value="40% - 50%">40% - 50%</option>
+       <option value="50% - 60%">50% - 60%</option>
+       <option value="60% - 70%">60% - 70%</option>
+       <option value="70% - 80%%">70% - 80%</option>
+       <option value="80% - 90%">80% - 90%</option>
+       <option value="90% - 100%">90% - 100%</option>
+
+     </select>
+</td>
+
+</tr>
+            @endif
+
+          
+          @endforeach 
+          @else
+          <tr> <td>No dristricts found</td> </tr>
+          @endif
+     
+        </tbody>
+      </table>
+    </div>
+
+    <br>
+
+
+
+        @endif
+
+        <div class="container  my-2">
+
+          <div class="row">
+              <div class="d-flex justify-content-between bd-highlight my-2">
+             <div></div>  
+             <button type="button" class="btn btn-success text-white" id="nextBtn2ndpage">Save and Continue</button>
+        </div>
+          </div>
+        </div>
+
+
    {{--end of table FORECAST TAB --}} 
 </div>
 {{-- MAP --}}
 <div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab">
-  <div class="container">
-    <div class="row">
-        <div class="d-flex justify-content-between bd-highlight mb-2">
-       <div></div>  
-       <button type="button" class="btn btn-success text-white" id="nextBtn3rdpage">Save and Continue</button>
-  </div>
-    </div>
-  </div>
+  
 
 
   <div class="alert alert-primary alert-dismissible fade show p-2 m-2" role="alert">
@@ -554,7 +3408,7 @@
                       <strong class="fs-3"> Morning Map</strong>  </div>
                   <div class="mb-3">
                       <label for="dateInput1" class="form-label">Set Date</label>
-                      <input type="date" class="form-control requiredmapdate" id="dateInput1" >
+                      <input type="date" class="form-control requiredmapdate" id="dateInput1" value="{{ !empty($genMorning)  ? $genMorning->date : '' }}" >
                     </div>
                   
                 </div>
@@ -609,7 +3463,7 @@
                   <strong class="fs-3">Afternoon Map</strong>  </div>
               <div class="mb-3">
                   <label for="dateInput1af" class="form-label">Set Date</label>
-                  <input type="date" class="form-control requiredmapdate" id="dateInput1af">
+                  <input type="date" class="form-control requiredmapdate" id="dateInput1af" value="{{ !empty($genAfternoon)  ? $genAfternoon->date : '' }}">
                 </div>
               
             </div>
@@ -667,7 +3521,7 @@
           <strong class="fs-3">Evening Map</strong>  </div>
       <div class="mb-3">
           <label for="dateInput1ev" class="form-label">Set Date</label>
-          <input type="date" class="form-control requiredmapdate" id="dateInput1ev">
+          <input type="date" class="form-control requiredmapdate" id="dateInput1ev" value="{{ !empty($genEvening)  ? $genEvening->date : '' }}" >
         </div>
       
     </div>
@@ -720,6 +3574,18 @@
       
    </div>
    <br>
+   <div class="container my-2">
+
+    <div class="row">
+        <div class="d-flex justify-content-between bd-highlight my-2">
+       <div> </div>  
+       <button type="button" class="btn btn-success text-white" id="nextBtn3rdpage">Save and Continue</button>
+  </div>
+
+    </div>
+  </div>
+
+<br>
    <div class="row">
     <div class="col-3">
       <div class="card text-white">
@@ -734,6 +3600,8 @@
 
    </div>
     <br>
+   
+
 </div>
 {{-- Weather Summary --}}
  <div class="tab-pane fade" id="weatherSummary" role="tabpanel" aria-labelledby="weatherSummary-tab">

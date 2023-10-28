@@ -68,7 +68,7 @@ class Userhome extends Controller
 
 public function timeOfDay()
     {
-        $currentTime = Carbon::now('Africa/Accra')->format('H:i');
+        $currentTime = Carbon::now('Africa/ACCRA')->format('H:i');
         if ($currentTime >= '00:00' && $currentTime < '12:00') {
             $this->time = 'Morning';
             return 'Morning';
@@ -818,17 +818,17 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the morning date from all the morning table in mysql
 $this->latestGeneralData =  $addDailyForecast->morning_general_variables();
-$this->eachDistrictWeather = $addDailyForecast->morning_table_values()->where('districts', '!=', 'Accra')->get();
+$this->eachDistrictWeather = $addDailyForecast->morning_table_values()->where('districts', '!=', 'ACCRA')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->morning_general_variables()->value('itd');
-    $this->currentConditionRH =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('humidity');
-  $this->currentConditionRain =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('rain_chance');
-  $this->minTemp =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('min_temp');
-  $this->maxTemp =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('max_temp');
-  $this->wind =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('wind');
-  $this->district =  $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('districts');
- $this->weather =  $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('weather');
+    $this->currentConditionRH =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('humidity');
+  $this->currentConditionRain =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('rain_chance');
+  $this->minTemp =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('min_temp');
+  $this->maxTemp =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('max_temp');
+  $this->wind =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('wind');
+  $this->district =  $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('districts');
+ $this->weather =  $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('weather');
 $this->winddir = $this->endsWith($this->wind);
   $this->period = "Morning(12:00AM - 5:59AM)UTC";
   $polugon = [];
@@ -878,17 +878,17 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the morning date from all the morning table in mysql
 $this->latestGeneralData =  $addDailyForecast->morning_general_variables();
-$this->eachDistrictWeather = $addDailyForecast->morning_table_values()->where('districts', '!=', 'Accra')->get();
+$this->eachDistrictWeather = $addDailyForecast->morning_table_values()->where('districts', '!=', 'ACCRA')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->morning_general_variables()->value('itd');
-    $this->currentConditionRH =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('humidity');
-  $this->currentConditionRain =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('rain_chance');
-  $this->minTemp =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('min_temp');
-  $this->maxTemp =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('max_temp');
-  $this->wind =   $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('wind');
-  $this->district =  $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('districts');
- $this->weather =  $addDailyForecast->morning_table_values()->where('districts', 'Accra')->value('weather');
+    $this->currentConditionRH =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('humidity');
+  $this->currentConditionRain =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('rain_chance');
+  $this->minTemp =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('min_temp');
+  $this->maxTemp =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('max_temp');
+  $this->wind =   $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('wind');
+  $this->district =  $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('districts');
+ $this->weather =  $addDailyForecast->morning_table_values()->where('districts', 'ACCRA')->value('weather');
 $this->winddir = $this->endsWith($this->wind);
   $this->period = "Morning(12:00AM - 5:59AM)UTC";
   $polugon = [];
@@ -957,17 +957,17 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the afternoon date from all the afternoon table in mysql
 $this->latestGeneralData =  $addDailyForecast->afternoon_general_variables();
-$this->eachDistrictWeather = $addDailyForecast->afternoon_table_values()->where('districts', '!=', 'Accra')->get();
+$this->eachDistrictWeather = $addDailyForecast->afternoon_table_values()->where('districts', '!=', 'ACCRA')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->afternoon_general_variables()->value('itd');
-    $this->currentConditionRH =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('humidity');
-  $this->currentConditionRain =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('rain_chance');
-  $this->minTemp =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('min_temp');
-  $this->maxTemp =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('max_temp');
-  $this->wind =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('wind');
-  $this->district =  $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('districts');
- $this->weather =  $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('weather');
+    $this->currentConditionRH =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('humidity');
+  $this->currentConditionRain =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('rain_chance');
+  $this->minTemp =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('min_temp');
+  $this->maxTemp =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('max_temp');
+  $this->wind =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('wind');
+  $this->district =  $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('districts');
+ $this->weather =  $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('weather');
 $this->winddir = $this->endsWith($this->wind);
   $this->period = "Afternoon(12:00PM - 5:59PM)UTC";
 
@@ -1016,17 +1016,17 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the afternoon date from all the afternoon table in mysql
 $this->latestGeneralData =  $addDailyForecast->afternoon_general_variables();
-$this->eachDistrictWeather = $addDailyForecast->afternoon_table_values()->where('districts', '!=', 'Accra')->get();
+$this->eachDistrictWeather = $addDailyForecast->afternoon_table_values()->where('districts', '!=', 'ACCRA')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->afternoon_general_variables()->value('itd');
-    $this->currentConditionRH =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('humidity');
-  $this->currentConditionRain =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('rain_chance');
-  $this->minTemp =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('min_temp');
-  $this->maxTemp =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('max_temp');
-  $this->wind =   $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('wind');
-  $this->district =  $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('districts');
- $this->weather =  $addDailyForecast->afternoon_table_values()->where('districts', 'Accra')->value('weather');
+    $this->currentConditionRH =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('humidity');
+  $this->currentConditionRain =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('rain_chance');
+  $this->minTemp =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('min_temp');
+  $this->maxTemp =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('max_temp');
+  $this->wind =   $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('wind');
+  $this->district =  $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('districts');
+ $this->weather =  $addDailyForecast->afternoon_table_values()->where('districts', 'ACCRA')->value('weather');
 $this->winddir = $this->endsWith($this->wind);
   $this->period = "Afternoon(12:00PM - 5:59PM)UTC";
   
@@ -1098,17 +1098,17 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the evening date from all the evening table in mysql
 $this->latestGeneralData =  $addDailyForecast->evening_general_variables();
-$this->eachDistrictWeather = $addDailyForecast->evening_table_values()->where('districts', '!=', 'Accra')->get();
+$this->eachDistrictWeather = $addDailyForecast->evening_table_values()->where('districts', '!=', 'ACCRA')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->evening_general_variables()->value('itd');
-    $this->currentConditionRH =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('humidity');
-  $this->currentConditionRain =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('rain_chance');
-  $this->minTemp =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('min_temp');
-  $this->maxTemp =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('max_temp');
-  $this->wind =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('wind');
-  $this->district =  $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('districts');
- $this->weather =  $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('weather');
+    $this->currentConditionRH =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('humidity');
+  $this->currentConditionRain =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('rain_chance');
+  $this->minTemp =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('min_temp');
+  $this->maxTemp =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('max_temp');
+  $this->wind =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('wind');
+  $this->district =  $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('districts');
+ $this->weather =  $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('weather');
 $this->winddir = $this->endsWith($this->wind);
   $this->period = "Evening(6:00PM - 11:59PM)UTC";
 
@@ -1159,17 +1159,17 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
 
 //  now i can acess all the evening date from all the evening table in mysql
 $this->latestGeneralData =  $addDailyForecast->evening_general_variables();
-$this->eachDistrictWeather = $addDailyForecast->evening_table_values()->where('districts', '!=', 'Accra')->get();
+$this->eachDistrictWeather = $addDailyForecast->evening_table_values()->where('districts', '!=', 'ACCRA')->get();
 
 
     $this->currentConditionItd = $addDailyForecast->evening_general_variables()->value('itd');
-    $this->currentConditionRH =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('humidity');
-  $this->currentConditionRain =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('rain_chance');
-  $this->minTemp =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('min_temp');
-  $this->maxTemp =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('max_temp');
-  $this->wind =   $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('wind');
-  $this->district =  $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('districts');
- $this->weather =  $addDailyForecast->evening_table_values()->where('districts', 'Accra')->value('weather');
+    $this->currentConditionRH =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('humidity');
+  $this->currentConditionRain =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('rain_chance');
+  $this->minTemp =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('min_temp');
+  $this->maxTemp =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('max_temp');
+  $this->wind =   $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('wind');
+  $this->district =  $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('districts');
+ $this->weather =  $addDailyForecast->evening_table_values()->where('districts', 'ACCRA')->value('weather');
 $this->winddir = $this->endsWith($this->wind);
   $this->period = "Evening(6:00PM - 11:59PM)UTC";
  
@@ -1237,10 +1237,10 @@ $latestForecastIdM = Morning_general_variables::whereDate('date', today())->late
 if( !is_null($latestForecastIdM)){
 //24HRS now get the parent id from the addDailyForecast table
 $addDailyForecastM = AddDailyForecast::where('publishType', 'Publish-Forecast')->find($latestForecastIdM);
-$minTempM =   $addDailyForecastM->morning_table_values()->where('districts', 'Accra')->value('min_temp');
-$maxTempM =   $addDailyForecastM->morning_table_values()->where('districts', 'Accra')->value('max_temp');
-$windM =   $addDailyForecastM->morning_table_values()->where('districts', 'Accra')->value('wind');
-$weatherM =  $addDailyForecastM->morning_table_values()->where('districts', 'Accra')->value('weather');
+$minTempM =   $addDailyForecastM->morning_table_values()->where('districts', 'ACCRA')->value('min_temp');
+$maxTempM =   $addDailyForecastM->morning_table_values()->where('districts', 'ACCRA')->value('max_temp');
+$windM =   $addDailyForecastM->morning_table_values()->where('districts', 'ACCRA')->value('wind');
+$weatherM =  $addDailyForecastM->morning_table_values()->where('districts', 'ACCRA')->value('weather');
 $winddirM = $this->endsWith($windM);
 }else{
     $yesterday = Carbon::now()->subDay()->format('Y-m-d');
@@ -1249,10 +1249,10 @@ $latestForecastIdM = Morning_general_variables::whereDate('date', $yesterday)->l
 if(!is_null($latestForecastIdM)){
     //24HRS now get the parent id from the addDailyForecast table
 $addDailyForecastM = AddDailyForecast::where('publishType', 'Publish-Forecast')->find($latestForecastIdM);
-$minTempM =   $addDailyForecastM->morning_table_values()->where('districts', 'Accra')->value('min_temp');
-$maxTempM =   $addDailyForecastM->morning_table_values()->where('districts', 'Accra')->value('max_temp');
-$windM =   $addDailyForecastM->morning_table_values()->where('districts', 'Accra')->value('wind');
-$weatherM =  $addDailyForecastM->morning_table_values()->where('districts', 'Accra')->value('weather');
+$minTempM =   $addDailyForecastM->morning_table_values()->where('districts', 'ACCRA')->value('min_temp');
+$maxTempM =   $addDailyForecastM->morning_table_values()->where('districts', 'ACCRA')->value('max_temp');
+$windM =   $addDailyForecastM->morning_table_values()->where('districts', 'ACCRA')->value('wind');
+$weatherM =  $addDailyForecastM->morning_table_values()->where('districts', 'ACCRA')->value('weather');
 $winddirM = $this->endsWith($windM);
 }else{
     $addDailyForecastM = 'null';
@@ -1273,10 +1273,10 @@ $latestForecastIdA = Afternoon_general_variables::whereDate('date', today())->la
 if( !is_null($latestForecastIdA)){
 //24HRS now get the parent id from the addDailyForecast table
 $addDailyForecastA = AddDailyForecast::where('publishType', 'Publish-Forecast')->find($latestForecastIdA);
-$minTempA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'Accra')->value('min_temp');
-$maxTempA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'Accra')->value('max_temp');
-$windA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'Accra')->value('wind');
-$weatherA =  $addDailyForecastA->afternoon_table_values()->where('districts', 'Accra')->value('weather');
+$minTempA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'ACCRA')->value('min_temp');
+$maxTempA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'ACCRA')->value('max_temp');
+$windA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'ACCRA')->value('wind');
+$weatherA =  $addDailyForecastA->afternoon_table_values()->where('districts', 'ACCRA')->value('weather');
 $winddirA = $this->endsWith($windA);
 }// else use yesterday's forecast
 else{
@@ -1286,10 +1286,10 @@ else{
 $latestForecastIdA = Afternoon_general_variables::whereDate('date',  $yesterday)->latest('created_at')->value('add_daily_forecast_id');
     //24HRS now get the parent id from the addDailyForecast table
 $addDailyForecastA = AddDailyForecast::where('publishType', 'Publish-Forecast')->find($latestForecastIdA);
-$minTempA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'Accra')->value('min_temp');
-$maxTempA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'Accra')->value('max_temp');
-$windA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'Accra')->value('wind');
-$weatherA =  $addDailyForecastA->afternoon_table_values()->where('districts', 'Accra')->value('weather');
+$minTempA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'ACCRA')->value('min_temp');
+$maxTempA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'ACCRA')->value('max_temp');
+$windA =   $addDailyForecastA->afternoon_table_values()->where('districts', 'ACCRA')->value('wind');
+$weatherA =  $addDailyForecastA->afternoon_table_values()->where('districts', 'ACCRA')->value('weather');
 $winddirA = $this->endsWith($windA);
     }else{
         $addDailyForecastA = 'null';
@@ -1308,10 +1308,10 @@ $latestForecastIdE = Evening_general_variables::whereDate('date', today())->late
 if( !is_null($latestForecastIdE)){
 //24HRS now get the parent id from the addDailyForecast table
 $addDailyForecastE = AddDailyForecast::where('publishType', 'Publish-Forecast')->find($latestForecastIdE);
-$minTempE =   $addDailyForecastE->evening_table_values()->where('districts', 'Accra')->value('min_temp');
-$maxTempE =   $addDailyForecastE->evening_table_values()->where('districts', 'Accra')->value('max_temp');
-$windE =   $addDailyForecastE->evening_table_values()->where('districts', 'Accra')->value('wind');
-$weatherE =  $addDailyForecastE->evening_table_values()->where('districts', 'Accra')->value('weather');
+$minTempE =   $addDailyForecastE->evening_table_values()->where('districts', 'ACCRA')->value('min_temp');
+$maxTempE =   $addDailyForecastE->evening_table_values()->where('districts', 'ACCRA')->value('max_temp');
+$windE =   $addDailyForecastE->evening_table_values()->where('districts', 'ACCRA')->value('wind');
+$weatherE =  $addDailyForecastE->evening_table_values()->where('districts', 'ACCRA')->value('weather');
 $winddirE = $this->endsWith($windE);
 }else{
     $yesterday = Carbon::now()->subDay()->format('Y-m-d');
@@ -1320,10 +1320,10 @@ $latestForecastIdE = Evening_general_variables::whereDate('date', $yesterday)->l
 if( !is_null($latestForecastIdE)){
     //24HRS now get the parent id from the addDailyForecast table
 $addDailyForecastE = AddDailyForecast::where('publishType', 'Publish-Forecast')->find($latestForecastIdE);
-$minTempE =   $addDailyForecastE->evening_table_values()->where('districts', 'Accra')->value('min_temp');
-$maxTempE =   $addDailyForecastE->evening_table_values()->where('districts', 'Accra')->value('max_temp');
-$windE =   $addDailyForecastE->evening_table_values()->where('districts', 'Accra')->value('wind');
-$weatherE =  $addDailyForecastE->evening_table_values()->where('districts', 'Accra')->value('weather');
+$minTempE =   $addDailyForecastE->evening_table_values()->where('districts', 'ACCRA')->value('min_temp');
+$maxTempE =   $addDailyForecastE->evening_table_values()->where('districts', 'ACCRA')->value('max_temp');
+$windE =   $addDailyForecastE->evening_table_values()->where('districts', 'ACCRA')->value('wind');
+$weatherE =  $addDailyForecastE->evening_table_values()->where('districts', 'ACCRA')->value('weather');
 $winddirE = $this->endsWith($windE);
 }else{
     $addDailyForecastE = 'null';
@@ -1354,15 +1354,15 @@ $addInlandForecast = InlandForecast::where('publishType', 'Publish-Forecast')->f
 
 //  now i can acess all the morning date from all the morning table in mysql
 $this->inlandlatestGeneralData =  $addInlandForecast->inlandmorning_general_variables();
-$this->inlandeachDistrictWeather = $addInlandForecast->inlandmorning_table_values()->where('districts', '!=', 'Ada')->get();
+$this->inlandeachDistrictWeather = $addInlandForecast->inlandmorning_table_values()->where('districts', '!=', 'ADA')->get();
 
 
     $this->inlandcurrentConditionminTemp = $addInlandForecast->inlandmorning_general_variables()->value('min_temp');
     $this->inlandcurrentConditionmaxTemp = $addInlandForecast->inlandmorning_general_variables()->value('max_temp');
     
-  $this->inlandwind =   $addInlandForecast->inlandmorning_table_values()->where('districts', 'Ada')->value('wind');
-  $this->inlanddistrict =  $addInlandForecast->inlandmorning_table_values()->where('districts', 'Ada')->value('districts');
- $this->inlandweather =  $addInlandForecast->inlandmorning_table_values()->where('districts', 'Ada')->value('weather');
+  $this->inlandwind =   $addInlandForecast->inlandmorning_table_values()->where('districts', 'ADA')->value('wind');
+  $this->inlanddistrict =  $addInlandForecast->inlandmorning_table_values()->where('districts', 'ADA')->value('districts');
+ $this->inlandweather =  $addInlandForecast->inlandmorning_table_values()->where('districts', 'ADA')->value('weather');
 $this->inlandwinddir = $this->endsWith($this->inlandwind);
   $this->inlandperiod = "Morning(12:00AM - 5:59AM)UTC";
   $inlandpolugon = [];
@@ -1411,15 +1411,15 @@ $addInlandForecast = InlandForecast::where('publishType', 'Publish-Forecast')->f
 
 //  now i can acess all the morning date from all the morning table in mysql
 $this->inlandlatestGeneralData =  $addInlandForecast->inlandmorning_general_variables();
-$this->inlandeachDistrictWeather = $addInlandForecast->inlandmorning_table_values()->where('districts', '!=', 'Ada')->get();
+$this->inlandeachDistrictWeather = $addInlandForecast->inlandmorning_table_values()->where('districts', '!=', 'ADA')->get();
 
 
     $this->inlandcurrentConditionminTemp = $addInlandForecast->inlandmorning_general_variables()->value('min_temp');
     $this->inlandcurrentConditionmaxTemp = $addInlandForecast->inlandmorning_general_variables()->value('max_temp');
     
-  $this->inlandwind =   $addInlandForecast->inlandmorning_table_values()->where('districts', 'Ada')->value('wind');
-  $this->inlanddistrict =  $addInlandForecast->inlandmorning_table_values()->where('districts', 'Ada')->value('districts');
- $this->inlandweather =  $addInlandForecast->inlandmorning_table_values()->where('districts', 'Ada')->value('weather');
+  $this->inlandwind =   $addInlandForecast->inlandmorning_table_values()->where('districts', 'ADA')->value('wind');
+  $this->inlanddistrict =  $addInlandForecast->inlandmorning_table_values()->where('districts', 'ADA')->value('districts');
+ $this->inlandweather =  $addInlandForecast->inlandmorning_table_values()->where('districts', 'ADA')->value('weather');
 $this->inlandwinddir = $this->endsWith($this->inlandwind);
   $this->inlandperiod = "Morning(12:00AM - 5:59AM)UTC";
   $inlandpolugon = [];
@@ -1483,14 +1483,14 @@ $addInlandForecast = InlandForecast::where('publishType', 'Publish-Forecast')->f
 
 //  now i can acess all the afternoon date from all the afternoon table in mysql
 $this->inlandlatestGeneralData =  $addInlandForecast->inlandafternoon_general_variables();
-$this->inlandeachDistrictWeather = $addInlandForecast->inlandafternoon_table_values()->where('districts', '!=', 'Ada')->get();
+$this->inlandeachDistrictWeather = $addInlandForecast->inlandafternoon_table_values()->where('districts', '!=', 'ADA')->get();
 
 
 $this->inlandcurrentConditionminTemp = $addInlandForecast->inlandmorning_general_variables()->value('min_temp');
 $this->inlandcurrentConditionmaxTemp = $addInlandForecast->inlandmorning_general_variables()->value('max_temp');
-  $this->inlandwind =   $addInlandForecast->inlandafternoon_table_values()->where('districts', 'Ada')->value('wind');
-  $this->inlanddistrict =  $addInlandForecast->inlandafternoon_table_values()->where('districts', 'Ada')->value('districts');
- $this->inlandweather =  $addInlandForecast->inlandafternoon_table_values()->where('districts', 'Ada')->value('weather');
+  $this->inlandwind =   $addInlandForecast->inlandafternoon_table_values()->where('districts', 'ADA')->value('wind');
+  $this->inlanddistrict =  $addInlandForecast->inlandafternoon_table_values()->where('districts', 'ADA')->value('districts');
+ $this->inlandweather =  $addInlandForecast->inlandafternoon_table_values()->where('districts', 'ADA')->value('weather');
 $this->inlandwinddir = $this->endsWith($this->inlandwind);
   $this->inlandperiod = "Afternoon(12:00PM - 5:59PM)UTC";
 
@@ -1539,15 +1539,15 @@ $addInlandForecast = InlandForecast::where('publishType', 'Publish-Forecast')->f
 
 //  now i can acess all the afternoon date from all the afternoon table in mysql
 $this->inlandlatestGeneralData =  $addInlandForecast->inlandafternoon_general_variables();
-$this->inlandeachDistrictWeather = $addInlandForecast->inlandafternoon_table_values()->where('districts', '!=', 'Ada')->get();
+$this->inlandeachDistrictWeather = $addInlandForecast->inlandafternoon_table_values()->where('districts', '!=', 'ADA')->get();
 
 
 $this->inlandcurrentConditionminTemp = $addInlandForecast->inlandmorning_general_variables()->value('min_temp');
 $this->inlandcurrentConditionmaxTemp = $addInlandForecast->inlandmorning_general_variables()->value('max_temp');
  
-  $this->inlandwind =   $addInlandForecast->inlandafternoon_table_values()->where('districts', 'Ada')->value('wind');
-  $this->inlanddistrict =  $addInlandForecast->inlandafternoon_table_values()->where('districts', 'Ada')->value('districts');
- $this->inlandweather =  $addInlandForecast->inlandafternoon_table_values()->where('districts', 'Ada')->value('weather');
+  $this->inlandwind =   $addInlandForecast->inlandafternoon_table_values()->where('districts', 'ADA')->value('wind');
+  $this->inlanddistrict =  $addInlandForecast->inlandafternoon_table_values()->where('districts', 'ADA')->value('districts');
+ $this->inlandweather =  $addInlandForecast->inlandafternoon_table_values()->where('districts', 'ADA')->value('weather');
 $this->inlandwinddir = $this->endsWith($this->inlandwind);
   $this->inlandperiod = "Afternoon(12:00PM - 5:59PM)UTC";
   
@@ -1615,14 +1615,14 @@ $addInlandForecast = InlandForecast::where('publishType', 'Publish-Forecast')->f
 
 //  now i can acess all the evening date from all the evening table in mysql
 $this->inlandlatestGeneralData =  $addInlandForecast->inlandevening_general_variables();
-$this->inlandeachDistrictWeather = $addInlandForecast->inlandevening_table_values()->where('districts', '!=', 'Ada')->get();
+$this->inlandeachDistrictWeather = $addInlandForecast->inlandevening_table_values()->where('districts', '!=', 'ADA')->get();
 
 
 $this->inlandcurrentConditionminTemp = $addInlandForecast->inlandmorning_general_variables()->value('min_temp');
 $this->inlandcurrentConditionmaxTemp = $addInlandForecast->inlandmorning_general_variables()->value('max_temp');
-  $this->inlandwind =   $addInlandForecast->inlandevening_table_values()->where('districts', 'Ada')->value('wind');
-  $this->inlanddistrict =  $addInlandForecast->inlandevening_table_values()->where('districts', 'Ada')->value('districts');
- $this->inlandweather =  $addInlandForecast->inlandevening_table_values()->where('districts', 'Ada')->value('weather');
+  $this->inlandwind =   $addInlandForecast->inlandevening_table_values()->where('districts', 'ADA')->value('wind');
+  $this->inlanddistrict =  $addInlandForecast->inlandevening_table_values()->where('districts', 'ADA')->value('districts');
+ $this->inlandweather =  $addInlandForecast->inlandevening_table_values()->where('districts', 'ADA')->value('weather');
 $this->inlandwinddir = $this->endsWith($this->inlandwind);
   $this->inlandperiod = "Evening(6:00PM - 11:59PM)UTC";
 
@@ -1673,14 +1673,14 @@ $addInlandForecast = InlandForecast::where('publishType', 'Publish-Forecast')->f
 
 //  now i can acess all the evening date from all the evening table in mysql
 $this->inlandlatestGeneralData =  $addInlandForecast->inlandevening_general_variables();
-$this->inlandeachDistrictWeather = $addInlandForecast->inlandevening_table_values()->where('districts', '!=', 'Ada')->get();
+$this->inlandeachDistrictWeather = $addInlandForecast->inlandevening_table_values()->where('districts', '!=', 'ADA')->get();
 
 
 $this->inlandcurrentConditionminTemp = $addInlandForecast->inlandmorning_general_variables()->value('min_temp');
 $this->inlandcurrentConditionmaxTemp = $addInlandForecast->inlandmorning_general_variables()->value('max_temp');
-  $this->inlandwind =   $addInlandForecast->inlandevening_table_values()->where('districts', 'Ada')->value('wind');
-  $this->inlanddistrict =  $addInlandForecast->inlandevening_table_values()->where('districts', 'Ada')->value('districts');
- $this->inlandweather =  $addInlandForecast->inlandevening_table_values()->where('districts', 'Ada')->value('weather');
+  $this->inlandwind =   $addInlandForecast->inlandevening_table_values()->where('districts', 'ADA')->value('wind');
+  $this->inlanddistrict =  $addInlandForecast->inlandevening_table_values()->where('districts', 'ADA')->value('districts');
+ $this->inlandweather =  $addInlandForecast->inlandevening_table_values()->where('districts', 'ADA')->value('weather');
 $this->inlandwinddir = $this->endsWith($this->inlandwind);
   $this->inlandperiod = "Evening(6:00PM - 11:59PM)UTC";
  
@@ -1743,8 +1743,8 @@ $inlandlatestForecastIdM = Inland_Morning_general_variables::whereDate('date', t
 if( !is_null($inlandlatestForecastIdM)){
 //24HRS now get the parent id from the addInlandForecast table
 $addInlandForecastM = InlandForecast::where('publishType', 'Publish-Forecast')->find($inlandlatestForecastIdM);
-$inlandwindM =   $addInlandForecastM->inlandmorning_table_values()->where('districts', 'Ada')->value('wind');
-$inlandweatherM =  $addInlandForecastM->inlandmorning_table_values()->where('districts', 'Ada')->value('weather');
+$inlandwindM =   $addInlandForecastM->inlandmorning_table_values()->where('districts', 'ADA')->value('wind');
+$inlandweatherM =  $addInlandForecastM->inlandmorning_table_values()->where('districts', 'ADA')->value('weather');
 $inlandwinddirM = $this->endsWith($inlandwindM);
 }else{
     $inlandyesterday = Carbon::now()->subDay()->format('Y-m-d');
@@ -1753,8 +1753,8 @@ $inlandlatestForecastIdM = Inland_Morning_general_variables::whereDate('date', $
 if(!is_null($inlandlatestForecastIdM)){
     //24HRS now get the parent id from the addInlandForecast table
 $addInlandForecastM = InlandForecast::where('publishType', 'Publish-Forecast')->find($inlandlatestForecastIdM);
-$inlandwindM =   $addInlandForecastM->inlandmorning_table_values()->where('districts', 'Ada')->value('wind');
-$inlandweatherM =  $addInlandForecastM->inlandmorning_table_values()->where('districts', 'Ada')->value('weather');
+$inlandwindM =   $addInlandForecastM->inlandmorning_table_values()->where('districts', 'ADA')->value('wind');
+$inlandweatherM =  $addInlandForecastM->inlandmorning_table_values()->where('districts', 'ADA')->value('weather');
 $inlandwinddirM = $this->endsWith($inlandwindM);
 }else{
     $addInlandForecastM = 'null';
@@ -1773,8 +1773,8 @@ $inlandlatestForecastIdA = Inland_Afternoon_general_variables::whereDate('date',
 if( !is_null($inlandlatestForecastIdA)){
 //24HRS now get the parent id from the addInlandForecast table
 $addInlandForecastA = InlandForecast::where('publishType', 'Publish-Forecast')->find($inlandlatestForecastIdA);
-$inlandwindA =   $addInlandForecastA->inlandafternoon_table_values()->where('districts', 'Ada')->value('wind');
-$inlandweatherA =  $addInlandForecastA->inlandafternoon_table_values()->where('districts', 'Ada')->value('weather');
+$inlandwindA =   $addInlandForecastA->inlandafternoon_table_values()->where('districts', 'ADA')->value('wind');
+$inlandweatherA =  $addInlandForecastA->inlandafternoon_table_values()->where('districts', 'ADA')->value('weather');
 $inlandwinddirA = $this->endsWith($inlandwindA);
 }// else use yesterday's forecast
 else{
@@ -1784,8 +1784,8 @@ else{
 $inlandlatestForecastIdA = Inland_Afternoon_general_variables::whereDate('date',  $inlandyesterday)->latest('created_at')->value('inland_forecast_id');
     //24HRS now get the parent id from the addInlandForecast table
 $addInlandForecastA = InlandForecast::where('publishType', 'Publish-Forecast')->find($inlandlatestForecastIdA);
-$inlandwindA =   $addInlandForecastA->inlandafternoon_table_values()->where('districts', 'Ada')->value('wind');
-$inlandweatherA =  $addInlandForecastA->inlandafternoon_table_values()->where('districts', 'Ada')->value('weather');
+$inlandwindA =   $addInlandForecastA->inlandafternoon_table_values()->where('districts', 'ADA')->value('wind');
+$inlandweatherA =  $addInlandForecastA->inlandafternoon_table_values()->where('districts', 'ADA')->value('weather');
 $inlandwinddirA = $this->endsWith($inlandwindA);
     }else{
         $addInlandForecastA = 'null';
@@ -1802,8 +1802,8 @@ $inlandlatestForecastIdE = Inland_Evening_general_variables::whereDate('date', t
 if( !is_null($inlandlatestForecastIdE)){
 //24HRS now get the parent id from the addInlandForecast table
 $addInlandForecastE = InlandForecast::where('publishType', 'Publish-Forecast')->find($inlandlatestForecastIdE);
-$inlandwindE =   $addInlandForecastE->inlandevening_table_values()->where('districts', 'Ada')->value('wind');
-$inlandweatherE =  $addInlandForecastE->inlandevening_table_values()->where('districts', 'Ada')->value('weather');
+$inlandwindE =   $addInlandForecastE->inlandevening_table_values()->where('districts', 'ADA')->value('wind');
+$inlandweatherE =  $addInlandForecastE->inlandevening_table_values()->where('districts', 'ADA')->value('weather');
 $inlandwinddirE = $this->endsWith($inlandwindE);
 }else{
     $inlandyesterday = Carbon::now()->subDay()->format('Y-m-d');
@@ -1812,8 +1812,8 @@ $inlandlatestForecastIdE = Inland_Evening_general_variables::whereDate('date', $
 if( !is_null($inlandlatestForecastIdE)){
     //24HRS now get the parent id from the addInlandForecast table
 $addInlandForecastE = InlandForecast::where('publishType', 'Publish-Forecast')->find($inlandlatestForecastIdE);
-$inlandwindE =   $addInlandForecastE->inlandevening_table_values()->where('districts', 'Ada')->value('wind');
-$inlandweatherE =  $addInlandForecastE->inlandevening_table_values()->where('districts', 'Ada')->value('weather');
+$inlandwindE =   $addInlandForecastE->inlandevening_table_values()->where('districts', 'ADA')->value('wind');
+$inlandweatherE =  $addInlandForecastE->inlandevening_table_values()->where('districts', 'ADA')->value('weather');
 $inlandwinddirE = $this->endsWith($inlandwindE);
 }else{
     $addInlandForecastE = 'null';

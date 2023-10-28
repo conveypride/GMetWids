@@ -78,6 +78,31 @@ class dailyForecast extends Controller
     }
 
 
+public function deleteforecast(Request $request)
+    {
+$id = $request->idd;
+AddDailyForecast::where('id', $id)->update([
+'publishType' => 'Delete-Forecast'
+]);
+
+return redirect()->route('df');
+    }
+
+
+public function approveforecast(Request $request)
+    {
+$id = $request->iddd;
+AddDailyForecast::where('id', $id)->update([
+'publishType' => 'Publish-Forecast',
+'approvedby' => Auth::user()->name
+
+]);
+
+return redirect()->route('df');
+    }
+
+
+    
     
 public function viewdailyforecast($id)
     {
