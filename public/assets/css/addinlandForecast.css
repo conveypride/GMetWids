@@ -1,0 +1,120 @@
+
+/* ========================= Animation intro for add new inland forecast page======================================== */
+
+.wavess {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    height: 50vh;
+    width: 100%;
+  }
+  .wavess:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -100px;
+    height: 100px;
+    background: dodgerblue;
+  }
+  .wavess svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  .wavess use {
+    animation: wavewave 5s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+    fill: dodgerblue;
+    opacity: 0.7;
+  }
+  .wavess.back {
+    z-index: 1;
+  }
+  .wavess.back use:nth-child(2) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+  }
+  .wavess.back use:nth-child(3) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+  }
+  .wavess.front {
+    z-index: 3;
+  }
+  .wavess.front use:nth-child(2) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+  }
+  .wavess.front use:nth-child(3) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+  }
+  @keyframes wavewave {
+    0% {
+      transform: translate(-90px);
+    }
+    100% {
+      transform: translate(85px);
+    }
+  }
+  .boats {
+    position: fixed;
+    bottom: 50px;
+    left: 50vw;
+    transition: left 2s ease;
+    z-index: 2;
+    display: inline-block;
+    transform-origin: center bottom;
+    animation: bob 4s ease-in-out alternate infinite;
+  }
+  .boats .hull {
+    width: 25vw;
+    height: 8.75vw;
+    background: firebrick;
+    border-radius: 0 0 12.5vw 12.5vw;
+    border-top: 0.375vw solid darkred;
+  }
+  .boats .sail1,
+  .boats .sail2 {
+    margin-bottom: 0.25vw;
+    display: inline-block;
+  }
+  .boats .sail1 {
+    width: 0px;
+    border-bottom: 11.25vw solid white;
+    border-left: 10vw solid transparent;
+    margin: 0 0.625vw 0.25vw;
+  }
+  .boats .sail2 {
+    width: 0px;
+    border-bottom: 13.75vw solid white;
+    border-right: 12.5vw solid transparent;
+  }
+  @keyframes bob {
+    0% {
+      transform: rotate(-10deg) translateY(0vh);
+    }
+    100% {
+      transform: rotate(8deg) translateY(-20vh);
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: midnightblue;
+    }
+    .wavess:after {
+      background: royalblue;
+    }
+    .wavess use {
+      fill: royalblue;
+    }
+    .boats .hull {
+      background: darkred;
+      border-top-color: #600000;
+    }
+    .boats .sail1,
+    .boats .sail2 {
+      border-bottom-color: whitesmoke;
+    }
+  }

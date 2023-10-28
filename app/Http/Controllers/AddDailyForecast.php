@@ -18,6 +18,7 @@ use App\Models\MorningPolygon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 
 class AddDailyForecast extends Controller
@@ -30,19 +31,7 @@ class AddDailyForecast extends Controller
     return view('admin.addNewDailyForecast', ['districts' => $districts]);
     }
 
-//  public  function generateRandomId($length = 10)
-//     {
-//         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-//         $id = '';
-    
-//         $max = strlen($characters) - 1;
-//         for ($i = 0; $i < $length; $i++) {
-//             $id .= $characters[random_int(0, $max)];
-//         }
-    
-//         return $id;
-//     }
-    
+ 
 
     public function create(Request $request)
     {
@@ -119,7 +108,7 @@ $add_daily_forecasts->save();
 //   $morning_general_variables->id = $randomId;
   $morning_general_variables->date = $tableMorningDate;
 //   $morning_general_variables->pressure= $tablePressureMorning;
-  $morning_general_variables->itd = $tableItdPositionMorning;
+  $morning_general_variables->itd = Str::upper($tableItdPositionMorning);
   $add_daily_forecasts->morning_general_variables()->save($morning_general_variables);
 
  // Create a new instance of afternoon_general_variables
@@ -127,7 +116,7 @@ $add_daily_forecasts->save();
 //  $afternoon_general_variables->id = $randomId;
  $afternoon_general_variables->date = $tableAfternoonDate;
 //  $afternoon_general_variables->pressure= $tablePressureAfternoon;
- $afternoon_general_variables->itd = $tableItdPositionAfternoon;
+ $afternoon_general_variables->itd = Str::upper($tableItdPositionAfternoon);
  $add_daily_forecasts->afternoon_general_variables()->save($afternoon_general_variables);
 
 
@@ -136,7 +125,7 @@ $add_daily_forecasts->save();
 //  $evening_general_variables->id = $randomId;
  $evening_general_variables->date = $tableEveningDate;
 //  $evening_general_variables->pressure= $tablePressureEvening;
- $evening_general_variables->itd = $tableItdPositionEvening;
+ $evening_general_variables->itd = Str::upper($tableItdPositionEvening);
  $add_daily_forecasts->evening_general_variables()->save($evening_general_variables);
  // Create a new instance of morning_table_values
 foreach ($tableMorningValues as $item) {
@@ -271,44 +260,6 @@ foreach ($markersEvening as $item) {
  }
 
 
-
-//  foreach ($markersMorning as $item) {
-//     $district = $item['districts'];
-//     $values = $item['values'];
-//     $evening_table_values = new Evening_table_values();
-//     $evening_table_values->districts = $district;
-//     $evening_table_values->min_temp = $values[0];
-//     $evening_table_values->max_temp = $values[1];
-//     $evening_table_values->wind = $values[2];
-//     $evening_table_values->weather = $values[3];
-//     $evening_table_values->rain_chance = $values[4];
-//     $evening_table_values->humidity = $values[5];
-//     $evening_table_values->eveningDate =  $tableEveningDate;
-//     $evening_table_values->forecaster = Auth::user()->name;
-//     // $evening_table_values->save();
-// }
-
-
-//  $morning_markers = new MorningMarkers();
-//  $morning_markers->markerId = $tableMorningDate;
-//  $morning_markers->lat= $tablePressureMorning;
-//  $morning_markers->lng = $tableItdPositionMorning;
-//  $morning_markers->morningDate = $tableItdPositionMorning;
-
-
-
-
-
-// Save the model instance
-// $morning_general_variables->save();
-
-        // Log::info('Your log message', ['data' => $data]);
-
-        // $data = $request->get('masterContainer');
-        // Log::info('Logging :', ['data' =>  $data]);
-        
-        // Log::info(print_r($request->get('masterContainer'),true ));
-        // dump($request->get('masterContainer'));
          // Return a response to indicate success
   return response('Form submitted successfully', 200);
     //     $districts = DB::table('cafodistricts')->orderBy('districtname')->get();

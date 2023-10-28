@@ -88,7 +88,7 @@
                   </div>
                   <div class="col-6">
                     <label for="itdtableMorning" class="form-label">Set ITD Position</label>
-                    <input type="text" class="form-control required" id="itdtableMorning" placeholder="e.g: 1°N">
+                    <input type="number" class="form-control required" id="itdtableMorning" placeholder="e.g: 1">
                   </div>
 
                   {{-- <div class="col-4">
@@ -111,7 +111,7 @@
             <th>Min Temp °C</th>
             <th>Max Temp °C</th>
             <th> Wind (m/s)</th>
-            <th>Chance of Rain</th>
+            <th>Chance of  Occurring</th>
             <th>Humidity</th>
            
              </tr>
@@ -181,22 +181,36 @@
                     <label for="morningfloatingInputwind{{ $district->id }}">Wind diecton & speed</label>
                   </div>
             </td>
-            {{-- CHANCE OF RAIN --}}
+            {{-- Chance of  Occurring --}}
             <td>
                 <select class="form-select form-select-sm required" aria-label="Small select">
-                    <option value="null">Select Chance of Rain</option>
-                    <option value="<40% "> &lt;40% </option>
-                    <option value="40% - 60%"> 40% - 60%</option>
-                    <option value=">60%"> &gt;60% </option>
+                    <option value="null">Select Chance of  Occurring</option>
+
+                    <option value="0%">0%</option>
+                    <option value="10%">10%</option> <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="70%">70%</option>
+                    <option value="80%">80%</option>
+                    <option value="90%">90%</option>
+                    <option value="100%">100%</option>
+
                   </select>
             </td>
             {{-- humidity 0% - 100%--}}
             <td>
                 <select class="form-select form-select-sm required" aria-label="Small select">
                     <option value="null">Select Humidity</option>
-                    <option value="<40%"> &lt;40% </option>
-                    <option value="40% - 60%"> 40% - 60%</option>
-                    <option value=">60%"> &gt;60% </option>
+                    <option value="0%">0%</option>
+                    <option value="10%">10%</option> <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="70%">70%</option>
+                    <option value="80%">80%</option>
+                    <option value="90%">90%</option>
+                    <option value="100%">100%</option>
                   </select>
             </td>
           </tr>
@@ -225,7 +239,7 @@
                   </div> 
                   <div class="col-6">
                     <label for="itdtableAfternoon" class="form-label">Set ITD Position</label>
-                    <input type="text" class="form-control required" id="itdtableAfternoon" placeholder="e.g: 1°N">
+                    <input type="number" class="form-control required" id="itdtableAfternoon" placeholder="e.g: 1">
                   </div>
                   {{-- <div class="col-4">
                     <label for="prestableAfternoon" class="form-label">Set Pressure</label>
@@ -246,7 +260,7 @@
             <th>Min Temp °C</th>
             <th>Max Temp °C</th>
             <th>Wind (m/s)</th>
-            <th>Chance of Rain</th>
+            <th>Chance of  Occurring</th>
             <th>Humidity</th> 
              
              </tr>
@@ -316,22 +330,34 @@
                     <label for="afternoonfloatingInputwind{{ $district->id }}">Wind diecton & speed</label>
                   </div>
             </td>
-            {{-- CHANCE OF RAIN --}}
+            {{-- Chance of  Occurring --}}
             <td>
                 <select class="form-select form-select-sm required" aria-label="Small select">
-                    <option value="null">Select Chance of Rain</option>
-                    <option value="<40%"> &lt;40% </option>
-                    <option value="40% - 60%"> 40% - 60%</option>
-                    <option value=">60%"> &gt;60% </option>
+                    <option value="null">Select Chance of  Occurring</option>
+                    <option value="0%">0%</option>
+                    <option value="10%">10%</option> <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="70%">70%</option>
+                    <option value="80%">80%</option>
+                    <option value="90%">90%</option>
+                    <option value="100%">100%</option>
                   </select>
             </td>
             {{-- humidity 0% - 100%--}}
             <td>
                 <select class="form-select form-select-sm required" aria-label="Small select">
                     <option value="null">Select Humidity</option>
-                    <option value="<40%"> &lt;40% </option>
-                    <option value="40% - 60%"> 40% - 60%</option>
-                    <option value=">60%"> &gt;60% </option>
+                    <option value="0%">0%</option>
+                    <option value="10%">10%</option> <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="70%">70%</option>
+                    <option value="80%">80%</option>
+                    <option value="90%">90%</option>
+                    <option value="100%">100%</option>
                   </select>
             </td>
              
@@ -362,7 +388,7 @@
                       </div> 
                       <div class="col-6">
                         <label for="itdtableEvening" class="form-label">Set ITD Position</label>
-                        <input type="text" class="form-control required" id="itdtableEvening" placeholder="e.g: 1°N">
+                        <input type="number" class="form-control required" id="itdtableEvening" placeholder="e.g: 1">
                       </div>
                       {{-- <div class="col-4">
                         <label for="prestableEvening" class="form-label">Set Pressure</label>
@@ -383,7 +409,7 @@
                 <th>Min Temp °C</th>
                 <th>Max Temp °C</th>
                 <th> Wind (m/s)</th>
-                <th>Chance of Rain</th>
+                <th>Chance of  Occurring</th>
                 <th>Humidity</th> 
                 </tr>
                {{-- end of sub titles --}}
@@ -450,22 +476,34 @@
                         <label for="eveningfloatingInputwind{{ $district->id }}">Wind diecton & speed</label>
                       </div>
                 </td>
-                {{-- CHANCE OF RAIN --}}
+                {{-- Chance of  Occurring --}}
                 <td>
                     <select class="form-select form-select-sm required" aria-label="Small select">
-                        <option value="null">Select Chance of Rain</option>
-                        <option value="<40%"> &lt;40% </option>
-                    <option value="40% - 60%"> 40% - 60%</option>
-                    <option value=">60%"> &gt;60% </option>
+                        <option value="null">Select Chance of  Occurring</option>
+                        <option value="0%">0%</option>
+                    <option value="10%">10%</option> <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="70%">70%</option>
+                    <option value="80%">80%</option>
+                    <option value="90%">90%</option>
+                    <option value="100%">100%</option>
                       </select>
                 </td>
                 {{-- humidity 0% - 100%--}}
                 <td>
                     <select class="form-select form-select-sm required" aria-label="Small select">
                         <option value="null">Select Humidity</option>
-                        <option value="<40%"> &lt;40% </option>
-                        <option value="40% - 60%"> 40% - 60%</option>
-                        <option value=">60%"> &gt;60% </option>
+                        <option value="0%">0%</option>
+                    <option value="10%">10%</option> <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="60%">60%</option>
+                    <option value="70%">70%</option>
+                    <option value="80%">80%</option>
+                    <option value="90%">90%</option>
+                    <option value="100%">100%</option>
                       </select>
                 </td> 
      
@@ -556,9 +594,7 @@
                     {{-- </div> --}}
                      <div class="card-body" style="position: relative; width: 300px;
                      height: 300px;">
-              <div id="mapAdmin1"   style="
-             
-              width: 100%;
+              <div id="mapAdmin1"   style="width: 100%;
               height: 100%;"> </div>
           </div>
           <div class="card-footer">
@@ -715,7 +751,9 @@
         <strong> Weather Summary Report</strong>  </div>
 
     <div class="form-floating my-3">
+     
         <textarea class="form-control" placeholder="Write your weather here" id="floatingTextareaSummary" style="height: 150px"></textarea>
+        <p id="characterCount">Characters remaining: 310</p>
         <label for="floatingTextareaSummary">Weather Summary</label>
       </div>
  </div>
@@ -757,8 +795,10 @@
       </select>
 
     <div class="form-floating my-3">
+     
         <textarea class="form-control" placeholder="Write your weather warning here" id="textareaweatherwarning" style="height: 150px"></textarea>
         <label for="textareaweatherwarning">Weather Warning Advice</label>
+        
       </div>
 
 </div> 
@@ -769,5 +809,24 @@
 	    
     </div><!--//app-wrapper-->    					
 
- 
+ @section('script')
+ <script>
+  const textarea = document.getElementById('floatingTextareaSummary');
+  const characterCount = document.getElementById('characterCount');
+  const maxCharacters = 310;
+
+  textarea.addEventListener('input', function () {
+    const currentText = textarea.value;
+    const remainingCharacters = maxCharacters - currentText.length;
+
+    if (remainingCharacters < 0) {
+      textarea.value = currentText.slice(0, maxCharacters); // Truncate text if exceeded
+      characterCount.textContent = 'Maximum character limit reached';
+      alert('Maximum character limit reached');
+    } else {
+      characterCount.textContent = `Characters remaining: ${remainingCharacters}`;
+    }
+  });
+  </script>
+ @endsection
     @endsection

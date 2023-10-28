@@ -14,5 +14,11 @@ public function add_daily_forecasts()
         return $this->belongsTo(AddDailyForecast::class);
     }
 
+    public function district()
+    {
+        return $this->belongsTo(Cafodistricts::class, 'districtname', 'districts');
+    }
+
+
 
 }

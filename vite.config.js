@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/js/adminApp.js',
                 'resources/js/adminCharts-demo.js',
                 'resources/js/adminIndex-charts.js',
+                'resources/js/viewallMap.js'
             ],
             // refresh: true,
         }),

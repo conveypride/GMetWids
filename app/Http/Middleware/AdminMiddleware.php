@@ -22,9 +22,12 @@ class AdminMiddleware
             # check if user is an admin. i.e role=1
             if(Auth::user()->role == 1){
  return $next($request);
-            }else{
-return redirect('/verify')->with('message', 'Please come back later, your account is being verified by an Admin. This can take up to 24 hours.Thank you!!');
+            }else if(Auth::user()->role == 0){
+return redirect('/verifi');
             }
+
+// return $next($request);
+
         } else {
             # if user is not logined in
             return redirect('/login')->with('message', 'Access Denied Please Login!!');
