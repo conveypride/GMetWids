@@ -72,7 +72,7 @@
             <th>Weather</th>
             <th>Min Temp °C</th>
             <th>Max Temp °C</th>
-            <th> Wind (m/s)</th>
+            <th>  Wind (m/s) <small>- E.g; 12SE</small></th>
             <th>Chance of  Occurring</th>
             <th>Humidity</th>
            
@@ -127,58 +127,65 @@
                     {{-- <option value="CLEAR NIGHT">CLEAR NIGHT</option> --}}
                   </select>
             </td>
-            {{-- min TEMPERATURE --}}
+            {{-- Min Temp --}}
             <td>
                 <div class="form-floating">
                     <input type="number" class="form-control required mintempp" id="{{ $mornings->districts }}MfloatingInputtempmin{{ $mornings->id }}"  value="{{  $mornings->min_temp }}">
-                    <label for="{{ $mornings->districts }}MfloatingInputtempmin{{ $mornings->id }}">Min Temperature</label>
+                    <label for="{{ $mornings->districts }}MfloatingInputtempmin{{ $mornings->id }}">Min Temp</label>
                   </div>
             </td>
              {{--max temp --}}
             <td> 
               <div class="form-floating">
                 <input type="number" class="form-control required maxtempp" id="{{ $mornings->districts }}MfloatingInputtempmax{{ $mornings->id }}" value="{{  $mornings->max_temp }}">
-                <label for="{{ $mornings->districts }}MfloatingInputtempmax{{ $mornings->id }}">Max Temperature</label>
+                <label for="{{ $mornings->districts }}MfloatingInputtempmax{{ $mornings->id }}">Max Temp</label>
               </div>
             </td>
             {{-- WIND --}}
             <td>
                 <div class="form-floating">
                     <input type="text" class="form-control required windval" id="morningfloatingInputwind{{ $mornings->id }}"  value="{{ $mornings->wind }}">
-                    <label for="morningfloatingInputwind{{ $mornings->id }}">Wind diecton & speed</label>
+                  
                   </div>
             </td>
             {{-- Chance of  Occurring --}}
             <td>
                 <select class="form-select form-select-sm required rainChance" aria-label="Small select">
-                    <option value="null">Select Chance of  Occurring</option>
+                  
                     <option selected value="{{ $mornings->rain_chance }}">{{ $mornings->rain_chance }}</option>
-                    <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
+                    <option value="0%">Select Chance of
+                      Occurring</option>
+
+                  <option value="0% - 10%">0% - 10%</option>
+                  <option value="10% - 20%">10% - 20%</option>
+                  <option value="20% - 30%">20% - 30%</option>
+                  <option value="30% - 40%">30% - 40%</option>
+                  <option value="40% - 50%">40% - 50%</option>
+                  <option value="50% - 60%">50% - 60%</option>
+                  <option value="60% - 70%">60% - 70%</option>
+                  <option value="70% - 80%">70% - 80%</option>
+                  <option value="80% - 90%">80% - 90%</option>
+                  <option value="90% - 100%">90% - 100%</option>
 
                   </select>
             </td>
             {{-- humidity 0% - 100%--}}
             <td>
                 <select class="form-select form-select-sm required humidity" aria-label="Small select">
-                    <option value="null">Select Humidity</option>
+                    
                     <option selected value="{{ $mornings->humidity }}">{{ $mornings->humidity }}</option>
-                    <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
+                    <option value="null">Select Humidity</option>
+                    <option value="0% - 10%">0% - 10%</option>
+                    <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                    <option value="30% - 40%">30% - 40%</option>
+                    <option value="40% - 50%">40% - 50%</option>
+                    <option value="50% - 60%">50% - 60%</option>
+                    <option value="60% - 70%">60% - 70%</option>
+                    <option value="70% - 80%">70% - 80%</option>
+                    <option value="80% - 90%">80% - 90%</option>
+                    <option value="90% - 100%">90% - 100%</option>
+
                   </select>
             </td>
           </tr>
@@ -231,7 +238,7 @@
             <th>Weather</th>
             <th>Min Temp °C</th>
             <th>Max Temp °C</th>
-            <th>Wind (m/s)</th>
+            <th> Wind (m/s) <small>- E.g; 12SE</small></th>
             <th>Chance of  Occurring</th>
             <th>Humidity</th> 
              
@@ -294,37 +301,39 @@
     <td>
       <div class="form-floating">
           <input type="number" class="form-control required mintempp" id="{{ $afternoons->districts }}AfloatingInputtempmin{{ $afternoons->id }}"   value="{{  $afternoons->min_temp }}">
-          <label for="{{ $afternoons->districts }}AfloatingInputtempmin{{ $afternoons->id }}">Min Temperature</label>
+          <label for="{{ $afternoons->districts }}AfloatingInputtempmin{{ $afternoons->id }}">Min Temp</label>
         </div>
   </td>
 {{--max temp --}}
 <td> 
 <div class="form-floating">
   <input type="number" class="form-control required maxtempp" id="{{ $afternoons->districts }}AfloatingInputtempmax{{ $afternoons->id }}"  value="{{  $afternoons->max_temp }}">
-  <label for="{{ $afternoons->districts }}AfloatingInputtempmax{{ $afternoons->id }}">Max Temperature</label>
+  <label for="{{ $afternoons->districts }}AfloatingInputtempmax{{ $afternoons->id }}">Max Temp</label>
 </div>
 </td>
             {{-- WIND --}}
             <td>
                 <div class="form-floating">
                     <input type="text" class="form-control required windval" id="afternoonfloatingInputwind{{ $afternoons->id }}" value="{{  $afternoons->wind }}">
-                    <label for="afternoonfloatingInputwind{{ $afternoons->id }}">Wind diecton & speed</label>
+                   
                   </div>
             </td>
             {{-- Chance of  Occurring --}}
             <td>
                 <select class="form-select form-select-sm required rainChance" aria-label="Small select">
                     <option selected value="{{ $afternoons->rain_chance }}">{{ $afternoons->rain_chance }}</option>
-                    <option value="null">Select Chance of  Occurring</option>
-                    <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
+                    <option value="0%">Select Chance of
+                      Occurring</option>
+                 <option value="0% - 10%">0% - 10%</option>
+                  <option value="10% - 20%">10% - 20%</option>
+                  <option value="20% - 30%">20% - 30%</option>
+                  <option value="30% - 40%">30% - 40%</option>
+                  <option value="40% - 50%">40% - 50%</option>
+                  <option value="50% - 60%">50% - 60%</option>
+                  <option value="60% - 70%">60% - 70%</option>
+                  <option value="70% - 80%">70% - 80%</option>
+                  <option value="80% - 90%">80% - 90%</option>
+                  <option value="90% - 100%">90% - 100%</option>
                   </select>
             </td>
             {{-- humidity 0% - 100%--}}
@@ -332,15 +341,18 @@
                 <select class="form-select form-select-sm required humidity" aria-label="Small select">
                     <option selected value="{{ $afternoons->humidity }}">{{ $afternoons->humidity }}</option>
                     <option value="null">Select Humidity</option>
-                    <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
+                    <option value="0% - 10%">0% - 10%</option>
+                    <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                    <option value="30% - 40%">30% - 40%</option>
+                    <option value="40% - 50%">40% - 50%</option>
+                    <option value="50% - 60%">50% - 60%</option>
+                    <option value="60% - 70%">60% - 70%</option>
+                    <option value="70% - 80%">70% - 80%</option>
+                    <option value="80% - 90%">80% - 90%</option>
+                    <option value="90% - 100%">90% - 100%</option>
+
+
                   </select>
             </td>
              
@@ -393,7 +405,7 @@
                 <th>Weather</th>
                 <th>Min Temp °C</th>
                 <th>Max Temp °C</th>
-                <th> Wind (m/s)</th>
+                <th>  Wind (m/s) <small>- E.g; 12SE</small></th>
                 <th>Chance of  Occurring</th>
                 <th>Humidity</th> 
                 </tr>
@@ -449,37 +461,39 @@
     <td>
       <div class="form-floating">
           <input type="number" class="form-control required mintempp" id="{{ $evenings->districts }}EfloatingInputtempmin{{ $evenings->id }}" value="{{ $evenings->min_temp  }}">
-          <label for="{{ $evenings->districts }}EfloatingInputtempmin{{ $evenings->id }}">Min Temperature</label>
+          <label for="{{ $evenings->districts }}EfloatingInputtempmin{{ $evenings->id }}">Min Temp</label>
         </div>
   </td>
 {{--max temp --}}
 <td> 
 <div class="form-floating">
   <input type="number" class="form-control required maxtempp" id="{{ $evenings->districts }}EfloatingInputtempmax{{ $evenings->id }}" value="{{ $evenings->max_temp  }}">
-  <label for="{{ $evenings->districts }}EfloatingInputtempmax{{ $evenings->id }}">Max Temperature</label>
+  <label for="{{ $evenings->districts }}EfloatingInputtempmax{{ $evenings->id }}">Max Temp</label>
 </div>
 </td>
                 {{-- WIND --}}
                 <td>
                     <div class="form-floating">
                         <input type="text" class="form-control required windval" id="eveningfloatingInputwind{{ $evenings->id }}" value="{{ $evenings->wind }}">
-                        <label for="eveningfloatingInputwind{{ $evenings->id }}">Wind diecton & speed</label>
+                       
                       </div>
                 </td>
                 {{-- Chance of  Occurring --}}
                 <td>
                     <select class="form-select form-select-sm required rainChance" aria-label="Small select">
                         <option selected value="{{ $evenings->rain_chance }}">{{ $evenings->rain_chance }}</option>
-                        <option value="null">Select Chance of  Occurring</option>
-                        <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
+                        <option value="0%">Select Chance of
+                          Occurring</option> 
+                          <option value="0% - 10%">0% - 10%</option>
+                      <option value="10% - 20%">10% - 20%</option>
+                      <option value="20% - 30%">20% - 30%</option>
+                      <option value="30% - 40%">30% - 40%</option>
+                      <option value="40% - 50%">40% - 50%</option>
+                      <option value="50% - 60%">50% - 60%</option>
+                      <option value="60% - 70%">60% - 70%</option>
+                      <option value="70% - 80%">70% - 80%</option>
+                      <option value="80% - 90%">80% - 90%</option>
+                      <option value="90% - 100%">90% - 100%</option>
                       </select>
                 </td>
                 {{-- humidity 0% - 100%--}}
@@ -487,15 +501,18 @@
                     <select class="form-select form-select-sm required humidity" aria-label="Small select">
                         <option selected value="{{ $evenings->humidity }}">{{ $evenings->humidity }}</option>
                         <option value="null">Select Humidity</option>
-                        <option value="0%">0%</option>
-                    <option value="10%">10%</option> <option value="20%">20%</option>
-                    <option value="30%">30%</option>
-                    <option value="40%">40%</option>
-                    <option value="60%">60%</option>
-                    <option value="70%">70%</option>
-                    <option value="80%">80%</option>
-                    <option value="90%">90%</option>
-                    <option value="100%">100%</option>
+                    <option value="0% - 10%">0% - 10%</option>
+                    <option value="10% - 20%">10% - 20%</option>
+                    <option value="20% - 30%">20% - 30%</option>
+                    <option value="30% - 40%">30% - 40%</option>
+                    <option value="40% - 50%">40% - 50%</option>
+                    <option value="50% - 60%">50% - 60%</option>
+                    <option value="60% - 70%">60% - 70%</option>
+                    <option value="70% - 80%">70% - 80%</option>
+                    <option value="80% - 90%">80% - 90%</option>
+                    <option value="90% - 100%">90% - 100%</option>
+
+
                       </select>
                 </td> 
      
@@ -550,7 +567,11 @@
                       <input type="date" class="form-control requiredmapdate" id="datemapp1" value="@if (!empty($polygonDatemorning->morningDate))
                       {{$polygonDatemorning->morningDate }} @endif">
                     </div>
-                  
+                    <div class="mb-3">
+                      <label for="iconsizeM" class="form-label">Icon Size</label>
+                      <input type="number" class="form-control requiredmapdate" id="iconsizeM"
+                          value="40">
+                  </div>
                 </div>
           
                     {{-- <div class="btn-group-vertical" role="group" aria-label="Vertical button group"> --}}
@@ -586,8 +607,8 @@
                       
                        </div>
                     {{-- </div> --}}
-                     <div class="card-body">
-              <div id="mapEdit" style="position: relative; width: 100%; height: 95%;"> </div>
+                     <div class="card-body" style="position: relative; width: 100%;   min-height: 300px;">
+              <div id="mapEdit" style="width: 100%;   height: 100%"> </div>
           </div>
           <div class="card-footer">
               <small class="text-muted">Morning (6:00am - 11:59am)</small>
@@ -605,6 +626,12 @@
                   <input type="date" class="form-control requiredmapdate" id="datemapp1af" value="@if (!empty($polygonDateafternoon->afternoonDate))
                   {{$polygonDateafternoon->afternoonDate }} @endif">
                 </div>
+
+                <div class="mb-3">
+                  <label for="iconsizeA" class="form-label">Icon Size</label>
+                  <input type="number" class="form-control requiredmapdate" id="iconsizeA"
+                      value="40">
+              </div>
               
             </div>
       
@@ -641,8 +668,8 @@
                   
                    </div>
                 {{-- </div> --}}
-                 <div class="card-body">
-          <div id="mapEditaf"  style="position: relative; width: 100%; height: 95%;"> </div>
+                 <div class="card-body" style="position: relative; width: 100%;   min-height: 300px;">
+          <div id="mapEditaf"  style=" width: 100%; height: 100%"> </div>
       </div>
       <div class="card-footer">
           <small class="text-muted">Afternoon (12:00pm - 5:59pm)</small>
@@ -661,7 +688,11 @@ height: 750px;">
           <input type="date" class="form-control requiredmapdate" id="datemapp1ev" value="@if (!empty($polygonDateevening->eveningDate))
             {{$polygonDateevening->eveningDate}} @endif">
         </div>
-      
+        <div class="mb-3">
+          <label for="iconsizeE" class="form-label">Icon Size</label>
+          <input type="number" class="form-control requiredmapdate" id="iconsizeE"
+              value="40">
+      </div>
     </div>
  
         {{-- <div class="btn-group-vertical" role="group" aria-label="Vertical button group"> --}}
@@ -697,8 +728,8 @@ height: 750px;">
           
            </div>
         {{-- </div> --}}
-         <div class="card-body" >
-  <div id="mapEditev"   style="position: relative; width: 100%; height: 95%;"> </div>
+         <div class="card-body" style="position: relative; width: 100%;   min-height: 300px;" >
+  <div id="mapEditev" style="width: 100%;  height: 100%"> </div>
 </div>
 <div class="card-footer">
   <small class="text-muted">Evening (6:00pm - 11:59pm)</small>
@@ -740,7 +771,9 @@ height: 750px;">
 
     <div class="form-floating my-3">
      
-        <textarea class="form-control" placeholder="Write your weather here" id="summarytext" style="height: 150px"></textarea>
+        <textarea class="form-control" placeholder="Write your weather here" id="summarytext" style="height: 150px">
+        {{ $dailyforecast->summary }}
+        </textarea>
         <p id="characterCount">Characters remaining: 310</p>
         <label for="summarytext">Weather Summary</label>
       </div>
@@ -916,8 +949,8 @@ console.log('Forecast ID:', forecastId);
     console.log('Table ID:', tableId);
     console.log('Forecast Time:', forecastTime);
     console.log('Weather:', weather);
-    console.log('Min Temperature:', minTemperature);
-    console.log('Max Temperature:', maxTemperature);
+    console.log('Min Temp:', minTemperature);
+    console.log('Max Temp:', maxTemperature);
     console.log('Wind:', wind);
     console.log('Rain Chance:', rainChance);
     console.log('Humidity:', humidity);

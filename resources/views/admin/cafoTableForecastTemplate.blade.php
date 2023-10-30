@@ -28,6 +28,16 @@ font-family: "Times New Roman", Times, serif;
    height: 3px!important;
 }
 
+
+.headin {
+   /* line-height: 11px!important; */
+   font-size:14px;
+   font-weight: bold;
+   /* word-spacing: 10px; */
+   /* min-height: 11px!important;
+   height: 11px!important; */
+}
+
 /* Apply styles to all vertical lines in the table */
 table tr td:nth-child(odd) {
     border-color:  #292b2c; 
@@ -74,21 +84,21 @@ table tr th:nth-child(even) {
 </div>
 </div>
 <div class="row">
-    <div class="col-6">
+    <div class="col-4">
         <div class="d-flex  flex-column justify-content-start">
-            <div class="fw-bold" style="font-size: 10px">P.O Box LG 87, Accra</div>
-            <div class="fw-bold"  style="font-size: 10px">Tel/Fax: +233-302-543252</div>
-            <div class="fw-bold"  style="font-size: 10px">Tel: +233-0302-776171 ext. 3267/2534/3244</div>
-            <div class="fw-bold"  style="font-size: 10px">Digital Address: GA-485-3581</div>
+            <div class="fw-bold" style="font-size: 11px">P.O Box LG 87, Accra</div>
+            <div class="fw-bold"  style="font-size: 11px">Tel/Fax: +233-302-543252</div>
+            <div class="fw-bold"  style="font-size: 11px">Tel: +233-0302-776171 ext. 3267/2534/3244</div>
+            <div class="fw-bold"  style="font-size: 11px">Digital Address: GA-485-3581</div>
           </div>
     </div>
-
-    <div class="col-6">
+    <div class="col-4"></div>
+    <div class="col-4">
         <div class="d-flex flex-column justify-content-end">
-            <div class="fw-bold" style="font-size: 10px; align-self:flex-end">Email: <a href="mailto:kiamo@meteo.gov.gh">kiamo@meteo.gov.gh</a></div>
-            <div class="fw-bold"  style="font-size: 10px; align-self:flex-end">Website: <a href="https://www.meteo.gov.gh">www.meteo.gov.gh</a></div>
-            <div class="fw-bold"  style="font-size: 10px; align-self:flex-end"><img class="coatofarms-image" width="25px" src="{{ asset('assets/images/twitter.jpg') }}" alt="twitterlogo"> @GhanaMet</div>
-            <div class="fw-bold"  style="font-size: 10px; align-self:flex-end"><img class="coatofarms-image" width="17px" src="{{ asset('assets/images/facebook_icon.png') }}" alt="facebooklogo"> Ghana Meteorological Agency (GMet)</div>
+            <div class="fw-bold" style="font-size: 10px; align-self:flex-start">Email: <a href="mailto:kiamo@meteo.gov.gh">kiamo@meteo.gov.gh</a></div>
+            <div class="fw-bold"  style="font-size: 10px; align-self:flex-start">Website: <a href="https://www.meteo.gov.gh">www.meteo.gov.gh</a></div>
+            <div class="fw-bold"  style="font-size: 10px; align-self:flex-start"><img class="coatofarms-image" width="25px" src="{{ asset('assets/images/twitter.jpg') }}" alt="twitterlogo"> @GhanaMet</div>
+            <div class="fw-bold"  style="font-size: 10px; align-self:flex-start"><img class="coatofarms-image" width="17px" src="{{ asset('assets/images/facebook_icon.png') }}" alt="facebooklogo"> Ghana Meteorological Agency (GMet)</div>
           </div>
     </div>
 </div>
@@ -131,18 +141,21 @@ table tr th:nth-child(even) {
           <th rowspan="2">CITIES</th>
           <th colspan="6" class="text-center">WEATHER BRIEF</th>
         </tr>
-        <tr class="text-center">
-            <th scope="col" >Morning</th>
-            <th scope="col"> Temp</th>
-            <th scope="col" >Afternoon</th>
-            <th scope="col"> Temp</th>
-            <th scope="col" >Evening</th>
-            <th scope="col"> Temp</th>
+        <tr class="text-center headin">
+            <th scope="col" >MORNING ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
+            <th scope="col"> TEMP </th>
+            <th scope="col" >AFTERNOON ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
+            <th scope="col"> TEMP </th>
+            <th scope="col" >EVENING ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
+            <th scope="col"> TEMP </th>
         </tr>
         <tbody>
             @foreach($morning as $key => $value)
+            @if( $value->districts == 'AFLAO'||  $value->districts == 'ACCRA' || $value->districts == 'KASOA' || $value->districts == 'CAPE COAST' ||  $value->districts == 'TAKORADI' || $value->districts == 'AXIM' || $value->districts == 'HO' ||  $value->districts == 'KOFORIDUA' || $value->districts == 'AKIM ODA' || $value->districts == 'KUMASI' ||  $value->districts == 'OBUASI' || $value->districts == 'TARKWA' ||  $value->districts == 'SEFWI BEKWAI'  ||  $value->districts == 'KETE KRACHI' || $value->districts == 'KINTAMPO' ||  $value->districts == 'GOASO'  ||  $value->districts == 'SUNYANI' ||  $value->districts == 'TECHIMAN' ||  $value->districts == 'YENDI'  || $value->districts == 'TEMALE' || $value->districts == 'BOLE' || $value->districts == 'DAMONGO' ||   $value->districts == 'BOLGATANGA' || $value->districts == 'NALERIGU' ||  $value->districts == 'WA'  )
             <tr class="text-center"  style="font-size: 12px">
-                <th scope="row">{{ $value->districts }}</th>
+                <th scope="row">
+                 {{  $value->districts}}
+                  </th>
                 <td>
                     @if ( $value->weather == 'SUNNY')
                   {{ 'SUNNY' }} 
@@ -255,7 +268,7 @@ table tr th:nth-child(even) {
               @endif
 @endif
  </td>
-                <td width="5px">{{ $value->max_temp }}</td>
+                <td width="5px">{{ $value->max_temp }} °C</td>
                 <td>  
                 @if (  $afternoon[$key]->weather == 'SUNNY')
                 {{ 'SUNNY' }}  @if ($afternoon[$key]->rain_chance != "0%")
@@ -368,7 +381,7 @@ table tr th:nth-child(even) {
             @endif
 @endif
 </td>  
-                <td width="5px">{{ $afternoon[$key]->max_temp }}</td>
+                <td width="5px">{{ $afternoon[$key]->max_temp }} °C</td>
         <td>      @if (  $evening[$key]->weather == 'SUNNY')
                 {{ 'SUNNY' }} @if ($evening[$key]->rain_chance != "0%")
                 ({{ $evening[$key]->rain_chance }})
@@ -479,8 +492,10 @@ table tr th:nth-child(even) {
             @endif
 @endif
 </td>          
-                <td width="5px">{{ $evening[$key]->max_temp }}</td>
+                <td width="5px">{{ $evening[$key]->max_temp }} °C</td>
+                 
             </tr>
+            @endif
             @endforeach
     </tbody>
       </table>
@@ -491,16 +506,17 @@ table tr th:nth-child(even) {
           <th rowspan="2">CITIES</th>
           <th colspan="6" class="text-center">WEATHER BRIEF</th>
         </tr>
-        <tr class="text-center">
-            <th scope="col" >Afternoon</th>
-            <th scope="col">Temp</th>
-            <th scope="col" >Evening</th>
-            <th scope="col">Temp</th>
-            <th scope="col" >Morning</th>
-            <th scope="col">Temp</th>
+        <tr class="text-center headin">
+            <th scope="col" >AFTERNOON ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
+            <th scope="col">TEMP </th>
+            <th scope="col" >EVENING  ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
+            <th scope="col">TEMP </th>
+            <th scope="col" >MORNING ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
+            <th scope="col">TEMP </th>
         </tr>
         <tbody>
             @foreach($afternoon as $key => $value)
+            @if( $value->districts == 'AFLAO'||  $value->districts == 'ACCRA' || $value->districts == 'KASOA' || $value->districts == 'CAPE COAST' ||  $value->districts == 'TAKORADI' || $value->districts == 'AXIM' || $value->districts == 'HO' ||  $value->districts == 'KOFORIDUA' || $value->districts == 'AKIM ODA' || $value->districts == 'KUMASI' ||  $value->districts == 'OBUASI' || $value->districts == 'TARKWA' ||  $value->districts == 'SEFWI BEKWAI'  ||  $value->districts == 'KETE KRACHI' || $value->districts == 'KINTAMPO' ||  $value->districts == 'GOASO'  ||  $value->districts == 'SUNYANI' ||  $value->districts == 'TECHIMAN' ||  $value->districts == 'YENDI'  || $value->districts == 'TEMALE' || $value->districts == 'BOLE' || $value->districts == 'DAMONGO' ||   $value->districts == 'BOLGATANGA' || $value->districts == 'NALERIGU' ||  $value->districts == 'WA'  )
             <tr class="text-center"  style="font-size: 12px">
                 <th scope="row">{{ $value->districts }}</th>
                 <td>
@@ -615,7 +631,7 @@ table tr th:nth-child(even) {
               @endif
 @endif
  </td>
-                <td width="5px">{{ $value->max_temp }}</td>
+                <td width="5px">{{ $value->max_temp }} °C</td>
                 <td>  
                 @if (  $evening[$key]->weather == 'SUNNY')
                 {{ 'SUNNY' }}  @if ($evening[$key]->rain_chance != "0%")
@@ -728,7 +744,7 @@ table tr th:nth-child(even) {
             @endif
 @endif
 </td>  
-                <td width="5px">{{ $evening[$key]->max_temp }}</td>
+                <td width="5px">{{ $evening[$key]->max_temp }} °C</td>
         <td>      @if (  $morning[$key]->weather == 'SUNNY')
                 {{ 'SUNNY' }} @if ($morning[$key]->rain_chance != "0%")
                 ({{ $morning[$key]->rain_chance }})
@@ -839,8 +855,9 @@ table tr th:nth-child(even) {
             @endif
 @endif
 </td>          
-                <td width="5px">{{ $morning[$key]->max_temp }}</td>
+                <td width="5px">{{ $morning[$key]->max_temp }} °C</td>
             </tr>
+            @endif
             @endforeach
     </tbody>
       </table>
@@ -851,16 +868,17 @@ table tr th:nth-child(even) {
       <th rowspan="2">CITIES</th>
       <th colspan="6" class="text-center">WEATHER BRIEF</th>
     </tr>
-    <tr class="text-center">
-        <th scope="col" >Evening</th>
-        <th scope="col">Temp</th>
-        <th scope="col" >Morning</th>
-        <th scope="col">Temp</th>
-        <th scope="col" >Afternoon</th>
-        <th scope="col">Temp</th>
+    <tr class="text-center headin">
+        <th scope="col" >EVENING  ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
+        <th scope="col">TEMP </th>
+        <th scope="col" >MORNING ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
+        <th scope="col">TEMP </th>
+        <th scope="col" >AFTERNOON ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
+        <th scope="col">TEMP </th>
     </tr>
     <tbody>
         @foreach($evening as $key => $value)
+        @if( $value->districts == 'AFLAO'||  $value->districts == 'ACCRA' || $value->districts == 'KASOA' || $value->districts == 'CAPE COAST' ||  $value->districts == 'TAKORADI' || $value->districts == 'AXIM' || $value->districts == 'HO' ||  $value->districts == 'KOFORIDUA' || $value->districts == 'AKIM ODA' || $value->districts == 'KUMASI' ||  $value->districts == 'OBUASI' || $value->districts == 'TARKWA' ||  $value->districts == 'SEFWI BEKWAI'  ||  $value->districts == 'KETE KRACHI' || $value->districts == 'KINTAMPO' ||  $value->districts == 'GOASO'  ||  $value->districts == 'SUNYANI' ||  $value->districts == 'TECHIMAN' ||  $value->districts == 'YENDI'  || $value->districts == 'TEMALE' || $value->districts == 'BOLE' || $value->districts == 'DAMONGO' ||   $value->districts == 'BOLGATANGA' || $value->districts == 'NALERIGU' ||  $value->districts == 'WA'  )
         <tr class="text-center"  style="font-size: 12px">
             <th scope="row">{{ $value->districts }}</th>
             <td>
@@ -912,6 +930,7 @@ table tr th:nth-child(even) {
             @elseif( $value->weather == '-DRIZZLENIGHT')
             {{ 'SLT DRIZZLE' }}  @if ($value->rain_chance != "0%")
             ({{ $value->rain_chance }})
+            
          @endif
              @elseif( $value->weather == 'DRIZZLEDAY')
              {{ 'MOD DRIZZLE' }}  @if ($value->rain_chance != "0%")
@@ -975,7 +994,7 @@ table tr th:nth-child(even) {
           @endif
 @endif
 </td>
-            <td width="5px">{{ $value->max_temp }}</td>
+            <td width="5px">{{ $value->max_temp }} °C</td>
             <td>  
             @if (  $morning[$key]->weather == 'SUNNY')
             {{ 'SUNNY' }}  @if ($morning[$key]->rain_chance != "0%")
@@ -1088,7 +1107,7 @@ table tr th:nth-child(even) {
         @endif
 @endif
 </td>  
-            <td width="5px">{{ $morning[$key]->max_temp }}</td>
+            <td width="5px">{{ $morning[$key]->max_temp }} °C</td>
     <td>      @if (  $afternoon[$key]->weather == 'SUNNY')
             {{ 'SUNNY' }} @if ($afternoon[$key]->rain_chance != "0%")
             ({{ $afternoon[$key]->rain_chance }})
@@ -1199,8 +1218,9 @@ table tr th:nth-child(even) {
         @endif
 @endif
 </td>          
-            <td width="5px">{{ $afternoon[$key]->max_temp }}</td>
+            <td width="5px">{{ $afternoon[$key]->max_temp }} °C</td>
         </tr>
+        @endif
         @endforeach
 </tbody>
 </table>

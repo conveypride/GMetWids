@@ -712,11 +712,20 @@ $this->seasonalForecast = Seasonalforecast::orderBy('created_at', 'desc')->get()
 // get marine data from the Marineforecast database table:
 $marineForecast = MarineForecast::latest()->where('publishType','PUBLISHED')->first();
 
-
+if (isset($marineForecast)) {
+  
     $marinepolugon = [];
     $marinepolygonns=  $marineForecast->marine_polygons()->pluck('cordinate')->all();
   $inlandcolors= $marineForecast->marine_polygons()->pluck('color')->all();
   $marinepolygonId = $marineForecast->marine_polygons()->pluck('polygonId')->all();
+}else{
+
+    $marinepolygonId = [];
+
+}
+
+
+
 
   if(!empty($marinepolygonId)){
   foreach ($marinepolygonns as $index => $marinepolygon) {
@@ -735,6 +744,9 @@ $marineForecast = MarineForecast::latest()->where('publishType','PUBLISHED')->fi
 
   // get the marinemarkers
   $marinemarkers = [];
+
+  if ( isset($marineForecast) ) {
+    
   $marinemarkerslat = $marineForecast->marine_markers()->pluck('lat')->all();
   $marinemarkerslng = $marineForecast->marine_markers()->pluck('lng')->all();
   $marinecontype = $marineForecast->marine_markers()->pluck('icontype')->all();
@@ -761,7 +773,12 @@ $marineForecast = MarineForecast::latest()->where('publishType','PUBLISHED')->fi
   }
 
 $this->marinedata = $marineForecast;
-
+ 
+}else{
+    $this->marinemarkers = [];
+    $this->marinedata = [];
+    
+  }
 
 
 // GET THE SPATIAL RAINFALL  IMAGE URL

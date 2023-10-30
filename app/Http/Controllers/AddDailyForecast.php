@@ -178,12 +178,14 @@ class AddDailyForecast extends Controller
         
  // Create a new instance of add_daily_forecasts
  $add_daily_forecasts = new ModelsAddDailyForecast();
- $add_daily_forecasts->publishType = $publishType ;
+ $add_daily_forecasts->publishType = 'Pending-Forecast';
  $add_daily_forecasts->creator =  Auth::user()->name;
  $add_daily_forecasts->scheduledate= $scheduledate;
  $add_daily_forecasts->summary =  $summary;
 $add_daily_forecasts->textareaweatherwarning = $textareaweatherwarning;
 $add_daily_forecasts->warningtype = $warningtype;
+$add_daily_forecasts->department = Auth::user()->department;
+$add_daily_forecasts->usertype = Auth::user()->usertype;
 $add_daily_forecasts->save();
 
   // Create a new instance of morning_general_variables
@@ -218,7 +220,7 @@ foreach ($tableMorningValues as $item) {
     $morning_table_values->districts = $district;
     $morning_table_values->min_temp = $values[0];
     $morning_table_values->max_temp = $values[1];
-    $morning_table_values->wind = $values[2];
+    $morning_table_values->wind = Str::upper($values[2]);
     $morning_table_values->weather = $values[3];
     $morning_table_values->rain_chance = $values[4];
     $morning_table_values->humidity = $values[5];
@@ -236,7 +238,7 @@ foreach ($tableAfternoonValues as $item) {
     $afternoon_table_values->districts = $district;
     $afternoon_table_values->min_temp = $values[0];
     $afternoon_table_values->max_temp = $values[1];
-    $afternoon_table_values->wind = $values[2];
+    $afternoon_table_values->wind = Str::upper($values[2]);
     $afternoon_table_values->weather = $values[3];
     $afternoon_table_values->rain_chance = $values[4];
     $afternoon_table_values->humidity = $values[5];
@@ -256,7 +258,7 @@ foreach ($tableEveningValues as $item) {
     $evening_table_values->districts = $district;
     $evening_table_values->min_temp = $values[0];
     $evening_table_values->max_temp = $values[1];
-    $evening_table_values->wind = $values[2];
+    $evening_table_values->wind = Str::upper($values[2]);
     $evening_table_values->weather = $values[3];
     $evening_table_values->rain_chance = $values[4];
     $evening_table_values->humidity = $values[5];
@@ -272,6 +274,7 @@ foreach ($tableEveningValues as $item) {
     $morning_markers->markerId = $item['id'];
     $morning_markers->morningDate = $mapMorningDate;
     $morning_markers->icontype = $item['icontype'];
+    $morning_markers->iconsize = $item['iconsize'];
     $morning_markers->lng = $item['lnglat']['lng'];
     $morning_markers->lat = $item['lnglat']['lat'];
     $add_daily_forecasts->morning_markers()->save($morning_markers);
@@ -286,6 +289,7 @@ foreach ($tableEveningValues as $item) {
     $afternoon_markers->markerId = $item['id'];
     $afternoon_markers->afternoonDate = $mapAfternoonDate;
     $afternoon_markers->icontype = $item['icontype'];
+    $afternoon_markers->iconsize = $item['iconsize'];
     $afternoon_markers->lng = $item['lnglat']['lng'];
     $afternoon_markers->lat = $item['lnglat']['lat'];
     $add_daily_forecasts->afternoon_markers()->save($afternoon_markers);
@@ -299,6 +303,7 @@ foreach ($markersEvening as $item) {
     $evening_markers->markerId = $item['id'];
     $evening_markers->eveningDate = $mapEveningDate;
     $evening_markers->icontype = $item['icontype'];
+    $evening_markers->iconsize = $item['iconsize'];
     $evening_markers->lng = $item['lnglat']['lng'];
     $evening_markers->lat = $item['lnglat']['lat'];
     $add_daily_forecasts->evening_markers()->save($evening_markers);

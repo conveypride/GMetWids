@@ -19,6 +19,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+
 class dailyForecast extends Controller
 {
     //
@@ -45,11 +48,11 @@ class dailyForecast extends Controller
         if ($hour >= 00 && $hour < 7) {
             return 'Morning';
         }
-        // else if published betwen 7am to 12pm start from the afternoon
-     elseif ($hour >= 7 && $hour < 14) {
+        // else if published betwen 7am to 1pm start from the afternoon
+     elseif ($hour >= 7 && $hour < 13) {
             return 'Afternoon';
 
-        } elseif ($hour >14 && $hour < 24) {
+        } elseif ($hour >13 && $hour < 24) {
             return 'Evening';
         }
     }
@@ -110,10 +113,14 @@ public function viewdailyforecast($id)
         $dailyforecast = AddDailyForecast::where('id', $id)->first();
         $morning = $dailyforecast->morning_table_values()->get();
         $afternoon = $dailyforecast->afternoon_table_values()->get();
-        $evening =  $dailyforecast->evening_table_values()->get(); 
+        $evening =  $dailyforecast->evening_table_values()->get();
+        $genMorning= $dailyforecast->morning_general_variables()->first();
+        $genAfternoon= $dailyforecast->afternoon_general_variables()->first();
+       $genEvening= $dailyforecast->evening_general_variables()->first();
+        
         $time = $this->getTimeOfDay($dailyforecast->created_at);
 
-    return view('admin.cafoTableForecastTemplate',compact('time','morning','afternoon','evening', 'dailyforecast'));
+    return view('admin.cafoTableForecastTemplate',compact('time','morning','afternoon','evening', 'dailyforecast','genMorning', 'genAfternoon', 'genEvening'));
     }
 
 
@@ -147,7 +154,8 @@ public function editdailyforecastTable($id)
             'forecastid' => $id,
             'polygonDatemorning' => $polygonDatemorning,
             'polygonDateafternoon' => $polygonDateafternoon,
-            'polygonDateevening' => $polygonDateevening
+            'polygonDateevening' => $polygonDateevening,
+            'dailyforecast' => $dailyforecast
            
     ]);
     }
@@ -232,7 +240,7 @@ $datav = $request->json()->all();
 $weather = $datav['weather'];
 $minTemperature = $datav['minTemperature'];
 $maxTemperature = $datav['maxTemperature'];
-$wind = $datav['wind'];
+$wind = Str::upper($datav['wind']);
 $rainChance = $datav['rainChance'];
 $humidity = $datav['humidity'];
 $forecastid = $datav['forecastId'];
@@ -244,7 +252,7 @@ if($forecastTime == "Morning"){
     [
         'min_temp' => $minTemperature,
         'max_temp' => $maxTemperature,
-        'wind' => $wind,
+        'wind' => Str::upper($wind),
         'rain_chance' => $rainChance,
         'weather' => $weather,
         'humidity' => $humidity
@@ -256,7 +264,7 @@ if($forecastTime == "Morning"){
     [
         'min_temp' => $minTemperature,
         'max_temp' => $maxTemperature,
-        'wind' => $wind,
+        'wind' => Str::upper($wind),
         'rain_chance' => $rainChance,
         'weather' => $weather,
         'humidity' => $humidity
@@ -269,7 +277,7 @@ if($forecastTime == "Morning"){
         [
             'min_temp' => $minTemperature,
             'max_temp' => $maxTemperature,
-            'wind' => $wind,
+            'wind' =>  Str::upper($wind),
             'rain_chance' => $rainChance,
             'weather' => $weather,
             'humidity' => $humidity
@@ -283,7 +291,7 @@ $data = [
     $weather,
     $minTemperature,
     $maxTemperature,
-    $wind,
+    Str::upper($wind),
     $rainChance,
     $humidity,
     $forecastid,
@@ -300,8 +308,9 @@ public function viewdailyforecastMap($id)
         
         //  ====================morning map for viewall map==================
     // now get the parent id from the addDailyForecast table
-$addDailyForecast = AddDailyForecast::where('id', $id)->where('publishType', 'Publish-Forecast')->first();
+$addDailyForecast = AddDailyForecast::where('id', $id)->first();
     // now get the map details 
+    if(isset($addDailyForecast)){
     $polugonm = [];
     $polygonnsm=  $addDailyForecast->morning_polygons()->pluck('cordinate')->all();
   $colorsm= $addDailyForecast->morning_polygons()->pluck('color')->all();
@@ -316,12 +325,19 @@ $addDailyForecast = AddDailyForecast::where('id', $id)->where('publishType', 'Pu
   }
   
   $this->polygonsM =$polugonm;
+}else{
+    $this->polygonsM = [];
+}
+
+if(isset($addDailyForecast)){
   // get the markers
   $markersm = [];
   $markerslatm = $addDailyForecast->morning_markers()->pluck('lat')->all();
   $markerslngm = $addDailyForecast->morning_markers()->pluck('lng')->all();
   $icontypem = $addDailyForecast->morning_markers()->pluck('icontype')->all();
+  $iconsizepem = $addDailyForecast->morning_markers()->pluck('iconsize')->all();
   $markerIdsm = $addDailyForecast->morning_markers()->pluck('markerId')->all();
+
   foreach ($markerIdsm as $index => $markerId) {
       $marker = [
           'markerId' => $markerId,
@@ -330,17 +346,20 @@ $addDailyForecast = AddDailyForecast::where('id', $id)->where('publishType', 'Pu
               'lat' => $markerslatm[$index],
           ],
           'icontype' => $icontypem[$index],
+          'iconsize' => $iconsizepem[$index]
       ];
   
       $markersm[] = $marker;
   }
   
   $this->markersM = $markersm;
-
+}else{
+    $this->markersM = [];
+}
 
 // 
 // ====================AFTERNOON map for viewall map==================
-
+if(isset($addDailyForecast)){
 $polugona = [];
   $polygonnsa=  $addDailyForecast->afternoon_polygons()->pluck('cordinate')->all();
 $colorsa= $addDailyForecast->afternoon_polygons()->pluck('color')->all();
@@ -361,6 +380,7 @@ $markersa = [];
 $markerslata = $addDailyForecast->afternoon_markers()->pluck('lat')->all();
 $markerslnga = $addDailyForecast->afternoon_markers()->pluck('lng')->all();
 $icontypea = $addDailyForecast->afternoon_markers()->pluck('icontype')->all();
+$iconsizea = $addDailyForecast->afternoon_markers()->pluck('iconsize')->all();
 $markerIdsa = $addDailyForecast->afternoon_markers()->pluck('markerId')->all();
 foreach ($markerIdsa as $index => $markerId) {
     $marker = [
@@ -370,17 +390,22 @@ foreach ($markerIdsa as $index => $markerId) {
             'lat' => $markerslata[$index],
         ],
         'icontype' => $icontypea[$index],
+        'iconsize' => $iconsizea[$index]
     ];
 
     $markersa[] = $marker;
 }
 
 $this->markersA = $markersa;
-
+}else{
+  $this->polygonsA  = [];
+$this->markersA = [];
+  
+}
 
 // ====================EVENING  map for viewall map==================
 
-
+if(isset($addDailyForecast)){
 $polugone = [];
   $polygonnse=  $addDailyForecast->evening_polygons()->pluck('cordinate')->all();
 $colorse= $addDailyForecast->evening_polygons()->pluck('color')->all();
@@ -401,6 +426,7 @@ $markerse = [];
 $markerslate = $addDailyForecast->evening_markers()->pluck('lat')->all();
 $markerslnge = $addDailyForecast->evening_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->evening_markers()->pluck('icontype')->all();
+$iconsizee = $addDailyForecast->evening_markers()->pluck('iconsize')->all();
 $markerIdse = $addDailyForecast->evening_markers()->pluck('markerId')->all();
 foreach ($markerIdse as $index => $markerId) {
     $markere = [
@@ -410,13 +436,17 @@ foreach ($markerIdse as $index => $markerId) {
             'lat' => $markerslate[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsizee[$index]
     ];
 
     $markerse[] = $markere;
 }
 
 $this->markersE = $markerse;
-
+}else{
+   $this->polygonsE = [];
+  $this->markersE  = [];
+}
 
   $time = $this->getTimeOfDay($addDailyForecast->created_at);
  $morningDate = $addDailyForecast->morning_general_variables()->first();
@@ -470,6 +500,10 @@ $this->markersE = $markerse;
     }
 
    public function editMap(Request $request) {
+try {
+    //code...
+
+
     $data = $request->all();
     $mapMorningDate = $data[0]['mapdates']['morningdatee'];
     $mapAfternoonDate = $data[0]['mapdates']['afternoondatee'];
@@ -482,7 +516,7 @@ $this->markersE = $markerse;
     $ploygonsEvening = $data[0]['polygons']['ploygonsevening'];
     $id = $data[0]['mapdates']['forid'];
     
-    $add_daily_forecasts = AddDailyForecast::where('id', $id)->where('publishType', 'Publish-Forecast')->first();
+    $add_daily_forecasts = AddDailyForecast::where('id', $id)->first();
     MorningMarkers::where("add_daily_forecast_id", $id)->delete();
     AfternoonMarkers::where("add_daily_forecast_id", $id)->delete();
     EveningMarkers::where("add_daily_forecast_id", $id)->delete();
@@ -500,6 +534,7 @@ $this->markersE = $markerse;
     $morning_markers->add_daily_forecast_id = $id;
     $morning_markers->morningDate = $mapMorningDate;
     $morning_markers->icontype = $item['icontype'];
+     $morning_markers->iconsize = $item['iconsize'];
     $morning_markers->lng = $item['lnglat']['lng'];
     $morning_markers->lat = $item['lnglat']['lat'];
     $add_daily_forecasts->morning_markers()->save($morning_markers);
@@ -515,6 +550,7 @@ $this->markersE = $markerse;
     $afternoon_markers->add_daily_forecast_id = $id;
     $afternoon_markers->afternoonDate = $mapAfternoonDate;
     $afternoon_markers->icontype = $item['icontype'];
+    $afternoon_markers->iconsize = $item['iconsize'];
     $afternoon_markers->lng = $item['lnglat']['lng'];
     $afternoon_markers->lat = $item['lnglat']['lat'];
     $add_daily_forecasts->afternoon_markers()->save($afternoon_markers);
@@ -529,6 +565,7 @@ foreach ($markersEvening as $item) {
     $evening_markers->add_daily_forecast_id = $id;
     $evening_markers->eveningDate = $mapEveningDate;
     $evening_markers->icontype = $item['icontype'];
+    $evening_markers->iconsize = $item['iconsize'];
     $evening_markers->lng = $item['lnglat']['lng'];
     $evening_markers->lat = $item['lnglat']['lat'];
     $add_daily_forecasts->evening_markers()->save($evening_markers);
@@ -577,7 +614,9 @@ foreach ($markersEvening as $item) {
 
 
          // Return a response to indicate success
-       
+        } catch (\Throwable $th) {
+            Log::info($th);
+        } 
 
    }
 
@@ -586,7 +625,7 @@ $data = $request->all();
 $id = $data['forid'];
 $summary = $data['summary'];
 
-   AddDailyForecast::where('id', $id)->where('publishType', 'Publish-Forecast')->update([
+   AddDailyForecast::where('id', $id)->update([
 'summary' => $summary ]); 
  
   return response('Form submitted successfully', 200);

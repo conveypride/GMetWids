@@ -76,24 +76,24 @@ rows.forEach(function(row) {
 console.log(valuesArray);
 
 
-var jsonData = JSON.stringify(valuesArray);
-const xhr = new XMLHttpRequest();
-  xhr.open('post', 'addFiveDayForecastpost', true);
-  xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken); // assuming CSRF token is stored in a variable called csrfToken
-  xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(jsonData);
+// var jsonData = JSON.stringify(valuesArray);
+// const xhr = new XMLHttpRequest();
+//   xhr.open('post', 'addFiveDayForecastpost', true);
+//   xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken); // assuming CSRF token is stored in a variable called csrfToken
+//   xhr.setRequestHeader('Content-Type', 'application/json');
+//     xhr.send(jsonData);
 
-  // xhr.send(JSON.stringify(data));
-  xhr.onload = () => {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        buttonpublish5Day.textContent = 'Successful';
-      const response = xhr.response;
-      window.location.href = "/admin/fiveDayForecast" 
+  
+//   xhr.onload = () => {
+//     if (xhr.readyState === 4 && xhr.status === 200) {
+//         buttonpublish5Day.textContent = 'Successful';
+//       const response = xhr.response;
+//       window.location.href = "/admin/fiveDayForecast" 
 
-    } else {
-      console.error('Error:', xhr.status);
-    }
-  };
+//     } else {
+//       console.error('Error:', xhr.status);
+//     }
+//   };
 
 }
 });

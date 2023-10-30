@@ -80,20 +80,22 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="col-8">
    <h6 class="fw-bold text-center text-white" style="color: white">GHANA METEOROLOGICAL AGENCY</h6>
    <div class="row">
-    <div class="col-6">
+    <div class="col-4">
         <div class="d-flex  flex-column justify-content-start text-white" >
             <div class="fw-bold" style="font-size: 10px">P.O Box LG 87, Accra</div>
             <div class="fw-bold"  style="font-size: 10px">Tel: +233-302-543252/307010019</div>
             <div class="fw-bold"  style="font-size: 10px">Digital Address: GA-485-3581</div>
+            <div class="fw-bold"  style="font-size: 10px">Twitter: @GhanaMet</div>
           </div>
     </div>
+    <div class="col-4"></div>
 
-    <div class="col-6">
+    <div class="col-4">
         <div class="d-flex flex-column justify-content-end text-white">
-            <div class="fw-bold text-white" style="font-size: 10px; align-self:flex-end">Email: <a class="text-white" href="mailto:kiamo@meteo.gov.gh">kiamo@meteo.gov.gh</a></div>
-            <div class="fw-bold "  style="font-size: 10px; align-self:flex-end">Website: <a class="text-white" href="https://www.meteo.gov.gh">www.meteo.gov.gh</a></div>
-            <div class="fw-bold"  style="font-size: 10px; align-self:flex-end">Twitter: @GhanaMet</div>
-            <div class="fw-bold"  style="font-size: 10px; align-self:flex-end">Facebook: Ghana Meteorological Agency (GMet)</div>
+            <div class="fw-bold text-white" style="font-size: 10px; align-self:flex-start">Email: <a class="text-white" href="mailto:kiamo@meteo.gov.gh">kiamo@meteo.gov.gh</a></div>
+            <div class="fw-bold "  style="font-size: 10px; align-self:flex-start">Website: <a class="text-white" href="https://www.meteo.gov.gh">www.meteo.gov.gh</a></div>
+            {{-- <div class="fw-bold"  style="font-size: 10px; align-self:flex-start"></div> --}}
+            <div class="fw-bold"  style="font-size: 10px; align-self:flex-start">Facebook: Ghana Meteorological Agency (GMet)</div>
           </div>
     </div>
 </div>
