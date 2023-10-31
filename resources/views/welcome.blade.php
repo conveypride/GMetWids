@@ -339,7 +339,7 @@
                 </a>
                 <span class="tooltip">Daily Forecast</span>
             </li>
-            <li class="btnicons" data-target="day5-content">
+            <li class="btnicons" data-target="day5-content"  id="fivedays-btn">
               <a href="#">
                   <i class='bi bi-sun'></i>
                   <span class="links_name">5-Days-Forecast</span>
@@ -2709,6 +2709,19 @@
                                 
                     <div class="card-body">
           <h5 class="text-muted fw-bold font-monospace">5-Days-Forecast</h5>
+          <div class="mb-3">
+            {{-- search  --}}
+            <label for="selectedDist" class="form-label fw-bold fs-3"> Select City:</label>
+            <select class="form-select" aria-label="Default select" id="selectedfiveDays">
+              <option value="null">Select City</option>
+              @forelse ($districts as $districtt)
+              <option value="{{ $districtt->districtname }}">{{ $districtt->districtname }}</option> 
+              @empty
+              <option value="2">No Cities available</option>
+              @endforelse
+            </select>
+            </div>
+          
   {{--  today--}}
   @forelse ($fivedayforecasts as $fivedayforecast )
     

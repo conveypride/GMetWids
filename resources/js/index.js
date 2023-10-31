@@ -63,7 +63,19 @@ document.addEventListener("DOMContentLoaded", function () {
         button.click();
         inlandbutton.click();
         //     showContent(this);
-    } else {
+    } 
+    
+    else if (paramValue === 'citiesfivedys') {
+        // weather-btn
+        // Get the button element by its ID
+        const buttonfiv = document.getElementById("fivedays-btn"); 
+         
+        buttonfiv.click();
+        //     showContent(this);
+    } 
+    
+    
+    else {
         function showWeatherContent() {
             const weatherBtn = document.getElementById("home-btn");
             weatherBtn.click();
@@ -262,7 +274,16 @@ document.getElementById("selectedDist").addEventListener("change", function () {
     }
 });
 
-
+// JavaScript
+document.getElementById("selectedfiveDays").addEventListener("change", function () {
+    var selectedOption = this.options[this.selectedIndex];
+    var cityName = selectedOption.innerHTML;
+    var citynull = selectedOption.value;
+    // Redirect to a new page based on the selected city
+    if (citynull != "null") {
+        window.location.href = "/filter/" + cityName + "?click=citiesfivedys";
+    }
+});
 
 // marine forecast fish animation 
 if( document.querySelector("#numP")){

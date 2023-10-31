@@ -830,8 +830,10 @@ while ($startDate <= $endDate) {
 }
 
 // Retrieve records from the database
-$tfivedayforecast =  AddFiveDayForecast::whereIn('date', $dates)->latest('created_at')
+$tfivedayforecast =  AddFiveDayForecast::whereIn('date', $dates)->where('district', 'ACCRA')->where('status', 'Approved')->latest('created_at')
 ->take(5)->get();
+
+
 // Assuming you have retrieved the records and stored them in $this->fivedayforecast
 $this->fivedayforecast = $tfivedayforecast->sortBy(function ($forecast) {
     return Carbon::parse($forecast->date)->diffInDays(Carbon::today());
@@ -2045,6 +2047,10 @@ while ($startDate <= $endDate) {
 
 // Retrieve records from the database
 $tfivedayforecast =  AddFiveDayForecast::whereIn('date', $dates)->latest('created_at')
+->take(5)->get();
+
+
+$tfivedayforecast = AddFiveDayForecast::whereIn('date', $dates)->where('district', $city)->where('status', 'Approved')->latest('created_at')
 ->take(5)->get();
 // Assuming you have retrieved the records and stored them in $this->fivedayforecast
 $this->fivedayforecast = $tfivedayforecast->sortBy(function ($forecast) {
