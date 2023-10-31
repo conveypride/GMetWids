@@ -56,6 +56,13 @@ class AddDailyForecast extends Controller
         $idd = ModelsAddDailyForecast::where('publishType', 'Publish-Forecast')->latest('created_at')->value('id'); ;
 
         $dailyforecast = ModelsAddDailyForecast::where('id', $idd)->first();
+
+
+        $districts = DB::table('cafodistricts')->orderBy('districtname')->get();
+
+        $districtss = Cafodistricts::pluck('districtname')->toArray() ; 
+
+
        if(isset($dailyforecast)){
 
       
@@ -72,10 +79,6 @@ class AddDailyForecast extends Controller
       $polygonDateevening =  $dailyforecast->evening_polygons()->first(); 
 
    
-        $districts = DB::table('cafodistricts')->orderBy('districtname')->get();
-
-        $districtss = Cafodistricts::pluck('districtname')->toArray() ; 
-
 
         $morningcitiesavailable = $dailyforecast->morning_table_values()->whereIn('districts',$districtss )->pluck('districts')->toArray();
         $afternooncitiesavailable = $dailyforecast->afternoon_table_values()->whereIn('districts',$districtss )->pluck('districts')->toArray();
@@ -88,7 +91,7 @@ class AddDailyForecast extends Controller
     //     $afternoon1 = $dailyforecast->afternoon_table_values()->get();
     //   $evening1 =  $dailyforecast->evening_table_values()->get(); 
 }else{
-    $districts = [];
+  
     $genMorning = [];
     $genEvening = [];
     $genAfternoon = [];
@@ -100,6 +103,7 @@ $polygonDateafternoon= [];
 $polygonDateevening = [];
 $missingmorningcities = [];
 $missingeveningcities= [];
+$missingafternooncities = [];
 
 }
 
