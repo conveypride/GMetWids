@@ -106,6 +106,7 @@ function menuBtnChange() {
     }
 }
 
+var tt = 0;
 
 
 
