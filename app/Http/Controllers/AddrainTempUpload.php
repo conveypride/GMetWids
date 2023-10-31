@@ -27,6 +27,7 @@ class AddrainTempUpload extends Controller
 
     public function index()
     {
+
     //   
     $imagesRainTemp = ModelsAddrainTempUpload::orderBy('created_at', 'desc')
     ->get();
@@ -55,7 +56,8 @@ class AddrainTempUpload extends Controller
 if(!empty($image1)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $image1->getClientOriginalName();
-   $path = $image1->storePubliclyAs('/public/rainimages', $imageName);
+//    $path = $image1->storePubliclyAs('/public/rainimages', $imageName);
+   $path = $image1->move(public_path('assets/images/rainimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -68,7 +70,8 @@ if(!empty($image1)){
 if(!empty($image2)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $image2->getClientOriginalName();
-   $path = $image2->storePubliclyAs('/public/rainimages', $imageName);
+//    $path = $image2->storePubliclyAs('/public/rainimages', $imageName);
+$path = $image2->move(public_path('assets/images/rainimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -81,7 +84,8 @@ if(!empty($image2)){
 if(!empty($image3)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $image3->getClientOriginalName();
-   $path = $image3->storePubliclyAs('/public/rainimages', $imageName);
+//    $path = $image3->storePubliclyAs('/public/rainimages', $imageName);
+$path = $image3->move(public_path('assets/images/rainimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -94,7 +98,8 @@ if(!empty($image3)){
 if(!empty($image4)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $image4->getClientOriginalName();
-   $path = $image4->storePubliclyAs('/public/rainimages', $imageName);
+//    $path = $image4->storePubliclyAs('/public/rainimages', $imageName);
+$path = $image4->move(public_path('assets/images/rainimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -107,7 +112,8 @@ if(!empty($image4)){
 if(!empty($image5)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $image5->getClientOriginalName();
-   $path = $image5->storePubliclyAs('/public/rainimages', $imageName);
+//    $path = $image5->storePubliclyAs('/public/rainimages', $imageName);
+   $path = $image5->move(public_path('assets/images/rainimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -127,7 +133,8 @@ $imageT5 = $request->file('imageT5');
 if(!empty($imageT1)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $imageT1->getClientOriginalName();
-   $path = $image1->storePubliclyAs('/public/tempimages', $imageName);
+//    $path = $image1->storePubliclyAs('/public/tempimages', $imageName);
+$path = $imageT1->move(public_path('assets/images/tempimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -140,7 +147,8 @@ if(!empty($imageT1)){
 if(!empty($imageT2)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $imageT2->getClientOriginalName();
-   $path = $image2->storePubliclyAs('/public/tempimages', $imageName);
+//    $path = $image2->storePubliclyAs('/public/tempimages', $imageName);
+$path = $imageT2->move(public_path('assets/images/tempimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -153,7 +161,8 @@ if(!empty($imageT2)){
 if(!empty($imageT3)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $imageT3->getClientOriginalName();
-   $path = $image3->storePubliclyAs('/public/tempimages', $imageName);
+//    $path = $image3->storePubliclyAs('/public/tempimages', $imageName);
+$path = $imageT3->move(public_path('assets/images/tempimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -166,7 +175,8 @@ if(!empty($imageT3)){
 if(!empty($imageT4)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $imageT4->getClientOriginalName();
-   $path = $image4->storePubliclyAs('/public/tempimages', $imageName);
+//    $path = $image4->storePubliclyAs('/public/tempimages', $imageName);
+$path = $imageT4->move(public_path('assets/images/tempimages'), $imageName);
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;
@@ -179,7 +189,9 @@ if(!empty($imageT4)){
 if(!empty($imageT5)){
     $image = new ModelsAddrainTempUpload();
     $imageName = time() . '_' . $imageT5->getClientOriginalName();
-   $path = $image5->storePubliclyAs('/public/tempimages', $imageName);
+//    $path = $image5->storePubliclyAs('/public/tempimages', $imageName); 
+   $path = $imageT5->move(public_path('assets/images/tempimages'), $imageName);
+
    $image->url = $path;
    $image->filename =  $imageName;
    $image->forecaster =   Auth::user()->name;

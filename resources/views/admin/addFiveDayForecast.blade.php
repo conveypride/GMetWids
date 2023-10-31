@@ -120,13 +120,13 @@
                                             <td>
                                                 <div class="form-floating">
                                                     <input type="number" class="form-control fiverequired">
-                                                    <label for="temp5dayMin">Temperature</label>
+                                                    <label>Temperature</label>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-floating">
                                                     <input type="number" class="form-control fiverequired">
-                                                    <label for="temp5dayMin">Temperature</label>
+                                                    <label>Temperature</label>
                                                 </div>
                                             </td>
                                         </tr>

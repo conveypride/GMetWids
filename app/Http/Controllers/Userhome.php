@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\Seasonalforecast;
+use Illuminate\Support\Facades\Log;
 class Userhome extends Controller
 {
      
@@ -123,6 +124,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
   $markerslat = $addDailyForecast->morning_markers()->pluck('lat')->all();
   $markerslng = $addDailyForecast->morning_markers()->pluck('lng')->all();
   $icontype = $addDailyForecast->morning_markers()->pluck('icontype')->all();
+  $iconsize = $addDailyForecast->morning_markers()->pluck('iconsize')->all();
   $markerIds = $addDailyForecast->morning_markers()->pluck('markerId')->all();
   foreach ($markerIds as $index => $markerId) {
       $marker = [
@@ -132,6 +134,7 @@ $addDailyForecast = AddDailyForecast::where('publishType', 'Publish-Forecast')->
               'lat' => $markerslat[$index],
           ],
           'icontype' => $icontype[$index],
+          'iconsize' => $iconsize[$index],
       ];
   
       $markers[] = $marker;
@@ -165,6 +168,7 @@ $markers = [];
 $markerslat = $addDailyForecast->morning_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->morning_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->morning_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->morning_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->morning_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -174,6 +178,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index]
     ];
 
     $markers[] = $marker;
@@ -218,6 +223,7 @@ $markers = [];
 $markerslat = $addDailyForecast->afternoon_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->afternoon_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->afternoon_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->afternoon_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->afternoon_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -227,6 +233,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -260,6 +267,7 @@ $markers = [];
 $markerslat = $addDailyForecast->afternoon_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->afternoon_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->afternoon_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->afternoon_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->afternoon_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -269,6 +277,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -311,6 +320,7 @@ $markers = [];
 $markerslat = $addDailyForecast->evening_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->evening_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->evening_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->evening_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->evening_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -320,6 +330,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -355,6 +366,7 @@ $markers = [];
 $markerslat = $addDailyForecast->evening_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->evening_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->evening_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->evening_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->evening_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -364,6 +376,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -783,13 +796,15 @@ $this->marinedata = $marineForecast;
 
 // GET THE SPATIAL RAINFALL  IMAGE URL
 $this->spatialRainfallImage = AddrainTempUpload::where('imageType', 'rain')
-->orderBy('created_at', 'desc')
+->latest('created_at')
 ->limit(5)
 ->get();
 
+// dd($this->spatialRainfallImage);
+// exit();
 // GET THE SPATIAL TEMPERATURE IMAGE URL
 $this->spatialTempImage = AddrainTempUpload::where('imageType', 'temp')
-->orderBy('created_at', 'desc')
+->latest('created_at')
 ->limit(5)
 ->get();
 
@@ -867,6 +882,7 @@ $markers = [];
 $markerslat = $addDailyForecast->morning_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->morning_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->morning_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->morning_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->morning_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -876,6 +892,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -927,6 +944,7 @@ $markers = [];
 $markerslat = $addDailyForecast->morning_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->morning_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->morning_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->morning_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->morning_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -936,6 +954,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -1008,6 +1027,7 @@ $markers = [];
 $markerslat = $addDailyForecast->afternoon_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->afternoon_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->afternoon_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->afternoon_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->afternoon_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -1017,6 +1037,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -1066,6 +1087,7 @@ $markers = [];
 $markerslat = $addDailyForecast->afternoon_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->afternoon_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->afternoon_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->afternoon_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->afternoon_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -1075,6 +1097,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -1149,6 +1172,7 @@ $markers = [];
 $markerslat = $addDailyForecast->evening_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->evening_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->evening_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->evening_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->evening_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -1158,6 +1182,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -1210,6 +1235,7 @@ $markers = [];
 $markerslat = $addDailyForecast->evening_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->evening_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->evening_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->evening_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->evening_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -1219,6 +1245,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -1919,6 +1946,9 @@ $inlandwinddirE = 'null';
 // on district changed
 public function seeDetailsOfCity($city)
 {
+
+    try {
+        
                 // GET THE SPATIAL TEMPERATURE IMAGE URL
 $this->seasonalForecast = Seasonalforecast::orderBy('created_at', 'desc')->get();
 
@@ -1926,6 +1956,7 @@ $this->seasonalForecast = Seasonalforecast::orderBy('created_at', 'desc')->get()
 // get marine data from the Marineforecast database table:
 $marineForecast = MarineForecast::latest()->where('publishType','PUBLISHED')->first();
 
+if(isset($marineForecast)){
 
 $marinepolugon = [];
 $marinepolygonns=  $marineForecast->marine_polygons()->pluck('cordinate')->all();
@@ -1976,16 +2007,21 @@ $this->marinemarkers = "null";
 
 $this->marinedata = $marineForecast;
 
+}else{
+    $this->marinemarkers = "null";
+    $this->marinepolygons = "null";
+
+}
 
 // GET THE SPATIAL RAINFALL IMAGE URL
 $this->spatialRainfallImage = AddrainTempUpload::where('imageType', 'rain')
-->orderBy('created_at', 'desc')
+->latest('created_at')
 ->limit(5)
 ->get();
 
 // GET THE SPATIAL TEMPERATURE IMAGE URL
 $this->spatialTempImage = AddrainTempUpload::where('imageType', 'temp')
-->orderBy('created_at', 'desc')
+->latest('created_at')
 ->limit(5)
 ->get();
 
@@ -2066,6 +2102,7 @@ $markers = [];
 $markerslat = $addDailyForecast->morning_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->morning_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->morning_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->morning_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->morning_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -2075,6 +2112,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -2128,6 +2166,7 @@ $markers = [];
 $markerslat = $addDailyForecast->morning_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->morning_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->morning_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->morning_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->morning_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -2137,6 +2176,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -2207,6 +2247,7 @@ $markers = [];
 $markerslat = $addDailyForecast->afternoon_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->afternoon_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->afternoon_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->afternoon_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->afternoon_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -2216,6 +2257,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -2267,6 +2309,7 @@ $markers = [];
 $markerslat = $addDailyForecast->afternoon_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->afternoon_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->afternoon_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->afternoon_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->afternoon_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -2276,6 +2319,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -2349,6 +2393,7 @@ $markers = [];
 $markerslat = $addDailyForecast->evening_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->evening_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->evening_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->evening_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->evening_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -2358,6 +2403,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -2409,6 +2455,7 @@ $markers = [];
 $markerslat = $addDailyForecast->evening_markers()->pluck('lat')->all();
 $markerslng = $addDailyForecast->evening_markers()->pluck('lng')->all();
 $icontype = $addDailyForecast->evening_markers()->pluck('icontype')->all();
+$iconsize = $addDailyForecast->evening_markers()->pluck('iconsize')->all();
 $markerIds = $addDailyForecast->evening_markers()->pluck('markerId')->all();
 foreach ($markerIds as $index => $markerId) {
     $marker = [
@@ -2418,6 +2465,7 @@ foreach ($markerIds as $index => $markerId) {
             'lat' => $markerslat[$index],
         ],
         'icontype' => $icontype[$index],
+        'iconsize' => $iconsize[$index],
     ];
 
     $markers[] = $marker;
@@ -3112,6 +3160,11 @@ $inlandwinddirE = 'null';
     'timeOfDay' => $this->timeOfDay(),
     'seasonalForecasts' => $this->seasonalForecast
 ]);
+
+} catch (\Throwable $th) {
+    Log::info($th);
+}
+
 }
 
 

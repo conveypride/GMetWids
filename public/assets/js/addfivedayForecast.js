@@ -32,15 +32,15 @@ function validatefivedaytableForm() {
     return true;
   }
   
-  
+   const buttonpublish5Day = document.getElementById('buttonpublish5Day'); 
 
 
 buttonpublish5Day.addEventListener('click', () => {
     var all5DAYfieldsfilled = validatefivedaytableForm();
     // buttonpublish5Day
-    const buttonpublish5Day = document.getElementById('buttonpublish5Day'); 
+   
     buttonpublish5Day.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>';
-if(all5DAYfieldsfilled == true){
+if(all5DAYfieldsfilled == true) {
  // Define the class name of the elements you want to select
 const className = "";
 
@@ -76,24 +76,27 @@ rows.forEach(function(row) {
 console.log(valuesArray);
 
 
-// var jsonData = JSON.stringify(valuesArray);
-// const xhr = new XMLHttpRequest();
-//   xhr.open('post', 'addFiveDayForecastpost', true);
-//   xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken); // assuming CSRF token is stored in a variable called csrfToken
-//   xhr.setRequestHeader('Content-Type', 'application/json');
-//     xhr.send(jsonData);
+var jsonData = JSON.stringify(valuesArray);
+const xhr = new XMLHttpRequest();
+  xhr.open('post', 'addFiveDayForecastpost', true);
+  xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken); // assuming CSRF token is stored in a variable called csrfToken
+  xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(jsonData);
 
   
-//   xhr.onload = () => {
-//     if (xhr.readyState === 4 && xhr.status === 200) {
-//         buttonpublish5Day.textContent = 'Successful';
-//       const response = xhr.response;
-//       window.location.href = "/admin/fiveDayForecast" 
+  xhr.onload = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        buttonpublish5Day.textContent = 'Successful';
+      const response = xhr.response;
+      window.location.href = "/admin/fiveDayForecast" 
 
-//     } else {
-//       console.error('Error:', xhr.status);
-//     }
-//   };
+    } else {
+      console.error('Error:', xhr.status);
+      buttonpublish5Day.textContent = 'Save';
+    }
+  };
 
+}else{
+  buttonpublish5Day.textContent = 'Save';
 }
 });

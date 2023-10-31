@@ -56,9 +56,12 @@
 			    
 			    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
 				    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
-				    {{-- <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Published</a>
-				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Drafted</a>
-				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Deleted</a> --}}
+					@if (Auth::user()->usertype == 1 || Auth::user()->usertype == 0)
+					   <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Pending</a>
+				  @endif
+
+				      <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Published</a>
+				  {{--   <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Deleted</a> --}}
 				</nav>
 				
 				
@@ -71,84 +74,43 @@
 										<thead>
 											<tr>
 												<th class="cell">Id</th>
-												<th class="cell">Weather</th>
+												<th class="cell">Department</th>
 												<th class="cell">Forcaster</th>
 												<th class="cell">Date</th>
 												<th class="cell">Status</th>
 												<th class="cell"></th>
 											</tr>
 										</thead>
+										
 										<tbody>
-											@if ($fivedayforecasts == null )
+											@if (!isset($fivedayforecasts))
 											<tr><td><p> No Published Forecast Available</p> </td><tr>	
 											@else
 											
 											@foreach ($fivedayforecasts as $fivedayforecast)
 											<tr>
-												<td class="cell">{{ $fivedayforecast->id }}</td>
-												<td class="cell"><span class="truncate">
-													@if ($fivedayforecast->weather == '-TSRA' )
-													SLIGHT TSRA(-)
-													@elseif ($fivedayforecast->weather == 'TSRA')
-													MODERATE TSRA
-													@elseif ($fivedayforecast->weather == '+TSRA')
-												    HEAVY TSRA(+)
-													@elseif ($fivedayforecast->weather == '-RAINDAY')
-												   SLIGHT RAIN(DAY)
-												   @elseif ($fivedayforecast->weather == '-RAINNIGHT')
-												   SLIGHT RAIN(NIGHT)
-												   @elseif ($fivedayforecast->weather == 'RAINDAY')
-													MODERATE RAIN(DAY)
-													@elseif ($fivedayforecast->weather == 'RAINNIGHT')
-													MODERATE RAIN(NIGHT)
-													@elseif ($fivedayforecast->weather == '+RAINDAY')
-													HEAVY RAIN(DAY)
-													@elseif ($fivedayforecast->weather == '+RAINNIGHT')
-													HEAVY RAIN(NIGHT)
-													@elseif ($fivedayforecast->weather == '-DRIZZLEDAY')
-												   SLIGHT DRIZZLE(DAY)
-												   @elseif ($fivedayforecast->weather == '-DRIZZLENIGHT')
-												   SLIGHT DRIZZLE(NIGHT)
-												   @elseif ($fivedayforecast->weather == 'DRIZZLEDAY')MODERATE DRIZZLE(DAY)
-												   @elseif ($fivedayforecast->weather == 'DRIZZLENIGHT')
-												   MODERATE DRIZZLE(NIGHT)
-												   @elseif ($fivedayforecast->weather == '+DRIZZLEDAY')
-												   HEAVY DRIZZLE(DAY)
-												   @elseif ($fivedayforecast->weather == '+DRIZZLENIGHT')
-												   HEAVY DRIZZLE(NIGHT)
-												   @elseif ($fivedayforecast->weather == 'HAIL')
-												   HAIL
-												   @elseif ($fivedayforecast->weather == 'MIST')
-												   MIST
-												   @elseif ($fivedayforecast->weather == 'FOG')
-												   FOG
-												   @elseif ($fivedayforecast->weather == 'HAZE')
-												   HAZE
-												   @elseif ($fivedayforecast->weather == 'SUNNY')
-												   SUNNY
-												   @elseif ($fivedayforecast->weather == 'SUNNY BREAKS')
-												   SUNNY BREAKS
-												   @elseif ($fivedayforecast->weather == 'SUNNY INTERVALS')
-												   SUNNY INTERVALS
-												   @elseif ($fivedayforecast->weather == 'FEW CLOUDS')
-												  FEW CLOUDS
-												  @elseif ($fivedayforecast->weather == 'PARTLY CLOUDY(DAY)')
-												   PARTLY CLOUDY(DAY)
-												   @elseif ($fivedayforecast->weather == 'PARTLY CLOUDY(NIGHT)')
-												   PARTLY CLOUDY(NIGHT)
-												   @elseif ($fivedayforecast->weather == 'CLOUDY')
-												  CLOUDY
-												  @elseif ($fivedayforecast->weather == 'CLEAR NIGHT')
-												   CLEAR NIGHT
+												 
+												<td class="cell">{{ $fivedayforecast[0]->randomId }}</td>
+												<td class="cell">
+													{{ $fivedayforecast[0]->department }}
+											     </td>
+												<td class="cell">{{ $fivedayforecast[0]->forecaster}}</td>
+												<td class="cell"><span>{{ \Carbon\Carbon::parse($fivedayforecast[0]->created_at)->format('j, M') }}</span><span class="note">{{ \Carbon\Carbon::parse($fivedayforecast[0]->created_at)->format('h:i A') }}</span></td>
+												<td class="cell">
+													@if ($fivedayforecast[0]->status == "Pending")
+														<span class="badge bg-secondary">
+															{{ 'Pending' }}
+													</span>
+
+													@elseif($fivedayforecast[0]->status == 'Approved')
+													<span class="badge bg-success">
+														{{ 'Published'}}
+											     	</span>
+
 													@endif
-												
-												
-												</span></td>
-												<td class="cell">{{ $fivedayforecast->forecaster}}</td>
-												<td class="cell"><span>{{ \Carbon\Carbon::parse($fivedayforecast->created_at)->format('j, M') }}</span><span class="note">{{ \Carbon\Carbon::parse($fivedayforecast->created_at)->format('h:i A') }}</span></td>
-												<td class="cell"><span class="badge bg-success">Published</span></td>
+													</td>
 												{{-- <td class="cell">$259.35</td> --}}
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" href="{{route('viewfivedayforecast', ['id' =>  $fivedayforecast[0]->randomId]) }}">View</a></td>
 											</tr>
 											
 											@endforeach	
@@ -176,104 +138,153 @@
 						</nav><!--//app-pagination-->
 						
 			        </div><!--//tab-pane-->
-{{-- 			        
+					@if (Auth::user()->usertype == 1 || Auth::user()->usertype == 0)
 			        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-					    <div class="app-card app-card-orders-table mb-5">
+						<div class="app-card app-card-orders-table shadow-sm mb-5">
 						    <div class="app-card-body">
 							    <div class="table-responsive">
-								    
-							        <table class="table mb-0 text-left">
+							        <table class="table app-table-hover mb-0 text-left">
 										<thead>
 											<tr>
 												<th class="cell">Id</th>
-												<th class="cell">Weather</th>
+												<th class="cell">Department</th>
 												<th class="cell">Forcaster</th>
 												<th class="cell">Date</th>
 												<th class="cell">Status</th>
 												<th class="cell"></th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td class="cell">#15346</td>
-												<td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-												<td class="cell">John Sanders</td>
-												<td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-												<td class="cell"><span class="badge bg-success">Published</span></td>
-												
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15344</td>
-												<td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-												<td class="cell">Teresa Holland</td>
-												<td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Published</span></td>
-												
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
-											
-											<tr>
-												<td class="cell">#15343</td>
-												<td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-												<td class="cell">Jayden Massey</td>
-												<td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-												<td class="cell"><span class="badge bg-success">Published</span></td>
-												
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-											</tr>
 										
+										<tbody>
+											@if (!isset($fivedayforecastPending))
+											<tr><td><p> No Pending Forecast Available</p> </td><tr>	
+											@else
 											
+											@foreach ($fivedayforecastPending as $fivedayforecast)
 											<tr>
-												<td class="cell">#15341</td>
-												<td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-												<td class="cell">Raymond Atkins</td>
-												<td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-												<td class="cell"><span class="badge bg-success">Published</span></td>
-												<td class="cell">$678.26</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
+												 
+												<td class="cell">{{ $fivedayforecast[0]->randomId }}</td>
+												<td class="cell">
+													{{ $fivedayforecast[0]->department }}
+											     </td>
+												<td class="cell">{{ $fivedayforecast[0]->forecaster}}</td>
+												<td class="cell"><span>{{ \Carbon\Carbon::parse($fivedayforecast[0]->created_at)->format('j, M') }}</span><span class="note">{{ \Carbon\Carbon::parse($fivedayforecast[0]->created_at)->format('h:i A') }}</span></td>
+												<td class="cell">
+													@if ($fivedayforecast[0]->status == "Pending")
+														<span class="badge bg-secondary">
+															{{ 'Pending' }}
+													</span>
+
+													@elseif($fivedayforecast[0]->status == 'Approved')
+													<span class="badge bg-success">
+														{{ 'Published'}}
+											     	</span>
+
+													@endif
+													</td>
+												{{-- <td class="cell">$259.35</td> --}}
+												<td class="cell"><a class="btn-sm app-btn-secondary" href="{{route('viewfivedayforecast', ['id' =>  $fivedayforecast[0]->randomId]) }}">View</a></td>
 											</tr>
-		
+											
+											@endforeach	
+
+											@endif
+											
 										</tbody>
 									</table>
-						        </div>
-						    </div>		
-						</div>
+						        </div><!--//table-responsive-->
+						       
+						    </div><!--//app-card-body-->		
+						</div><!--//app-card-->
+						<nav class="app-pagination">
+							<ul class="pagination justify-content-center">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+							    </li>
+								<li class="page-item active"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+								    <a class="page-link" href="#">Next</a>
+								</li>
+							</ul>
+						</nav><!--//app-pagination-->
+						
 			        </div>
-			         --}}
-			        {{-- <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-					    <div class="app-card app-card-orders-table mb-5">
+			       
+					@endif
+			         <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
+						<div class="app-card app-card-orders-table shadow-sm mb-5">
 						    <div class="app-card-body">
 							    <div class="table-responsive">
-							        <table class="table mb-0 text-left">
+							        <table class="table app-table-hover mb-0 text-left">
 										<thead>
 											<tr>
-												<th class="cell">Order</th>
-												<th class="cell">Product</th>
-												<th class="cell">Customer</th>
+												<th class="cell">Id</th>
+												<th class="cell">Department</th>
+												<th class="cell">Forcaster</th>
 												<th class="cell">Date</th>
 												<th class="cell">Status</th>
-												<th class="cell">Total</th>
 												<th class="cell"></th>
 											</tr>
 										</thead>
+										
 										<tbody>
+											@if (!isset($fivedayforecastApproved))
+											<tr><td><p> No Published Forecast Available</p> </td><tr>	
+											@else
+											
+											@foreach ($fivedayforecastApproved as $fivedayforecast)
 											<tr>
-												<td class="cell">#15345</td>
-												<td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-												<td class="cell">Dylan Ambrose</td>
-												<td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-												<td class="cell"><span class="badge bg-warning">Drafted</span></td>
-												
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
+												 
+												<td class="cell">{{ $fivedayforecast[0]->randomId }}</td>
+												<td class="cell">
+													{{ $fivedayforecast[0]->department }}
+											     </td>
+												<td class="cell">{{ $fivedayforecast[0]->forecaster}}</td>
+												<td class="cell"><span>{{ \Carbon\Carbon::parse($fivedayforecast[0]->created_at)->format('j, M') }}</span><span class="note">{{ \Carbon\Carbon::parse($fivedayforecast[0]->created_at)->format('h:i A') }}</span></td>
+												<td class="cell">
+													@if ($fivedayforecast[0]->status == "Pending")
+														<span class="badge bg-secondary">
+															{{ 'Pending' }}
+													</span>
+
+													@elseif($fivedayforecast[0]->status == 'Approved')
+													<span class="badge bg-success">
+														{{ 'Published'}}
+											     	</span>
+
+													@endif
+													</td>
+												{{-- <td class="cell">$259.35</td> --}}
+												<td class="cell"><a class="btn-sm app-btn-secondary" href="{{route('viewfivedayforecast', ['id' =>  $fivedayforecast[0]->randomId]) }}">View</a></td>
 											</tr>
+											
+											@endforeach	
+
+											@endif
+											
 										</tbody>
 									</table>
-						        </div>
-						    </div>	
-						</div>
-			        </div> --}}
+						        </div><!--//table-responsive-->
+						       
+						    </div><!--//app-card-body-->		
+						</div><!--//app-card-->
+						<nav class="app-pagination">
+							<ul class="pagination justify-content-center">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+							    </li>
+								<li class="page-item active"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+								    <a class="page-link" href="#">Next</a>
+								</li>
+							</ul>
+						</nav><!--//app-pagination-->
+						
+			        </div>  
 
 			        {{-- <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
 					    <div class="app-card app-card-orders-table mb-5">

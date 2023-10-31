@@ -454,13 +454,13 @@
 
 <h1 class="d-block card-body"> 
 <div id="carouselSmall" class="carousel slide" data-bs-ride="carousel">
-  <ol class="carousel-indicators">
+  <ul class="carousel-indicators">
     <li data-bs-target="#carouselSmall" data-bs-slide-to="0" class="active" aria-current="true" aria-label="First slide"></li>
-    <li data-bs-target="#carouselSmall" data-bs-slide-to="1" aria-label="Second slide"></li>
-    <li data-bs-target="#carouselSmall" data-bs-slide-to="2" aria-label="Third slide"></li>
-    <li data-bs-target="#carouselSmall" data-bs-slide-to="3" aria-label="4th slide"></li>
-    <li data-bs-target="#carouselSmall" data-bs-slide-to="4" aria-label="5th slide"></li>
-  </ol>
+    <li data-bs-target="#carouselSmall" data-bs-slide-to="1" ></li>
+    <li data-bs-target="#carouselSmall" data-bs-slide-to="2"></li>
+    <li data-bs-target="#carouselSmall" data-bs-slide-to="3"></li>
+    <li data-bs-target="#carouselSmall" data-bs-slide-to="4"></li>
+  </ul>
   <div class="carousel-inner" role="listbox">
     <div class="carousel-item active">
       <img src="{{ asset('images/Slider1.jpg') }}" class="w-100 d-block" alt="First slide">
@@ -674,7 +674,7 @@
                                             max-height: 200px;"> 
 
                                             @forelse ($districts as $districtt)
-                                            <li><a class="dropdown-item districted" districted={{ $districtt->districtname }} href="#">{{ $districtt->districtname }}</a></li>
+                                            <li><a class=" dropdown-item dailyy  districted" districted={{ $districtt->districtname }} href="#">{{ $districtt->districtname }}</a></li>
                                             @empty
                                             <li><a class="dropdown-item" href="#">No Cities available</a></li>
                                             @endforelse
@@ -3109,8 +3109,8 @@
                            <div class="carousel-item  carousel-item1">
                           <div class="col-md-3">
                             <div class="card">
-                              <div class="card-img">
-                                <img src="{{ asset('storage/rainimages/' . $spatialRainfallImages->filename) }}" class="img-fluid ">
+                              <div class="card-img"> 
+                                <img src="{{ asset('assets/images/rainimages/' . $spatialRainfallImages->filename) }}" class="img-fluid ">
                               </div>
                               {{-- <div class="card-img-overlay">Slide 1</div> --}}
                             </div>
@@ -3155,7 +3155,7 @@
                           <div class="col-md-3">
                             <div class="card">
                               <div class="card-img">
-                                <img src="{{ asset('storage/tempimages/' . $spatialTempImages->filename) }}" class="img-fluid ">
+                                <img src="{{ asset('assets/images/tempimages/' . $spatialTempImages->filename) }}" class="img-fluid ">
                               </div>
                               {{-- <div class="card-img-overlay">Slide 1</div> --}}
                             </div>

@@ -63,6 +63,9 @@ Route::post('/editSummary', [App\Http\Controllers\dailyForecast::class,'editSumm
      Route::get('/editdailyforecastTable/{id}', [App\Http\Controllers\dailyForecast::class,'editdailyforecastTable'])->name('editdailyforecastTable');
     Route::get('/addFiveDayForecast', [App\Http\Controllers\AddFiveDayForecast::class,'index'])->name('addNewFD');
     Route::post('/addFiveDayForecastpost', [App\Http\Controllers\AddFiveDayForecast::class,'create']);
+  Route::get('/viewfivedayforecast/{id}', [App\Http\Controllers\AddFiveDayForecast::class,'view'])->name('viewfivedayforecast');
+ Route::post('/editfivedaysforecast', [App\Http\Controllers\AddFiveDayForecast::class,'editfivedaysforecast'])->name('editfivedaysforecast');
+ Route::post('/approvefivedaysforecast/{id}', [App\Http\Controllers\AddFiveDayForecast::class,'approvefivedaysforecast'])->name('approvefivedaysforecast');
 
 
     Route::get('/fiveDayForecast',  [App\Http\Controllers\fiveDayForecast::class,'index'])->name('fiveDayForecast');
@@ -101,9 +104,13 @@ Route::post('/addinlandforecastpost', [App\Http\Controllers\InlandForecastContro
     Route::post('/addNewDailyForecastpost', [App\Http\Controllers\AddDailyForecast::class,'create']);
     Route::post('/addNewDailyForecastedit', [App\Http\Controllers\AddDailyForecast::class,'edit']);
     Route::post('/addNewDailyForecastdelete', [App\Http\Controllers\AddDailyForecast::class,'delete']);
+
+    
     // rainTempUpload
     Route::get('/rainTempUpload', [App\Http\Controllers\AddrainTempUpload::class,'index'])->name('rainTempUpload');
-    
+     Route::get('/addrainTempUpload', [App\Http\Controllers\AddrainTempUpload::class,'addImgView'])->name('addrainTempUpload');
+ Route::post('/addrainTempUploadpost', [App\Http\Controllers\AddrainTempUpload::class,'create'])->name('addrainTempUploadpost');
+
     Route::post('/addrainTempUploadedit', [App\Http\Controllers\AddrainTempUpload::class,'edit']);
     Route::post('/addrainTempUploaddelete', [App\Http\Controllers\AddrainTempUpload::class,'delete']);
 

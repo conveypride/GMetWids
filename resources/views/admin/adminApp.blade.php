@@ -148,7 +148,7 @@
                                                 <div class="row gx-2 justify-content-between align-items-center">
                                                     <div class="col-auto">
                                                         <img class="profile-image"
-                                                            src="{{ asset('assets/images/profiles/profile-1.png') }}"
+                                                            src="{{ asset('images/icon.png') }}"
                                                             alt="">
                                                     </div><!--//col-->
                                                     <div class="col">
@@ -211,7 +211,7 @@
                                                 <div class="row gx-2 justify-content-between align-items-center">
                                                     <div class="col-auto">
                                                         <img class="profile-image"
-                                                            src="{{ asset('assets/images/profiles/profile-2.png') }}"
+                                                            src="{{ asset('images/icon.png') }}"
                                                             alt="">
                                                     </div><!--//col-->
                                                     <div class="col">
@@ -248,7 +248,7 @@
                                 <div class="app-utility-item app-user-dropdown dropdown">
                                     <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"
                                         href="#" role="button" aria-expanded="false"><img
-                                            src="{{ asset('assets/images/user.png') }}" alt="user profile"></a>
+                                            src="{{ asset('images/icon.png') }}" alt="user profile"></a>
                                     <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                                         <li> <a class="dropdown-item">
                                                 {{ Auth::user()->name }}
@@ -285,7 +285,7 @@
                     <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                     <div class="app-branding">
                         <a class="app-logo" href="{{ route('home') }}"><img class="logo-icon me-2"
-                                src="{{ asset('images/icon.png') }} " alt="logo"><span
+                                src="{{ asset('images/icon.png') }}" alt="logo"><span
                                 class="logo-text">GMet</span></a>
 
                     </div><!--//app-branding-->
@@ -335,6 +335,9 @@
                                 </a><!--//nav-link-->
                                 <div id="submenu-1" class="collapse submenu submenu-1"
                                     data-bs-parent="#menu-accordion">
+                                    @if (Auth::user()->usertype == 0)
+
+
                                     <ul class="submenu-list list-unstyled">
                                         <li class="submenu-item"><a class="submenu-link"
                                                 href= "{{ route('df') }}">Daily-Forecast</a></li>
@@ -350,6 +353,32 @@
                                         <li class="submenu-item"><a class="submenu-link"
                                                 href="{{ route('seasonalforecast') }}">Seasonal-Forecast</a></li>
                                     </ul>
+                                    {{-- cafo --}}
+
+                                    @elseif(Auth::user()->usertype == 1 && ( Auth::user()->department == 'CAFO' || Auth::user()->department == 'KIAMO') )
+                                    <ul class="submenu-list list-unstyled">
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href= "{{ route('df') }}">Daily-Forecast</a>
+                                            </li>
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('fiveDayForecast') }}">5-Days-Forecast</a>
+                                            </li>
+                                        <li class="submenu-item"><a class="submenu-link"  href="{{ route('rainTempUpload') }}">5-Days Spatial Rain & Temp.</a>
+                                        </li>
+                                         
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('seasonalforecast') }}">Seasonal-Forecast</a></li>
+                                    </ul>
+                                    @elseif(Auth::user()->usertype == 1 &&( Auth::user()->department == 'MARINE') )
+                                    <ul class="submenu-list list-unstyled">
+                                        
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('mmf') }}">Marine-Forecast</a></li> 
+                                    </ul>
+                                @elseif(Auth::user()->usertype == 1 &&( Auth::user()->department == 'INLAND') )
+                                   <li class="submenu-item"><a class="submenu-link" href="{{ route('mIf') }}">Inland-Forecast</a></li>
+
+                                    @endif
                                 </div>
                             </li><!--//nav-item-->
 
@@ -379,6 +408,7 @@
                                 </a><!--//nav-link-->
                                 <div id="submenu-2" class="collapse submenu submenu-2"
                                     data-bs-parent="#menu-accordion">
+                                    @if(Auth::user()->usertype == 0 )
                                     <ul class="submenu-list list-unstyled">
                                         <li class="submenu-item"><a class="submenu-link"
                                                 href="{{ route('cafoDistricts') }}">Add CAFO Cities</a></li>
@@ -387,9 +417,22 @@
                                                 href="{{ route('marineDistricts') }}">Add Marine Cities</a></li>
 
                                     </ul>
+                                    @elseif(Auth::user()->usertype == 1 &&  ( Auth::user()->department == 'CAFO' || Auth::user()->department == 'KIAMO') )
+                                    <ul class="submenu-list list-unstyled">
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('cafoDistricts') }}">Add CAFO Cities</a></li>
+                                    
+                                    </ul>
+                                    @elseif(Auth::user()->usertype == 1 && Auth::user()->department == 'INLAND'  )
+
+                                    <ul class="submenu-list list-unstyled">
+                                         <li class="submenu-item"><a class="submenu-link"   href="{{ route('marineDistricts') }}">Add Marine Cities</a></li>
+
+                                    </ul>
+                                    @endif
                                 </div>
                             </li><!--//nav-item-->
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a class="nav-link" href="{{ route('docs') }}">
                                     <span class="nav-icon">
@@ -403,8 +446,8 @@
                                     </span>
                                     <span class="nav-link-text">Docs</span>
                                 </a><!--//nav-link-->
-                            </li><!--//nav-item-->
-                            <li class="nav-item">
+                            </li>  --}}
+                            {{-- <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a class="nav-link" href="{{ route('history') }}">
                                     <span class="nav-icon">
@@ -422,9 +465,9 @@
                                     </span>
                                     <span class="nav-link-text">History</span>
                                 </a><!--//nav-link-->
-                            </li><!--//nav-item-->
+                            </li><!--//nav-item--> --}}
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a class="nav-link" href="#">
                                     <span class="nav-icon">
@@ -437,7 +480,7 @@
                                     </span>
                                     <span class="nav-link-text">Charts</span>
                                 </a><!--//nav-link-->
-                            </li><!--//nav-item-->
+                            </li><!--//nav-item--> --}}
 
                             <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
@@ -455,12 +498,15 @@
                                     <span class="nav-link-text">User Feedback</span>
                                 </a><!--//nav-link-->
                             </li><!--//nav-item-->
+
+
+
                         </ul><!--//app-menu-->
                     </nav><!--//app-nav-->
                     <div class="app-sidepanel-footer">
                         <nav class="app-nav app-nav-footer">
                             <ul class="app-menu footer-menu list-unstyled">
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                     <a class="nav-link" href="{{ route('settings') }}">
                                         <span class="nav-icon">
@@ -475,8 +521,8 @@
                                         </span>
                                         <span class="nav-link-text">Settings</span>
                                     </a><!--//nav-link-->
-                                </li><!--//nav-item-->
-                                <li class="nav-item">
+                                </li><!--//nav-item--> --}}
+                                {{-- <li class="nav-item">
                                     <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                     <a class="nav-link" href="#">
                                         <span class="nav-icon">
@@ -491,7 +537,7 @@
                                         </span>
                                         <span class="nav-link-text">Advisories</span>
                                     </a><!--//nav-link-->
-                                </li><!--//nav-item-->
+                                </li><!--//nav-item--> --}}
                                 @if (Auth::user()->usertype == 0 || Auth::user()->usertype == 1)
                                     <li class="nav-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->

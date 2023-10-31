@@ -8,7 +8,6 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * 
      *
      * @return void
      */
@@ -16,10 +15,7 @@ return new class extends Migration
     {
         Schema::table('add_five_day_forecasts', function (Blueprint $table) {
             //
-            $table->text('district')->nullable();
-            $table->text('status')->nullable();
-            $table->text('approvedBy')->nullable();
-
+            $table->text('randomId')->nullable();
         });
     }
 

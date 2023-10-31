@@ -184,7 +184,7 @@
 </div>
 
 
-
+ 
 <br>
 <div class="card-group">
     {{-- morning map --}}
@@ -235,6 +235,9 @@
     </div>
   </div>
 
+  <br>
+  <br>
+  <br>
   <div id="polygonElementM" data-polygonM="{{ json_encode($polygonM) }}"    data-markerM="{{ json_encode($markersM)  }}"></div>
   <div id="polygonElementA" data-polygonA="{{ json_encode($polygonA) }}"    data-markerA="{{ json_encode($markersA)  }}"></div>
   <div id="polygonElementE" data-polygonE="{{ json_encode($polygonE) }}"    data-markerE="{{ json_encode($markersE)  }}"></div>
