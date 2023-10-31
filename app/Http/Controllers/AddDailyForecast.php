@@ -56,7 +56,9 @@ class AddDailyForecast extends Controller
         $idd = ModelsAddDailyForecast::where('publishType', 'Publish-Forecast')->latest('created_at')->value('id'); ;
 
         $dailyforecast = ModelsAddDailyForecast::where('id', $idd)->first();
-       
+       if(isset($dailyforecast)){
+
+      
         $genMorning= $dailyforecast->morning_general_variables()->first();
          $genAfternoon= $dailyforecast->afternoon_general_variables()->first();
         $genEvening= $dailyforecast->evening_general_variables()->first();
@@ -85,6 +87,21 @@ class AddDailyForecast extends Controller
 
     //     $afternoon1 = $dailyforecast->afternoon_table_values()->get();
     //   $evening1 =  $dailyforecast->evening_table_values()->get(); 
+}else{
+    $districts = [];
+    $genMorning = [];
+    $genEvening = [];
+    $genAfternoon = [];
+    $morning = [];
+    $afternoon = [];
+$evening= [];
+$polygonDatemorning= [];
+$polygonDateafternoon= [];
+$polygonDateevening = [];
+$missingmorningcities = [];
+$missingeveningcities= [];
+
+}
 
 
 
