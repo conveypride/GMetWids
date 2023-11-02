@@ -92,11 +92,11 @@ class AddDailyForecast extends Controller
     //   $evening1 =  $dailyforecast->evening_table_values()->get(); 
 }else{
   
-    $genMorning = [];
-    $genEvening = [];
-    $genAfternoon = [];
-    $morning = [];
-    $afternoon = [];
+$genMorning = [];
+$genEvening = [];
+$genAfternoon = [];
+$morning = [];
+$afternoon = [];
 $evening= [];
 $polygonDatemorning= [];
 $polygonDateafternoon= [];

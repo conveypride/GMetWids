@@ -31,8 +31,9 @@ font-family: "Times New Roman", Times, serif;
 
 .headin {
    /* line-height: 11px!important; */
-   font-size:14px;
+   font-size:12px;
    font-weight: bold;
+   
    /* word-spacing: 10px; */
    /* min-height: 11px!important;
    height: 11px!important; */
@@ -142,11 +143,11 @@ table tr th:nth-child(even) {
           <th colspan="6" class="text-center">WEATHER BRIEF</th>
         </tr>
         <tr class="text-center headin">
-            <th scope="col" >MORNING ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
+            <th scope="col" style="margin: 0px; font-weight: bold;">MORNING  ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
             <th scope="col"> TEMP </th>
-            <th scope="col" >AFTERNOON ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
+            <th scope="col" style="margin: 0px; font-weight: bold;">AFTERNOON  ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
             <th scope="col"> TEMP </th>
-            <th scope="col" >EVENING ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
+            <th scope="col" style="margin: 0px; font-weight: bold;">EVENING  ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
             <th scope="col"> TEMP </th>
         </tr>
         <tbody>
@@ -507,11 +508,11 @@ table tr th:nth-child(even) {
           <th colspan="6" class="text-center">WEATHER BRIEF</th>
         </tr>
         <tr class="text-center headin">
-            <th scope="col" >AFTERNOON ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
+            <th scope="col" style="margin: 0px; font-weight: bold;">AFTERNOON ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
             <th scope="col">TEMP </th>
-            <th scope="col" >EVENING  ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
+            <th scope="col" style="margin: 0px; font-weight: bold;">EVENING  ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
             <th scope="col">TEMP </th>
-            <th scope="col" >MORNING ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
+            <th scope="col" style="margin: 0px; font-weight: bold;">MORNING ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
             <th scope="col">TEMP </th>
         </tr>
         <tbody>
@@ -869,11 +870,11 @@ table tr th:nth-child(even) {
       <th colspan="6" class="text-center">WEATHER BRIEF</th>
     </tr>
     <tr class="text-center headin">
-        <th scope="col" >EVENING  ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
+        <th scope="col" style="margin: 0px; font-weight: bold;">EVENING  ({{ \Carbon\Carbon::parse($genEvening->date)->format('d/m/Y') }})</th>
         <th scope="col">TEMP </th>
-        <th scope="col" >MORNING ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
+        <th scope="col" style="margin: 0px; font-weight: bold;">MORNING ({{ \Carbon\Carbon::parse($genMorning->date)->format('d/m/Y') }})</th>
         <th scope="col">TEMP </th>
-        <th scope="col" >AFTERNOON ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
+        <th scope="col" style="margin: 0px; font-weight: bold;">AFTERNOON ({{ \Carbon\Carbon::parse($genAfternoon->date)->format('d/m/Y') }})</th>
         <th scope="col">TEMP </th>
     </tr>
     <tbody>
@@ -1258,13 +1259,13 @@ table tr th:nth-child(even) {
 <div class="d-flex justify-content-between py-0 my-0" style="font-size: 10px">
     <div>
 <h6 class="text-start fw-bold">
-    ISSUED AT {{ \Carbon\Carbon::parse($dailyforecast['updated_at'])->format('H:i') }} UTC
+    ISSUED AT {{ \Carbon\Carbon::parse($dailyforecast['created_at'])->format('H:i') }} UTC
 </h6>  
 </div>
     <div  style="float:right; font-size: 13px; text-align:center">
 <h6 class="text-center fw-bold" style="font-size: 13px; text-align:center">DATE: {{ \Carbon\Carbon::parse($dailyforecast['created_at'])->format('d/m/Y') }}</h6>
 <h6 class="text-center fw-bold" style="font-size: 13px; text-align:center">SIGNED</h6>
-<h6 class="text-center fw-bold" style="font-size: 13px; text-align:center"> {{ Auth::user()->name }}</h6>
+<h6 class="text-center fw-bold" style="font-size: 13px; text-align:center"> {{ $dailyforecast->creator }}</h6>
 <h6 class="text-center fw-bold" style="font-size: 13px; text-align:center">(DUTY FORECASTER)</h6>
     </div>
 </div>

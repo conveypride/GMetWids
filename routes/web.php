@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\AddnewuserController;
+use App\Http\Controllers\Weeklyoutlook;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,15 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
 Route::get('addnewuser', [AddnewuserController::class, 'addnewuser'])->name('addnewuser');
 Route::post('updateuser', [AddnewuserController::class, 'updateuser'])->name('updateuser');
 Route::post('createUser', [AddnewuserController::class, 'createUser'])->name('createUser');
+
+// weekly outlook
+
+Route::get('/cafowarningIndex', [Weeklyoutlook::class, 'cafowarningIndex'])->name('cafowarningIndex');
+ 
+Route::get('/addwarningforecast', [Weeklyoutlook::class, 'addwarningforecast'])->name('addwarningforecast');
+ 
+
+
 
     Route::get('generate-pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
     

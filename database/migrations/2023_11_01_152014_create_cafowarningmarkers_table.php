@@ -6,24 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /** 
+    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('afternoon_markers', function (Blueprint $table) {
+        Schema::create('cafowarningmarkers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('add_daily_forecast_id');
-            $table->longText('afternoonDate');
+            $table->unsignedBigInteger('cafowarnings_id');
+            $table->longText('date');
             $table->longText('markerId');
             $table->longText('icontype');
             $table->longText('lat');
             $table->longText('lng');
             $table->timestamps();
              // Define foreign key constraint
- $table->foreign('add_daily_forecast_id')->references('id')->on('add_daily_forecasts')->onDelete('cascade');
+ $table->foreign('cafowarnings_id')->references('id')->on('cafowarnings')->onDelete('cascade');
         });
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('afternoon_markers');
+        Schema::dropIfExists('cafowarningmarkers');
     }
 };
