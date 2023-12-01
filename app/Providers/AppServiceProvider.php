@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Pagination\Paginator;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         date_default_timezone_set('Africa/Accra');
+        Paginator::useBootstrap();
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\AddnewuserController;
 use App\Http\Controllers\Weeklyoutlook;
+use App\Http\Controllers\SatelliteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\Userhome::class,'index'])->name('welcome');
+Route::get('/satellite', [App\Http\Controllers\SatelliteController::class,'index'])->name('satellite');
+
 Route::get('/filter/{city}', [App\Http\Controllers\Userhome::class,'seeDetailsOfCity'])->name('welcomeSelectCity');
 Route::post('/feedbackpost', [App\Http\Controllers\Feedback::class,'create'])->name('feedbackpost');
 Route::get('/viewAllmap', [App\Http\Controllers\Userhome::class,'viewallMap'])->name('viewAllmap');
@@ -95,6 +98,11 @@ Route::post('/editSummary', [App\Http\Controllers\dailyForecast::class,'editSumm
     Route::post('/marineDistrictsdelete', [App\Http\Controllers\MarineDistricts::class,'delete']);
 // marine forecast
 Route::get('/marineforecast', [App\Http\Controllers\MarineForecastController::class,'index'])->name('mmf');
+Route::get('/satelliteforecast', [App\Http\Controllers\SatelliteController::class,'satelliteforecast'])->name('satelliteforecast');
+Route::get('/addSatelliteImgView', [App\Http\Controllers\SatelliteController::class,'addSatelliteImgView'])->name('addSatelliteImgView');
+Route::post('/uploadSatelliteImgView', [App\Http\Controllers\SatelliteController::class,'uploadSatelliteImgView'])->name('uploadSatelliteImgView');
+Route::post('/uploadSatelliteImgViewEdit', [App\Http\Controllers\SatelliteController::class,'uploadSatelliteImgViewEdit'])->name('uploadSatelliteImgViewEdit');
+
 Route::get('/addmarineforecast', [App\Http\Controllers\MarineForecastController::class,'addNewMf'])->name('addNewMf');
 Route::post('/addmarineforecastpost', [App\Http\Controllers\MarineForecastController::class,'create']);
     Route::get('/viewmarineforecast/{id}', [App\Http\Controllers\MarineForecastController::class,'viewmarineforecast'])->name('viewmarineforecast');

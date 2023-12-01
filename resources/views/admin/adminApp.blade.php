@@ -348,6 +348,8 @@
                                         </li>
                                         <li class="submenu-item"><a class="submenu-link"
                                                 href="{{ route('mmf') }}">Marine-Forecast</a></li>
+                                            <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('satelliteforecast') }}">Satellite-Forecast</a></li>     
                                         <li class="submenu-item"><a class="submenu-link"
                                                 href="{{ route('mIf') }}">Inland-Forecast</a></li>
                                         <li class="submenu-item"><a class="submenu-link"
@@ -391,6 +393,9 @@
                                         
                                         <li class="submenu-item"><a class="submenu-link"
                                                 href="{{ route('mmf') }}">Marine-Forecast</a></li> 
+
+                                                <li class="submenu-item"><a class="submenu-link"
+                                                    href="{{ route('satelliteforecast') }}">Satellite-Forecast</a></li>  
                                     </ul>
 
                                     @elseif(Auth::user()->usertype == 2 &&( Auth::user()->department == 'MARINE') )
@@ -398,6 +403,9 @@
                                         
                                         <li class="submenu-item"><a class="submenu-link"
                                                 href="{{ route('mmf') }}">Marine-Forecast</a></li> 
+                                                
+                                                <li class="submenu-item"><a class="submenu-link"
+                                                    href="{{ route('satelliteforecast') }}">Satellite-Forecast</a></li>  
                                     </ul>
 
                                 @elseif(Auth::user()->usertype == 1 &&( Auth::user()->department == 'INLAND') )
@@ -444,7 +452,7 @@
                                     @if(Auth::user()->usertype == 0 )
                                     <ul class="submenu-list list-unstyled">
                                         <li class="submenu-item"><a class="submenu-link"
-                                                href="#">Add Warning</a></li>
+                                                href="{{ route('cafowarningIndex') }}">Add Warning</a></li>
                                                 <li class="submenu-item"><a class="submenu-link"
                                                     href="#">Add Weekly</a></li>
                                                     <li class="submenu-item"><a class="submenu-link"
@@ -460,7 +468,7 @@
                                     @elseif(Auth::user()->usertype == 1 &&  ( Auth::user()->department == 'CAFO' || Auth::user()->department == 'KIAMO') )
                                     <ul class="submenu-list list-unstyled">
                                         <li class="submenu-item"><a class="submenu-link"
-                                            href="#">Add Warning</a></li>
+                                            href="{{ route('cafowarningIndex') }}">Add Warning</a></li>
                                         <li class="submenu-item"><a class="submenu-link"
                                             href="#">Add Weekly</a></li>
                                             <li class="submenu-item"><a class="submenu-link"
@@ -472,7 +480,7 @@
                                     @elseif(Auth::user()->usertype == 2 &&  ( Auth::user()->department == 'CAFO' || Auth::user()->department == 'KIAMO') )
                                     <ul class="submenu-list list-unstyled">
                                         <li class="submenu-item"><a class="submenu-link"
-                                            href="#">Add Warning</a></li>
+                                            href="{{ route('cafowarningIndex') }}">Add Warning</a></li>
                                         <li class="submenu-item"><a class="submenu-link"
                                             href="#">Add Weekly</a></li>
                                             <li class="submenu-item"><a class="submenu-link"

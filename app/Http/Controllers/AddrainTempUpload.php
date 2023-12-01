@@ -37,8 +37,8 @@ class AddrainTempUpload extends Controller
 
 
   public function addImgView()
-    {
-    //   
+    { 
+    //    
     return view('admin.addRainTempUpload');
     }
 
